@@ -1,0 +1,33 @@
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+
+  .title{
+    margin: 20px 0;
+    color: white;
+  }
+
+  .form{
+    width: 100%;
+  }
+
+  .medicineWrapper{
+    padding: 20px 5px;
+    margin: 30px 0;
+    background-color: rgba(whitesmoke, .3);
+  }
+
+  .btnAdd{
+    width: 60%;
+    height: 50px;
+    margin-top: 20px;
+    letter-spacing: 2px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #a55f62;
+    border: 2px solid black;
+    background-color: black;
+  }
+}
