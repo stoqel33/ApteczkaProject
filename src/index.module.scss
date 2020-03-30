@@ -9,6 +9,7 @@
 body{
   font-family: 'Montserrat', sans-serif;
   background: linear-gradient(135deg, rgba(97,13,103,1) 10%, rgba(167,98,98,1) 100%);
+  min-height: 100vh;
 }
 
 @media screen and (min-width: 800px){

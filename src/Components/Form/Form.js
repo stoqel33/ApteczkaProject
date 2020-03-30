@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Form.module.scss';
 import Label from './Label/Label';
 
@@ -82,11 +83,12 @@ class Form extends React.Component {
 
         </form>
 
-        <button
+        <Link
+          to="/"
           onClick={this.handleClickSubmit}
           className={styles.btnAdd}>
           DODAJ
-        </button>
+        </Link>
       </div >
     )
   }
