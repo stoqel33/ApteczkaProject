@@ -84,7 +84,7 @@ class Form extends React.Component {
         </form>
 
         <Link
-          to="/ApteczkaProject"
+          to="/ApteczkaProject/"
           onClick={this.handleClickSubmit}
           className={styles.btnAdd}>
           DODAJ

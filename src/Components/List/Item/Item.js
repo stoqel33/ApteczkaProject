@@ -1,12 +1,31 @@
-import React from 'react'
+import React from 'react';
+import styles from './Item.module.scss';
 
 const Item = ({ name, amount, date, remind }) => (
-  <>
-    <h1>{name}</h1>
-    <h2>{amount}</h2>
-    <h3>{date}</h3>
-    {remind ? <h4>Tak</h4> : <h4>Nie</h4>}
-  </>
+  <div className={styles.wrapper}>
+    <span
+      className={styles.name}
+    >
+      Lek <span className={styles.value}>{name}</span>
+    </span>
+    <span
+      className={styles.amount}
+    >
+      Ilość <span className={styles.value}>{amount}</span>
+    </span>
+    <span
+      className={styles.date}
+    >
+      Data ważności <span className={styles.value}>{date}</span>
+    </span>
+    {remind ?
+      <span className={styles.remind}>Przypomnienie
+        <span className={styles.value}>TAK</span>
+      </span> :
+      <span className={styles.remind}>Przypomnienie
+      <span className={styles.value}>NIE</span>
+      </span>}
+  </div>
 );
 
 export default Item;

@@ -1,9 +1,10 @@
 import React from 'react';
+import styles from './List.module.scss';
 import Item from './Item/Item';
 
 const List = ({ medicines }) => {
   return (
-    <>
+    <div className={styles.wrapper}>
       {
         medicines.map((medicine) =>
           <Item
@@ -15,7 +16,7 @@ const List = ({ medicines }) => {
           />
         )
       }
-    </>
+    </div>
   );
 }
 

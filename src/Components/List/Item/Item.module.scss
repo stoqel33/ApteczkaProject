@@ -1,0 +1,30 @@
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  padding: 20px 40px;
+  margin-bottom: 20px;
+  background-color: rgba(white,.2);
+  border-radius: 10%;
+
+  &:last-child{
+    margin-bottom: 30px;
+  }
+
+  span{
+    margin-bottom: 7px;
+
+    &:last-child{
+      margin-bottom: 0;
+    }
+  }
+  .value{
+    margin-left: 8px;
+    font-weight: 700;
+  }
+  .name{
+    font-size: 25px;
+  }
+  .amount, .date, .remind{
+    font-size: 18px;
+  }
+}
