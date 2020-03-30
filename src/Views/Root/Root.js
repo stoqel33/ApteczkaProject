@@ -40,7 +40,7 @@ class Root extends React.Component {
         <AppContext.Provider value={contextElements}>
           <Switch>
             <Route exact path="/ApteczkaProject" component={Medicine} />
-            <Route path="/addMedicine" component={AddMedicine} />
+            <Route path="/ApteczkaProject/addMedicine" component={AddMedicine} />
           </Switch>
         </AppContext.Provider>
       </Router>

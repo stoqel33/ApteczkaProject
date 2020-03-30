@@ -14,7 +14,7 @@ class Medicine extends React.Component {
               <List medicines={context.medicines} /> :
               <h1>PUSTO</h1>
             }
-            <Link to="/addMedicine">Dodaj nowy lek</Link>
+            <Link to="/ApteczkaProject/addMedicine">Dodaj nowy lek</Link>
           </>
         )}
       </AppContext.Consumer>
