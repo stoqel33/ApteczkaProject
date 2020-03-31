@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import AppContext from '../../context';
-import Medicine from '../Medicine/Medicine';
-import AddMedicine from '../AddMedicine/AddMedicine';
+import AppContext from 'context';
+import Medicine from 'Views/Medicine/Medicine';
+import AddMedicine from 'Views/AddMedicine/AddMedicine';
 
 class Root extends React.Component {
   id = 0;
   state = {
     medicines: [],
-  }
+  };
 
   addMedicine = (name, amount, date, remind) => {
     if (name.length > 2) {
@@ -18,22 +18,21 @@ class Root extends React.Component {
         amount,
         date,
         remind,
-      }
+      };
       this.id++;
 
       this.setState((prevState) => ({
-        medicines: [...prevState.medicines, medicine]
-      }))
-      return true
+        medicines: [...prevState.medicines, medicine],
+      }));
+      return true;
     }
-  }
-
+  };
 
   render() {
     const contextElements = {
       medicines: this.state.medicines,
-      addMedicine: this.addMedicine
-    }
+      addMedicine: this.addMedicine,
+    };
 
     return (
       <Router>
