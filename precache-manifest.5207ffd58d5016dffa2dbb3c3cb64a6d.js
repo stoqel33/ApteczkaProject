@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "63510cdda4341364b97bf4b129d7d6f0",
+    "revision": "cc66b62ed14d9ee3dc907930ffbc0a27",
     "url": "/ApteczkaProject/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ApteczkaProject/static/js/2.efe6808d.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "0855a87482093e430115",
-    "url": "/ApteczkaProject/static/js/main.0387b28f.chunk.js"
+    "revision": "3f6358d8c4245ee88ac8",
+    "url": "/ApteczkaProject/static/js/main.8ba2056d.chunk.js"
   },
   {
     "revision": "93fe5c0a11df7624ae45",
