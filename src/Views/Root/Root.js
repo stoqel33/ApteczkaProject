@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AppContext from 'context';
+import GlobalStyle from 'Theme/GlobalStyle';
 import Medicine from 'Views/Medicine/Medicine';
 import AddMedicine from 'Views/AddMedicine/AddMedicine';
 
@@ -11,21 +12,19 @@ class Root extends React.Component {
   };
 
   addMedicine = (name, amount, date, remind) => {
-    if (name.length > 2) {
-      const medicine = {
-        id: this.id,
-        name,
-        amount,
-        date,
-        remind,
-      };
-      this.id++;
+    const medicine = {
+      id: this.id,
+      name,
+      amount,
+      date,
+      remind,
+    };
+    this.id++;
 
-      this.setState((prevState) => ({
-        medicines: [...prevState.medicines, medicine],
-      }));
-      return true;
-    }
+    this.setState((prevState) => ({
+      medicines: [...prevState.medicines, medicine],
+    }));
+    return true;
   };
 
   render() {
@@ -36,6 +35,7 @@ class Root extends React.Component {
 
     return (
       <Router>
+        <GlobalStyle />
         <AppContext.Provider value={contextElements}>
           <Switch>
             <Route exact path="/ApteczkaProject" component={Medicine} />

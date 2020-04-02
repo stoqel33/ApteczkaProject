@@ -1,6 +1,6 @@
 import React from 'react';
 import Item from 'Components/List/Item/Item';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 const Wrapper = styled.div`
   display: flex;

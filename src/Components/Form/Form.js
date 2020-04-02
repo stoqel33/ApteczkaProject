@@ -1,7 +1,7 @@
 import React from 'react';
+import styled from 'styled-components/macro';
 import Link from 'Styled/Link';
 import Label from './Label/Label';
-import styled from 'styled-components';
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const WrapperMedicine = styled.div`
 `;
 
 const ButtonAdd = styled.button`
-  width: 60%;
+  width: 250px;
   height: 50px;
   margin-top: 20px;
   letter-spacing: 2px;
@@ -44,15 +44,29 @@ const ButtonAdd = styled.button`
 class Form extends React.Component {
   state = {
     nameMedicine: '',
-    amountMedicine: '0',
+    amountMedicine: '',
     dateMedicine: new Date().toISOString().slice(0, 10),
     remindMedicine: false,
   };
 
-  handleInputChange = e => {
+  handleInputChange = (e) => {
     if (e.target.type === 'checkbox') {
       this.setState({
         [e.target.id]: e.target.checked,
+      });
+    } else if (e.target.type === 'tel') {
+      e.target.value = e.target.value.replace(/[^0-9]+/, '');
+      if (e.target.value === '0') {
+        e.target.value = '';
+      } else {
+        this.setState({
+          [e.target.id]: e.target.value,
+        });
+      }
+    } else if (e.target.type === 'text') {
+      e.target.value = e.target.value.replace(/[^a-zA-Z]+/, '');
+      this.setState({
+        [e.target.id]: e.target.value,
       });
     } else {
       this.setState({
@@ -63,8 +77,10 @@ class Form extends React.Component {
 
   handleClickSubmit = () => {
     const { nameMedicine, amountMedicine, dateMedicine, remindMedicine } = this.state;
+    const nameMed = nameMedicine.trim();
+    const medicineName = nameMed.charAt(0).toUpperCase() + nameMed.slice(1).trim();
     const newMedicine = this.props.addMedicine(
-      nameMedicine.trim(),
+      medicineName,
       amountMedicine,
       dateMedicine,
       remindMedicine,
@@ -72,7 +88,7 @@ class Form extends React.Component {
     if (newMedicine) {
       this.setState({
         nameMedicine: '',
-        amountMedicine: 0,
+        amountMedicine: '',
         dateMedicine: new Date().toISOString().slice(0, 10),
         remindMedicine: false,
       });
@@ -132,11 +148,16 @@ class Form extends React.Component {
           </WrapperMedicine>
         </FormAdd>
 
-        <ButtonAdd>
+        {this.state.nameMedicine.trim().length > 2 &&
+        this.state.amountMedicine.length > 0 ? (
           <Link to="/ApteczkaProject/" onClick={this.handleClickSubmit}>
-            DODAJ
+            <ButtonAdd>DODAJ</ButtonAdd>
           </Link>
-        </ButtonAdd>
+        ) : (
+          <Link to="/ApteczkaProject/AddMedicine">
+            <ButtonAdd>DODAJ</ButtonAdd>
+          </Link>
+        )}
       </Wrapper>
     );
   }

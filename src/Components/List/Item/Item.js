@@ -1,5 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
+import PropTypes from 'prop-types';
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,10 +15,6 @@ const Wrapper = styled.div`
   }
 `;
 
-const TitleName = styled.span`
-  font-size: 25px;
-`;
-
 const Title = styled.span`
   font-size: 18px;
   margin-bottom: 7px;
@@ -25,6 +22,10 @@ const Title = styled.span`
   &:last-child {
     margin-bottom: 0;
   }
+`;
+
+const TitleName = styled(Title)`
+  font-size: 25px;
 `;
 
 const Value = styled.span`
@@ -56,5 +57,12 @@ const Item = ({ name, amount, date, remind }) => (
     )}
   </Wrapper>
 );
+
+Item.propTypes = {
+  name: PropTypes.string.isRequired,
+  amount: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  remind: PropTypes.bool.isRequired,
+};
 
 export default Item;

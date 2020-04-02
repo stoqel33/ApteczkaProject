@@ -1,6 +1,6 @@
 import React from 'react';
-import Form from 'Components/Form/Form';
 import AppContext from 'context';
+import Form from 'Components/Form/Form';
 
 const AddMedicine = () => (
   <AppContext.Consumer>

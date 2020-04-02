@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
+import AppContext from 'context';
 import List from 'Components/List/List';
 import Link from 'Styled/Link';
-import AppContext from 'context';
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,7 +37,7 @@ const Medicine = () => (
   <AppContext.Consumer>
     {(context) => (
       <Wrapper>
-        <Title>Apteczka</Title>
+        <Title css="color: red">Apteczka</Title>
         {context.medicines.length > 0 ? (
           <List medicines={context.medicines} />
         ) : (
