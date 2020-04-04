@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
+import Inputs from 'Components/Form/Label/Input/Inputs';
 
 const MedicineLabel = styled.label`
   display: flex;
@@ -18,51 +19,32 @@ const Title = styled.h2`
   margin-left: 10px;
 `;
 
-const Input = styled.input`
-  color: white;
-  padding: 10px 0 10px 15px;
-  margin-right: 10px;
-  background-color: transparent;
-  border: none;
-  border-left: 1px solid black;
-  border-bottom: 1px solid black;
-
-  ::placeholder {
-    font-size: 300;
-    color: white;
-  }
-`;
-
-const InputAmount = styled(Input)`
-  width: 50px;
-`;
-
-const Label = ({ name, type, placeholder, value, onChange, children, ...props }) => {
+const Label = ({
+  name,
+  type,
+  placeholder,
+  value,
+  onChange,
+  children,
+  checked,
+  autoComplete,
+  minAmount,
+  minDate,
+}) => {
   return (
     <MedicineLabel htmlFor={name}>
       <Title>{children}</Title>
-      {type === 'checkbox' ? (
-        <Input type={type} id={name} checked={props.checked} onChange={onChange} />
-      ) : type === 'number' ? (
-        <InputAmount
-          type={type}
-          id={name}
-          placeholder={placeholder}
-          autoComplete={props.autoComplete}
-          value={value}
-          onChange={onChange}
-          min="0"
-        />
-      ) : (
-        <Input
-          type={type}
-          id={name}
-          placeholder={placeholder}
-          autoComplete={props.autoComplete}
-          value={value}
-          onChange={onChange}
-        />
-      )}
+      <Inputs
+        type={type}
+        id={name}
+        checked={checked}
+        placeholder={placeholder}
+        autoComplete={autoComplete}
+        value={value}
+        onChange={onChange}
+        minAmount={minAmount}
+        minDate={minDate}
+      />
     </MedicineLabel>
   );
 };
@@ -74,6 +56,19 @@ Label.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   children: PropTypes.string.isRequired,
+  checked: PropTypes.bool,
+  autoComplete: PropTypes.string,
+  minAmount: PropTypes.string,
+  minDate: PropTypes.string,
+};
+
+Label.defaultProps = {
+  placeholder: '',
+  value: '',
+  checked: false,
+  autoComplete: 'on',
+  minAmount: '1',
+  minDate: '',
 };
 
 export default Label;

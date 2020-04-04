@@ -45,10 +45,11 @@ class Form extends React.Component {
   state = {
     nameMedicine: '',
     amountMedicine: '',
-    dateMedicine: new Date().toISOString().slice(0, 10),
+    dateMedicine: this.props.today,
     remindMedicine: false,
   };
 
+  // Walidacja inputów
   handleInputChange = (e) => {
     if (e.target.type === 'checkbox') {
       this.setState({
@@ -56,9 +57,8 @@ class Form extends React.Component {
       });
     } else if (e.target.type === 'tel') {
       e.target.value = e.target.value.replace(/[^0-9]+/, '');
-      if (e.target.value === '0') {
-        e.target.value = '';
-      } else {
+      if (e.target.value === '0') e.target.value = '0';
+      else {
         this.setState({
           [e.target.id]: e.target.value,
         });
@@ -69,30 +69,21 @@ class Form extends React.Component {
         [e.target.id]: e.target.value,
       });
     } else {
-      this.setState({
-        [e.target.id]: e.target.value,
-      });
+      const nowDate = new Date(this.props.today);
+      const currentDate = new Date(e.target.value);
+      if (currentDate >= nowDate) {
+        this.setState({
+          [e.target.id]: e.target.value,
+        });
+      }
     }
   };
 
+  // Obsługa dodania leku
   handleClickSubmit = () => {
     const { nameMedicine, amountMedicine, dateMedicine, remindMedicine } = this.state;
-    const nameMed = nameMedicine.trim();
-    const medicineName = nameMed.charAt(0).toUpperCase() + nameMed.slice(1).trim();
-    const newMedicine = this.props.addMedicine(
-      medicineName,
-      amountMedicine,
-      dateMedicine,
-      remindMedicine,
-    );
-    if (newMedicine) {
-      this.setState({
-        nameMedicine: '',
-        amountMedicine: '',
-        dateMedicine: new Date().toISOString().slice(0, 10),
-        remindMedicine: false,
-      });
-    }
+    const nameMed = nameMedicine.charAt(0).toUpperCase() + nameMedicine.slice(1);
+    this.props.addMedicine(nameMed, amountMedicine, dateMedicine, remindMedicine);
   };
 
   render() {
@@ -104,10 +95,10 @@ class Form extends React.Component {
             <Label
               name="nameMedicine"
               type="text"
+              placeholder="Nazwa"
               autoComplete="off"
               value={this.state.nameMedicine}
               onChange={this.handleInputChange}
-              placeholder="Nazwa"
             >
               Nazwa leku
             </Label>
@@ -116,8 +107,10 @@ class Form extends React.Component {
           <WrapperMedicine>
             <Label
               name="amountMedicine"
-              type="number"
+              type="tel"
               placeholder="0"
+              autoComplete="off"
+              minAmount="1"
               value={this.state.amountMedicine}
               onChange={this.handleInputChange}
             >
@@ -129,6 +122,7 @@ class Form extends React.Component {
             <Label
               name="dateMedicine"
               type="date"
+              minDate={this.props.today}
               value={this.state.dateMedicine}
               onChange={this.handleInputChange}
             >
@@ -148,8 +142,7 @@ class Form extends React.Component {
           </WrapperMedicine>
         </FormAdd>
 
-        {this.state.nameMedicine.trim().length > 2 &&
-        this.state.amountMedicine.length > 0 ? (
+        {this.state.nameMedicine.length > 2 && this.state.amountMedicine.length > 0 ? (
           <Link to="/ApteczkaProject/" onClick={this.handleClickSubmit}>
             <ButtonAdd>DODAJ</ButtonAdd>
           </Link>

@@ -28,13 +28,14 @@ const Inputs = ({
   autoComplete,
   value,
   onChange,
-  min,
+  minAmount,
+  minDate,
 }) => {
   return (
     <>
       {(type === 'text' && (
         <Input
-          type="text"
+          type={type}
           id={id}
           placeholder={placeholder}
           autoComplete={autoComplete}
@@ -42,28 +43,30 @@ const Inputs = ({
           onChange={onChange}
         />
       )) ||
-        (type === 'number' && (
+        (type === 'tel' && (
           <InputAmount
-            type="tel"
-            id={id}
-            placeholder={placeholder}
-            value={value}
-            onChange={onChange}
-            min={min}
-          />
-        )) ||
-        (type === 'date' && (
-          <Input
-            type="date"
+            type={type}
             id={id}
             placeholder={placeholder}
             autoComplete={autoComplete}
             value={value}
             onChange={onChange}
+            min={minAmount}
+          />
+        )) ||
+        (type === 'date' && (
+          <Input
+            type={type}
+            id={id}
+            placeholder={placeholder}
+            autoComplete={autoComplete}
+            value={value}
+            onChange={onChange}
+            min={minDate}
           />
         )) ||
         (type === 'checkbox' && (
-          <Input type="checkbox" id={id} checked={checked} onChange={onChange} />
+          <Input type={type} id={id} checked={checked} onChange={onChange} />
         ))}
     </>
   );
@@ -77,7 +80,8 @@ Inputs.propTypes = {
   autoComplete: Proptypes.string,
   value: Proptypes.string,
   onChange: Proptypes.func.isRequired,
-  min: Proptypes.string,
+  minAmount: Proptypes.string,
+  minDate: Proptypes.string,
 };
 
 Inputs.defaultProps = {
@@ -85,7 +89,8 @@ Inputs.defaultProps = {
   placeholder: '',
   autoComplete: 'on',
   value: '',
-  min: '',
+  minAmount: '1',
+  minDate: '',
 };
 
 export default Inputs;
