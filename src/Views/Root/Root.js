@@ -11,7 +11,7 @@ import Error from 'Views/Error/Error';
 class Root extends React.Component {
   state = {
     response: true,
-    id: '',
+    id: '1',
     today: new Date().toISOString().slice(0, 10),
     medicines: [],
   };
