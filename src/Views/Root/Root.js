@@ -6,29 +6,39 @@ import GlobalStyle from 'Theme/GlobalStyle';
 import Medicine from 'Views/Medicine/Medicine';
 import AddMedicine from 'Views/AddMedicine/AddMedicine';
 import EditMedicine from 'Views/EditMedicine/EditMedicine';
+import Error from 'Views/Error/Error';
 
 class Root extends React.Component {
   id = 0;
   state = {
+    response: true,
     id: '',
     today: new Date().toISOString().slice(0, 10),
     medicines: [],
   };
 
   componentDidMount() {
-    axios.get('http://localhost:3000/ApteczkaProject').then((resp) => {
-      if (resp.data.length > 0) {
+    axios
+      .get('http://localhost:3000/ApteczkaProject')
+      .then((resp) => {
+        if (resp.data.length > 0) {
+          this.setState({
+            medicines: resp.data.map((medicine) => ({
+              id: medicine._id,
+              name: medicine.name,
+              amount: medicine.amount,
+              date: medicine.expiryDate.slice(0, 10),
+              show: true,
+            })),
+          });
+        }
+      })
+      .catch((err) => {
+        console.log('Cannot get response database ' + err);
         this.setState({
-          medicines: resp.data.map((medicine) => ({
-            id: medicine._id,
-            name: medicine.name,
-            amount: medicine.amount,
-            date: medicine.expiryDate.slice(0, 10),
-            show: true,
-          })),
+          response: false,
         });
-      }
-    });
+      });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -114,13 +124,17 @@ class Root extends React.Component {
     return (
       <Router>
         <GlobalStyle />
-        <AppContext.Provider value={contextElements}>
-          <Switch>
-            <Route exact path="/ApteczkaProject" component={Medicine} />
-            <Route path="/ApteczkaProject/addMedicine" component={AddMedicine} />
-            <Route path="/ApteczkaProject/editMedicine/:id" component={EditMedicine} />
-          </Switch>
-        </AppContext.Provider>
+        {this.state.response ? (
+          <AppContext.Provider value={contextElements}>
+            <Switch>
+              <Route exact path="/ApteczkaProject" component={Medicine} />
+              <Route path="/ApteczkaProject/addMedicine" component={AddMedicine} />
+              <Route path="/ApteczkaProject/editMedicine/:id" component={EditMedicine} />
+            </Switch>
+          </AppContext.Provider>
+        ) : (
+          <Error />
+        )}
       </Router>
     );
   }
