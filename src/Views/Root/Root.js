@@ -41,10 +41,6 @@ class Root extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('did mout');
-
-    console.log(prevState.medicines[this.state.id]);
-
     if (prevState.medicines.length !== this.state.medicines.length) {
       axios.get('http://localhost:3000/ApteczkaProject').then((resp) => {
         this.setState({
@@ -100,7 +96,7 @@ class Root extends React.Component {
       .post('http://localhost:3000/ApteczkaProject/editMedicine/update/' + id, newMed)
       .then((res) => console.log(res.data));
 
-    window.location = '/ApteczkaProject';
+    // window.location = '/ApteczkaProject';
   };
 
   // showSearchMedicine = (medicine) => {
