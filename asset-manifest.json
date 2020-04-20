@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/ApteczkaProject/static/js/main.022c2d96.chunk.js",
-    "main.js.map": "/ApteczkaProject/static/js/main.022c2d96.chunk.js.map",
+    "main.js": "/ApteczkaProject/static/js/main.82e51fa2.chunk.js",
+    "main.js.map": "/ApteczkaProject/static/js/main.82e51fa2.chunk.js.map",
     "runtime-main.js": "/ApteczkaProject/static/js/runtime-main.81ce0c0d.js",
     "runtime-main.js.map": "/ApteczkaProject/static/js/runtime-main.81ce0c0d.js.map",
-    "static/js/2.04bcb9e5.chunk.js": "/ApteczkaProject/static/js/2.04bcb9e5.chunk.js",
-    "static/js/2.04bcb9e5.chunk.js.map": "/ApteczkaProject/static/js/2.04bcb9e5.chunk.js.map",
+    "static/js/2.85baa0d1.chunk.js": "/ApteczkaProject/static/js/2.85baa0d1.chunk.js",
+    "static/js/2.85baa0d1.chunk.js.map": "/ApteczkaProject/static/js/2.85baa0d1.chunk.js.map",
     "index.html": "/ApteczkaProject/index.html",
-    "precache-manifest.29338463feacb9fd709b1df260424ab5.js": "/ApteczkaProject/precache-manifest.29338463feacb9fd709b1df260424ab5.js",
+    "precache-manifest.ebeaea6a6c7b4a6ccefb9f99cc34c6ca.js": "/ApteczkaProject/precache-manifest.ebeaea6a6c7b4a6ccefb9f99cc34c6ca.js",
     "service-worker.js": "/ApteczkaProject/service-worker.js",
-    "static/js/2.04bcb9e5.chunk.js.LICENSE.txt": "/ApteczkaProject/static/js/2.04bcb9e5.chunk.js.LICENSE.txt"
+    "static/js/2.85baa0d1.chunk.js.LICENSE.txt": "/ApteczkaProject/static/js/2.85baa0d1.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.81ce0c0d.js",
-    "static/js/2.04bcb9e5.chunk.js",
-    "static/js/main.022c2d96.chunk.js"
+    "static/js/2.85baa0d1.chunk.js",
+    "static/js/main.82e51fa2.chunk.js"
   ]
 }
