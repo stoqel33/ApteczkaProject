@@ -9,7 +9,6 @@ import EditMedicine from 'Views/EditMedicine/EditMedicine';
 import Error from 'Views/Error/Error';
 
 class Root extends React.Component {
-  id = 0;
   state = {
     response: true,
     id: '',
@@ -46,7 +45,7 @@ class Root extends React.Component {
 
     console.log(prevState.medicines[this.state.id]);
 
-    if (prevState.medicines[this.state.id] !== this.state.medicines[this.state.id]) {
+    if (prevState.medicines.length !== this.state.medicines.length) {
       axios.get('http://localhost:3000/ApteczkaProject').then((resp) => {
         this.setState({
           medicines: resp.data.map((medicine) => ({
