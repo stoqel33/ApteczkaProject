@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import axios from 'axios';
 import Link from 'Styled/Link';
 import Label from './Label/Label';
 
@@ -39,23 +40,20 @@ const ButtonAdd = styled.button`
   text-decoration: none;
   line-height: 45px;
   text-align: center;
+  cursor: pointer;
 `;
 
 class FormEdit extends React.Component {
   state = {
-    nameMedicine: this.props.medicines[this.props.target].name,
-    amountMedicine: this.props.medicines[this.props.target].amount,
-    dateMedicine: this.props.medicines[this.props.target].date,
-    remindMedicine: this.props.medicines[this.props.target].remind,
+    id: '',
+    nameMedicine: '',
+    amountMedicine: '',
+    dateMedicine: '',
   };
 
   // Walidacja inputów
   handleInputChange = (e) => {
-    if (e.target.type === 'checkbox') {
-      this.setState({
-        [e.target.id]: e.target.checked,
-      });
-    } else if (e.target.type === 'tel') {
+    if (e.target.type === 'tel') {
       e.target.value = e.target.value.replace(/[^0-9]+/, '');
       if (e.target.value === '0') {
         e.target.value = '0';
@@ -80,11 +78,30 @@ class FormEdit extends React.Component {
     }
   };
 
+  componentDidMount() {
+    console.log(this.props.url);
+    axios
+      .get(
+        'http://localhost:3000/ApteczkaProject/editMedicine/' + this.props.url.params.id,
+      )
+
+      .then((resp) => {
+        console.log('12312');
+
+        this.setState({
+          id: resp.data._id,
+          nameMedicine: resp.data.name,
+          amountMedicine: resp.data.amount.toString(),
+          dateMedicine: resp.data.expiryDate.slice(0, 10),
+        });
+      });
+  }
+
   // Obsługa dodania leku
   handleClickSubmit = () => {
-    const { nameMedicine, amountMedicine, dateMedicine, remindMedicine } = this.state;
+    const { id, nameMedicine, amountMedicine, dateMedicine } = this.state;
     const nameMed = nameMedicine.charAt(0).toUpperCase() + nameMedicine.slice(1);
-    this.props.changeMedicine(nameMed, amountMedicine, dateMedicine, remindMedicine);
+    this.props.changeMedicine(id, nameMed, amountMedicine, dateMedicine);
   };
 
   render() {
@@ -130,21 +147,10 @@ class FormEdit extends React.Component {
                 Data ważności
               </Label>
             </WrapperMedicine>
-
-            <WrapperMedicine>
-              <Label
-                name="remindMedicine"
-                type="checkbox"
-                checked={this.state.remindMedicine}
-                onChange={this.handleInputChange}
-              >
-                Przypomnienia
-              </Label>
-            </WrapperMedicine>
           </>
         </FormAdd>
         {this.state.nameMedicine.length > 2 && this.state.amountMedicine.length > 0 ? (
-          <Link to="/ApteczkaProject/" onClick={this.handleClickSubmit}>
+          <Link to="/ApteczkaProject/editMedicine" onClick={this.handleClickSubmit}>
             <ButtonAdd>Zapisz zmiany</ButtonAdd>
           </Link>
         ) : (

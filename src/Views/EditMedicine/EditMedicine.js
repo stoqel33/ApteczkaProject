@@ -2,7 +2,7 @@ import React from 'react';
 import AppContext from 'context';
 import FormEdit from 'Components/Form/FormEdit';
 
-const EditMedicine = () => (
+const EditMedicine = ({ match }) => (
   <AppContext.Consumer>
     {(context) => (
       <FormEdit
@@ -10,6 +10,7 @@ const EditMedicine = () => (
         changeMedicine={context.changeMedicine}
         target={context.target}
         today={context.today}
+        url={match}
       />
     )}
   </AppContext.Consumer>
