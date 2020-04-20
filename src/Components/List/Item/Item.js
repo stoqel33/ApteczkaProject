@@ -34,10 +34,7 @@ const Value = styled.span`
   font-weight: 700;
 `;
 
-const Item = ({ id, name, amount, date, remind, handle }) => {
-  // Wyłapanie id leku i przekazanie który lek ma być edytowany
-  const handled = (e) => handle(parseInt(e.target.id, 10));
-
+const Item = ({ id, name, amount, date }) => {
   return (
     <Wrapper>
       <TitleName>
@@ -49,31 +46,18 @@ const Item = ({ id, name, amount, date, remind, handle }) => {
       <Title>
         Data ważności <Value>{date}</Value>
       </Title>
-      {remind ? (
-        <Title>
-          Przypomnienie
-          <Value>TAK</Value>
-        </Title>
-      ) : (
-        <Title>
-          Przypomnienie
-          <Value>NIE</Value>
-        </Title>
-      )}
-      <Link to="/ApteczkaProject/editMedicine" onClick={handled}>
-        <span id={id}>edytuj</span>
+      <Link to={`/ApteczkaProject/editMedicine/${id}`}>
+        <span>edytuj</span>
       </Link>
     </Wrapper>
   );
 };
 
 Item.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  amount: PropTypes.string.isRequired,
+  amount: PropTypes.number.isRequired,
   date: PropTypes.string.isRequired,
-  remind: PropTypes.bool.isRequired,
-  handle: PropTypes.func.isRequired,
 };
 
 export default Item;

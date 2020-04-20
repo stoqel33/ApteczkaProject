@@ -23,7 +23,6 @@ const InputAmount = styled(Input)`
 const Inputs = ({
   type,
   id,
-  checked,
   placeholder,
   autoComplete,
   value,
@@ -64,9 +63,6 @@ const Inputs = ({
             onChange={onChange}
             min={minDate}
           />
-        )) ||
-        (type === 'checkbox' && (
-          <Input type={type} id={id} checked={checked} onChange={onChange} />
         ))}
     </>
   );
@@ -75,7 +71,6 @@ const Inputs = ({
 Inputs.propTypes = {
   type: Proptypes.string.isRequired,
   id: Proptypes.string.isRequired,
-  checked: Proptypes.bool,
   placeholder: Proptypes.string,
   autoComplete: Proptypes.string,
   value: Proptypes.string,
@@ -85,7 +80,6 @@ Inputs.propTypes = {
 };
 
 Inputs.defaultProps = {
-  checked: false,
   placeholder: '',
   autoComplete: 'on',
   value: '',

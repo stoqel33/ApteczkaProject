@@ -46,16 +46,11 @@ class Form extends React.Component {
     nameMedicine: '',
     amountMedicine: '',
     dateMedicine: this.props.today,
-    remindMedicine: false,
   };
 
   // Walidacja inputów
   handleInputChange = (e) => {
-    if (e.target.type === 'checkbox') {
-      this.setState({
-        [e.target.id]: e.target.checked,
-      });
-    } else if (e.target.type === 'tel') {
+    if (e.target.type === 'tel') {
       e.target.value = e.target.value.replace(/[^0-9]+/, '');
       if (e.target.value === '0') e.target.value = '0';
       else {
@@ -81,9 +76,9 @@ class Form extends React.Component {
 
   // Obsługa dodania leku
   handleClickSubmit = () => {
-    const { nameMedicine, amountMedicine, dateMedicine, remindMedicine } = this.state;
+    const { nameMedicine, amountMedicine, dateMedicine } = this.state;
     const nameMed = nameMedicine.charAt(0).toUpperCase() + nameMedicine.slice(1);
-    this.props.addMedicine(nameMed, amountMedicine, dateMedicine, remindMedicine);
+    this.props.addMedicine(nameMed, amountMedicine, dateMedicine);
   };
 
   render() {
@@ -129,17 +124,6 @@ class Form extends React.Component {
               Data ważności
             </Label>
           </WrapperMedicine>
-
-          <WrapperMedicine>
-            <Label
-              name="remindMedicine"
-              type="checkbox"
-              checked={this.state.remindMedicine}
-              onChange={this.handleInputChange}
-            >
-              Przypomnienia
-            </Label>
-          </WrapperMedicine>
         </FormAdd>
 
         {this.state.nameMedicine.length > 2 && this.state.amountMedicine.length > 0 ? (
@@ -147,7 +131,7 @@ class Form extends React.Component {
             <ButtonAdd>DODAJ</ButtonAdd>
           </Link>
         ) : (
-          <Link to="/ApteczkaProject/AddMedicine">
+          <Link to="/ApteczkaProject/AddMedicine/">
             <ButtonAdd>DODAJ</ButtonAdd>
           </Link>
         )}

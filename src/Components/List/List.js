@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   padding-top: 50px;
 `;
 
-const List = ({ medicines, handle }) => {
+const List = ({ medicines }) => {
   const currentMedicines = medicines.filter(
     (currentMedicine) => currentMedicine.show === true,
   );
@@ -23,8 +23,6 @@ const List = ({ medicines, handle }) => {
           name={medicine.name}
           amount={medicine.amount}
           date={medicine.date}
-          remind={medicine.remind}
-          handle={handle}
         />
       ))}
     </Wrapper>
@@ -34,14 +32,13 @@ const List = ({ medicines, handle }) => {
 List.propTypes = {
   medicines: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.string,
       name: PropTypes.string,
-      amount: PropTypes.string,
+      amount: PropTypes.number,
       date: PropTypes.string,
-      remind: PropTypes.bool,
+      show: PropTypes.bool,
     }),
   ).isRequired,
-  handle: PropTypes.func.isRequired,
 };
 
 export default List;

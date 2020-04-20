@@ -26,7 +26,6 @@ const Label = ({
   value,
   onChange,
   children,
-  checked,
   autoComplete,
   minAmount,
   minDate,
@@ -37,7 +36,6 @@ const Label = ({
       <Inputs
         type={type}
         id={name}
-        checked={checked}
         placeholder={placeholder}
         autoComplete={autoComplete}
         value={value}
@@ -56,7 +54,6 @@ Label.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   children: PropTypes.string.isRequired,
-  checked: PropTypes.bool,
   autoComplete: PropTypes.string,
   minAmount: PropTypes.string,
   minDate: PropTypes.string,
@@ -65,7 +62,6 @@ Label.propTypes = {
 Label.defaultProps = {
   placeholder: '',
   value: '',
-  checked: false,
   autoComplete: 'on',
   minAmount: '1',
   minDate: '',

@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 import AppContext from 'context';
 import List from 'Components/List/List';
 import Link from 'Styled/Link';
+import Search from '../../Components/Search/Search';
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,9 +38,15 @@ const Medicine = () => (
   <AppContext.Consumer>
     {(context) => (
       <Wrapper>
-        <Title css="color: red">Apteczka</Title>
+        <Title>Apteczka</Title>
         {context.medicines.length > 0 ? (
-          <List medicines={context.medicines} />
+          <>
+            {/* <Search
+              medicines={context.medicines}
+              showSearchMedicine={context.showSearchMedicine}
+            /> */}
+            <List medicines={context.medicines} handle={context.handle} />
+          </>
         ) : (
           <Empty>Brak leków</Empty>
         )}
