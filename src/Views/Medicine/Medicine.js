@@ -4,6 +4,7 @@ import axios from 'axios';
 // import AppContext from 'context';
 import List from 'Components/List/List';
 import Link from 'Styled/Link';
+import Error from 'Views/Error/Error';
 // import Search from '../../Components/Search/Search';
 
 const Wrapper = styled.div`
@@ -101,17 +102,23 @@ class Medicine extends React.Component {
 
   render() {
     return (
-      <Wrapper>
-        <Title>Apteczka</Title>
-        {this.state.medicines.length > 0 ? (
-          <List medicines={this.state.medicines} />
+      <>
+        {this.state.response ? (
+          <Wrapper>
+            <Title>Apteczka</Title>
+            {this.state.medicines.length > 0 ? (
+              <List medicines={this.state.medicines} />
+            ) : (
+              <Empty>Brak leków</Empty>
+            )}
+            <ButtonAddNew>
+              <Link to="/ApteczkaProject/addMedicine">Dodaj nowy lek</Link>
+            </ButtonAddNew>
+          </Wrapper>
         ) : (
-          <Empty>Brak leków</Empty>
+          <Error>Sorry, databse is down.</Error>
         )}
-        <ButtonAddNew>
-          <Link to="/ApteczkaProject/addMedicine">Dodaj nowy lek</Link>
-        </ButtonAddNew>
-      </Wrapper>
+      </>
     );
   }
 }
