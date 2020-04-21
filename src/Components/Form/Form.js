@@ -45,7 +45,7 @@ class Form extends React.Component {
   state = {
     nameMedicine: '',
     amountMedicine: '',
-    dateMedicine: this.props.today,
+    dateMedicine: new Date().toISOString().slice(0, 10),
   };
 
   // Walidacja inputów
@@ -64,7 +64,7 @@ class Form extends React.Component {
         [e.target.id]: e.target.value,
       });
     } else {
-      const nowDate = new Date(this.props.today);
+      const nowDate = new Date(this.state.dateMedicine);
       const currentDate = new Date(e.target.value);
       if (currentDate >= nowDate) {
         this.setState({

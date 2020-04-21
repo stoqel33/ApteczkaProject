@@ -79,15 +79,10 @@ class FormEdit extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.props.url);
     axios
-      .get(
-        'http://localhost:3000/ApteczkaProject/editMedicine/' + this.props.url.params.id,
-      )
+      .get('http://localhost:3000/ApteczkaProject/editMedicine/' + this.props.url)
 
       .then((resp) => {
-        console.log('12312');
-
         this.setState({
           id: resp.data._id,
           nameMedicine: resp.data.name,
@@ -97,7 +92,7 @@ class FormEdit extends React.Component {
       });
   }
 
-  // Obsługa dodania leku
+  // Obsługa edycji leku
   handleClickSubmit = () => {
     const { id, nameMedicine, amountMedicine, dateMedicine } = this.state;
     const nameMed = nameMedicine.charAt(0).toUpperCase() + nameMedicine.slice(1);
@@ -150,7 +145,7 @@ class FormEdit extends React.Component {
           </>
         </FormAdd>
         {this.state.nameMedicine.length > 2 && this.state.amountMedicine.length > 0 ? (
-          <Link to="/ApteczkaProject/editMedicine" onClick={this.handleClickSubmit}>
+          <Link to="/ApteczkaProject" onClick={this.handleClickSubmit}>
             <ButtonAdd>Zapisz zmiany</ButtonAdd>
           </Link>
         ) : (

@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import AppContext from 'context';
+import axios from 'axios';
+// import AppContext from 'context';
 import List from 'Components/List/List';
 import Link from 'Styled/Link';
-import Search from '../../Components/Search/Search';
+// import Search from '../../Components/Search/Search';
 
 const Wrapper = styled.div`
   display: flex;
@@ -34,19 +35,76 @@ const ButtonAddNew = styled.button`
   border: none;
 `;
 
-const Medicine = () => (
-  <AppContext.Consumer>
-    {(context) => (
+class Medicine extends React.Component {
+  state = {
+    response: true,
+    id: '',
+    today: new Date().toISOString().slice(0, 10),
+    medicines: [],
+  };
+
+  componentDidMount() {
+    console.log('mout');
+    axios
+      .get('http://localhost:3000/ApteczkaProject')
+      .then((resp) => {
+        console.log('przed if');
+
+        if (resp.data.length > 0) {
+          console.log('w if');
+
+          this.setState({
+            medicines: resp.data.map((medicine) => ({
+              id: medicine._id,
+              name: medicine.name,
+              amount: medicine.amount,
+              date: medicine.expiryDate.slice(0, 10),
+              show: true,
+            })),
+          });
+        }
+      })
+      .catch((err) => {
+        console.log('Cannot get response database ' + err);
+        this.setState({
+          response: false,
+        });
+      });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(nextState);
+    if (nextState.response === true) return true;
+  }
+  componentDidUpdate(prevProps, prevState) {
+    console.log('update');
+
+    console.log(prevState.medicines.length);
+    console.log(this.state.medicines.length);
+
+    if (prevState.medicines.length !== this.state.medicines.length) {
+      console.log('w update po if');
+
+      axios.get('http://localhost:3000/ApteczkaProject').then((resp) => {
+        this.setState({
+          medicines: resp.data.map((medicine) => ({
+            id: medicine._id,
+            name: medicine.name,
+            amount: medicine.amount,
+            date: medicine.expiryDate.slice(0, 10),
+            show: true,
+          })),
+        });
+      });
+    }
+  }
+
+  render() {
+    return (
       <Wrapper>
         <Title>Apteczka</Title>
-        {context.medicines.length > 0 ? (
-          <>
-            {/* <Search
-              medicines={context.medicines}
-              showSearchMedicine={context.showSearchMedicine}
-            /> */}
-            <List medicines={context.medicines} handle={context.handle} />
-          </>
+        {this.state.medicines.length > 0 ? (
+          <List medicines={this.state.medicines} />
         ) : (
           <Empty>Brak leków</Empty>
         )}
@@ -54,8 +112,7 @@ const Medicine = () => (
           <Link to="/ApteczkaProject/addMedicine">Dodaj nowy lek</Link>
         </ButtonAddNew>
       </Wrapper>
-    )}
-  </AppContext.Consumer>
-);
-
+    );
+  }
+}
 export default Medicine;
