@@ -1,7 +1,7 @@
 import React from 'react';
 // import AppContext from 'context';
 import axios from 'axios';
-import Form from 'Components/Form/Form';
+import FormAdd from 'Components/Form/FormAdd';
 
 class AddMedicine extends React.Component {
   addMedicine = (name, amount, date) => {
@@ -23,7 +23,7 @@ class AddMedicine extends React.Component {
   render() {
     return (
       <>
-        <Form addMedicine={this.addMedicine} />
+        <FormAdd match={this.props} />
         {console.log(this.props)};
       </>
     );

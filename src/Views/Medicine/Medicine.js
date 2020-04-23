@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import axios from 'axios';
-// import AppContext from 'context';
-import List from 'Components/List/List';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchMedicines } from 'Actions';
 import Link from 'Styled/Link';
-import Error from 'Views/Error/Error';
-// import Search from '../../Components/Search/Search';
+import MedicineItem from 'Components/MedicineItem/MedicineItem';
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,89 +36,64 @@ const ButtonAddNew = styled.button`
 `;
 
 class Medicine extends React.Component {
-  state = {
-    response: true,
-    id: '',
-    today: new Date().toISOString().slice(0, 10),
-    medicines: [],
-  };
-
   componentDidMount() {
-    console.log('mout');
-    axios
-      .get('http://localhost:3000/ApteczkaProject')
-      .then((resp) => {
-        console.log('przed if');
-
-        if (resp.data.length > 0) {
-          console.log('w if');
-
-          this.setState({
-            medicines: resp.data.map((medicine) => ({
-              id: medicine._id,
-              name: medicine.name,
-              amount: medicine.amount,
-              date: medicine.expiryDate.slice(0, 10),
-              show: true,
-            })),
-          });
-        }
-      })
-      .catch((err) => {
-        console.log('Cannot get response database ' + err);
-        this.setState({
-          response: false,
-        });
-      });
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log(nextState);
-    if (nextState.response === true) return true;
-  }
-  componentDidUpdate(prevProps, prevState) {
-    console.log('update');
-
-    console.log(prevState.medicines.length);
-    console.log(this.state.medicines.length);
-
-    if (prevState.medicines.length !== this.state.medicines.length) {
-      console.log('w update po if');
-
-      axios.get('http://localhost:3000/ApteczkaProject').then((resp) => {
-        this.setState({
-          medicines: resp.data.map((medicine) => ({
-            id: medicine._id,
-            name: medicine.name,
-            amount: medicine.amount,
-            date: medicine.expiryDate.slice(0, 10),
-            show: true,
-          })),
-        });
-      });
-    }
+    const { fetchMed } = this.props;
+    fetchMed();
   }
 
   render() {
+    const { medicines } = this.props;
     return (
       <>
-        {this.state.response ? (
-          <Wrapper>
-            <Title>Apteczka</Title>
-            {this.state.medicines.length > 0 ? (
-              <List medicines={this.state.medicines} />
-            ) : (
-              <Empty>Brak leków</Empty>
-            )}
-            <ButtonAddNew>
-              <Link to="/ApteczkaProject/addMedicine">Dodaj nowy lek</Link>
-            </ButtonAddNew>
-          </Wrapper>
-        ) : (
-          <Error>Sorry, databse is down.</Error>
-        )}
+        {/* {this.state.response ? ( */}
+        <Wrapper>
+          <Title>Apteczka</Title>
+          {medicines.length > 0 ? (
+            medicines.map(({ name, amount, expiryDate, _id }) => (
+              <MedicineItem
+                key={_id}
+                id={_id}
+                name={name}
+                amount={amount}
+                date={expiryDate}
+              />
+            ))
+          ) : (
+            <Empty>Brak leków</Empty>
+          )}
+          <ButtonAddNew>
+            <Link to="/ApteczkaProject/addMedicine">Dodaj nowy lek</Link>
+          </ButtonAddNew>
+        </Wrapper>
+        {/* ) : ( */}
+        {/* <Error>Sorry, databse is down.</Error> */}
+        {/* )} */}
       </>
     );
   }
 }
-export default Medicine;
+
+Medicine.propTypes = {
+  medicines: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
+      expiryDate: PropTypes.string.isRequired,
+      // show: PropTypes.bool,
+    }),
+  ),
+};
+
+Medicine.defaultProps = {
+  medicines: [],
+};
+
+const mapStateToProps = (state) => {
+  const { medicines } = state;
+  return { medicines };
+};
+const mapDispatchToProps = (dispatch) => ({
+  fetchMed: () => dispatch(fetchMedicines()),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Medicine);

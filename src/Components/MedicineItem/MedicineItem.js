@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
 import Link from 'Styled/Link';
+import { connect } from 'react-redux';
+import { removeMedicine } from 'Actions';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px 40px;
+  padding: 20px 50px;
   margin-bottom: 20px;
   background-color: rgba(245, 245, 245, 0.3);
   border-radius: 10%;
@@ -34,7 +36,7 @@ const Value = styled.span`
   font-weight: 700;
 `;
 
-const Item = ({ id, name, amount, date }) => {
+const MedicineItem = ({ id, name, amount, date, removeMed }) => {
   return (
     <Wrapper>
       <TitleName>
@@ -49,15 +51,22 @@ const Item = ({ id, name, amount, date }) => {
       <Link to={`/ApteczkaProject/editMedicine/${id}`}>
         <span>edytuj</span>
       </Link>
+      <button onClick={() => removeMed(id)}>Usun</button>
     </Wrapper>
   );
 };
 
-Item.propTypes = {
+MedicineItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   amount: PropTypes.number.isRequired,
   date: PropTypes.string.isRequired,
+  removeMed: PropTypes.func.isRequired,
 };
 
-export default Item;
+const mapDispatchToProps = (dispatch) => ({
+  removeMed: (id) => dispatch(removeMedicine(id)),
+});
+
+export default connect(null, mapDispatchToProps)(MedicineItem);
+// export default Item;
