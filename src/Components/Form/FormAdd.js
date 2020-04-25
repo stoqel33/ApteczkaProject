@@ -108,6 +108,7 @@ const FormAdd = ({ addMed }) => {
           return errors;
         }}
         onSubmit={(values) => {
+          values.name = values.name.charAt(0).toUpperCase() + values.name.slice(1);
           addMed(values);
           backToHome();
         }}
