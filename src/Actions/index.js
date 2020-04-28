@@ -18,6 +18,7 @@ export const fetchMedicines = () => (dispatch) => {
       dispatch({ type: 'FETCH_FAILURE' });
     });
 };
+
 export const changeMedicine = (medicine, id) => (dispatch) => {
   dispatch({ type: 'CHANGE_MED_REQUEST' });
   return axios
@@ -29,6 +30,7 @@ export const changeMedicine = (medicine, id) => (dispatch) => {
         type: 'CHANGE_MED_SUCCESS',
         payload: {
           data,
+          id,
         },
       });
     })

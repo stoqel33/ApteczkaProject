@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-underscore-dangle */
 const initialState = {
   isLoading: false,
 };
@@ -6,7 +8,6 @@ const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'FETCH_REQUEST':
       return {
-        ...state,
         isLoading: true,
       };
     case 'FETCH_SUCCESS':
@@ -17,14 +18,25 @@ const rootReducer = (state = initialState, action) => {
     case 'ADD_MED_SUCCESS':
       return {
         medicines: [...state.medicines, action.payload.data],
-        isLoading: false,
       };
+    case 'CHANGE_MED_SUCCESS': {
+      const newState = { ...state };
+      newState.medicines.forEach((medicine) => {
+        if (medicine._id === action.payload.id) {
+          medicine.name = action.payload.data.name;
+          medicine.amount = action.payload.data.amount;
+          medicine.expiryDate = action.payload.data.expiryDate;
+        }
+      });
+      return {
+        medicines: newState.medicines,
+      };
+    }
     case 'REMOVE_MED_SUCCESS':
       return {
         medicines: [
-          ...state.medicines.filter((medicine) => medicine.id !== action.payload.id),
+          ...state.medicines.filter((medicine) => medicine._id !== action.payload.id),
         ],
-        isLoading: false,
       };
     default:
       return state;
