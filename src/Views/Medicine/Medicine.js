@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
@@ -42,32 +43,36 @@ class Medicine extends React.Component {
   }
 
   render() {
-    const { medicines } = this.props;
+    const { medicines, isLoading, response } = this.props;
     return (
       <>
-        {/* {this.state.response ? ( */}
-        <Wrapper>
-          <Title>Apteczka</Title>
-          {medicines.length > 0 ? (
-            medicines.map(({ name, amount, expiryDate, _id }) => (
-              <MedicineItem
-                key={_id}
-                id={_id}
-                name={name}
-                amount={amount}
-                date={expiryDate}
-              />
-            ))
+        {response ? (
+          isLoading ? (
+            <h1>Wczytywanie</h1>
           ) : (
-            <Empty>Brak leków</Empty>
-          )}
-          <ButtonAddNew>
-            <Link to="/ApteczkaProject/addMedicine">Dodaj nowy lek</Link>
-          </ButtonAddNew>
-        </Wrapper>
-        {/* ) : ( */}
-        {/* <Error>Sorry, databse is down.</Error> */}
-        {/* )} */}
+            <Wrapper>
+              <Title>Apteczka</Title>
+              {medicines.length > 0 ? (
+                medicines.map(({ name, amount, expiryDate, _id }) => (
+                  <MedicineItem
+                    key={_id}
+                    id={_id}
+                    name={name}
+                    amount={amount}
+                    date={expiryDate}
+                  />
+                ))
+              ) : (
+                <Empty>Brak leków</Empty>
+              )}
+              <ButtonAddNew>
+                <Link to="/ApteczkaProject/addMedicine">Dodaj nowy lek</Link>
+              </ButtonAddNew>
+            </Wrapper>
+          )
+        ) : (
+          <h1>Sorry, database is down</h1>
+        )}
       </>
     );
   }
@@ -80,7 +85,6 @@ Medicine.propTypes = {
       name: PropTypes.string.isRequired,
       amount: PropTypes.number.isRequired,
       expiryDate: PropTypes.string.isRequired,
-      // show: PropTypes.bool,
     }),
   ),
 };
@@ -88,10 +92,9 @@ Medicine.propTypes = {
 Medicine.defaultProps = {
   medicines: [],
 };
-
 const mapStateToProps = (state) => {
-  const { medicines } = state;
-  return { medicines };
+  const { medicines, isLoading, response } = state;
+  return { medicines, isLoading, response };
 };
 const mapDispatchToProps = (dispatch) => ({
   fetchMed: () => dispatch(fetchMedicines()),

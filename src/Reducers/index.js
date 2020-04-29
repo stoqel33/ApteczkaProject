@@ -2,6 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 const initialState = {
   isLoading: false,
+  response: true,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -9,15 +10,18 @@ const rootReducer = (state = initialState, action) => {
     case 'FETCH_REQUEST':
       return {
         isLoading: true,
+        response: true,
       };
     case 'FETCH_SUCCESS':
       return {
         medicines: [...action.payload.data],
         isLoading: false,
+        response: true,
       };
     case 'ADD_MED_SUCCESS':
       return {
         medicines: [...state.medicines, action.payload.data],
+        response: true,
       };
     case 'CHANGE_MED_SUCCESS': {
       const newState = { ...state };
@@ -30,6 +34,7 @@ const rootReducer = (state = initialState, action) => {
       });
       return {
         medicines: newState.medicines,
+        response: true,
       };
     }
     case 'REMOVE_MED_SUCCESS':
@@ -37,7 +42,13 @@ const rootReducer = (state = initialState, action) => {
         medicines: [
           ...state.medicines.filter((medicine) => medicine._id !== action.payload.id),
         ],
+        response: true,
       };
+    case 'FETCH_FAILURE': {
+      return {
+        response: false,
+      };
+    }
     default:
       return state;
   }
