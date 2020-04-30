@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/ApteczkaProject/static/js/main.9f94a969.chunk.js",
-    "main.js.map": "/ApteczkaProject/static/js/main.9f94a969.chunk.js.map",
+    "main.js": "/ApteczkaProject/static/js/main.abcec3b0.chunk.js",
+    "main.js.map": "/ApteczkaProject/static/js/main.abcec3b0.chunk.js.map",
     "runtime-main.js": "/ApteczkaProject/static/js/runtime-main.81ce0c0d.js",
     "runtime-main.js.map": "/ApteczkaProject/static/js/runtime-main.81ce0c0d.js.map",
     "static/js/2.d1750b58.chunk.js": "/ApteczkaProject/static/js/2.d1750b58.chunk.js",
     "static/js/2.d1750b58.chunk.js.map": "/ApteczkaProject/static/js/2.d1750b58.chunk.js.map",
     "index.html": "/ApteczkaProject/index.html",
-    "precache-manifest.b7c6fa0af852188693d99193ff9c7232.js": "/ApteczkaProject/precache-manifest.b7c6fa0af852188693d99193ff9c7232.js",
+    "precache-manifest.a2b86f9c7ad2534b013cab3e02143e7e.js": "/ApteczkaProject/precache-manifest.a2b86f9c7ad2534b013cab3e02143e7e.js",
     "service-worker.js": "/ApteczkaProject/service-worker.js",
     "static/js/2.d1750b58.chunk.js.LICENSE.txt": "/ApteczkaProject/static/js/2.d1750b58.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.81ce0c0d.js",
     "static/js/2.d1750b58.chunk.js",
-    "static/js/main.9f94a969.chunk.js"
+    "static/js/main.abcec3b0.chunk.js"
   ]
 }
