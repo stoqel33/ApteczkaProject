@@ -42,6 +42,14 @@ class Medicine extends React.Component {
     fetchMed();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { refresh } = this.props;
+    const { fetchMed } = this.props;
+    if (refresh !== prevProps.refresh) {
+      fetchMed();
+    }
+  }
+
   render() {
     const { medicines, isLoading, response } = this.props;
     return (
@@ -93,8 +101,8 @@ Medicine.defaultProps = {
   medicines: [],
 };
 const mapStateToProps = (state) => {
-  const { medicines, isLoading, response } = state;
-  return { medicines, isLoading, response };
+  const { medicines, isLoading, response, refresh } = state;
+  return { medicines, isLoading, response, refresh };
 };
 const mapDispatchToProps = (dispatch) => ({
   fetchMed: () => dispatch(fetchMedicines()),

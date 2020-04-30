@@ -42,4 +42,16 @@ router.route('/editMedicine/update/:id').post((req, res) => {
     .catch((err) => res.status(400).json(`Error ${err}`));
 });
 
+router.route('/takePill/:id').put((req, res) => {
+  Medicines.findById(req.params.id)
+    .then((medicine) => {
+      medicine.amount -= 1;
+      medicine
+        .save()
+        .then(() => res.json(medicine))
+        .catch((err) => res.status(400).json(`Error${err}`));
+    })
+    .catch((err) => res.status(400).json(`Error ${err}`));
+});
+
 module.exports = router;

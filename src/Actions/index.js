@@ -56,6 +56,19 @@ export const addMedicine = (medicine) => (dispatch) => {
     });
 };
 
+export const removeOneMedicine = (id) => (dispatch) => {
+  dispatch({ type: 'REMOVE_ONE_MED_REQUEST' });
+  axios.put(`http://localhost:3000/ApteczkaProject/takePill/${id}`).then(({ data }) => {
+    dispatch({
+      type: 'REMOVE_ONE_MED_SUCCESS',
+      payload: {
+        data,
+        id,
+      },
+    });
+  });
+};
+
 export const removeMedicine = (id) => (dispatch) => {
   dispatch({ type: 'REMOVE_MED_REQUEST' });
   axios.delete(`http://localhost:3000/ApteczkaProject/editMedicine/${id}`).then(() => {

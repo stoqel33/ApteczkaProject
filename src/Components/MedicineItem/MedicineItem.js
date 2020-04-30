@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import { connect } from 'react-redux';
+import { removeOneMedicine } from 'Actions';
 import PropTypes from 'prop-types';
 import Link from 'Styled/Link';
-import { connect } from 'react-redux';
-import { removeMedicine } from 'Actions';
 
 const Wrapper = styled.div`
   display: flex;
@@ -35,8 +35,17 @@ const Value = styled.span`
   margin-left: 8px;
   font-weight: 700;
 `;
-
-const MedicineItem = ({ id, name, amount, date, removeMed }) => {
+const BtnDrug = styled.button`
+  font-size: 18px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+`;
+const Options = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
+const MedicineItem = ({ id, name, amount, date, takePill }) => {
   return (
     <Wrapper>
       <TitleName>
@@ -46,12 +55,22 @@ const MedicineItem = ({ id, name, amount, date, removeMed }) => {
         Ilość <Value>{amount}</Value>
       </Title>
       <Title>
-        Data ważności <Value>{date}</Value>
+        Data ważności <Value>{date.slice(0, 10)}</Value>
       </Title>
-      <Link to={`/ApteczkaProject/editMedicine/${id}`}>
-        <span>edytuj</span>
-      </Link>
-      <button onClick={() => removeMed(id)}>Usun</button>
+      <Options>
+        <Link to={`/ApteczkaProject/editMedicine/${id}`}>
+          <span>edytuj</span>
+        </Link>
+        <BtnDrug
+          onClick={() => {
+            if (amount > 0) {
+              takePill(id);
+            }
+          }}
+        >
+          Zażyj
+        </BtnDrug>
+      </Options>
     </Wrapper>
   );
 };
@@ -61,12 +80,10 @@ MedicineItem.propTypes = {
   name: PropTypes.string.isRequired,
   amount: PropTypes.number.isRequired,
   date: PropTypes.string.isRequired,
-  removeMed: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  removeMed: (id) => dispatch(removeMedicine(id)),
+  takePill: (id) => dispatch(removeOneMedicine(id)),
 });
 
 export default connect(null, mapDispatchToProps)(MedicineItem);
-// export default Item;
