@@ -43,10 +43,13 @@ class Medicine extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { refresh } = this.props;
-    const { fetchMed } = this.props;
-    if (refresh !== prevProps.refresh) {
-      fetchMed();
+    const { response } = this.props;
+    if (response === true) {
+      const { refresh } = this.props;
+      const { fetchMed } = this.props;
+      if (refresh !== prevProps.refresh) {
+        fetchMed();
+      }
     }
   }
 
