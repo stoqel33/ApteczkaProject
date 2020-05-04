@@ -1,7 +1,10 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import styled from 'styled-components/macro';
 import { Formik, Form } from 'formik';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { changeMedicine, removeMedicine } from 'Actions';
 
@@ -54,7 +57,7 @@ const WrapperMedicine = styled.div`
   background: rgba(245, 245, 245, 0.3);
 `;
 const ButtonAdd = styled.button`
-  width: 250px;
+  width: 100%;
   height: 50px;
   margin-top: 20px;
   letter-spacing: 2px;
@@ -69,6 +72,12 @@ const ButtonAdd = styled.button`
   text-align: center;
   cursor: pointer;
 `;
+const ButtonRemove = styled(ButtonAdd)`
+  width: 200px;
+  line-height: 40px;
+  height: 40px;
+  font-size: 18px;
+`;
 
 const FormEdit = ({ medicine, changeMed, removeMed }) => {
   const today = new Date().toISOString().slice(0, 10);
@@ -78,7 +87,7 @@ const FormEdit = ({ medicine, changeMed, removeMed }) => {
   };
   return (
     <Wrapper>
-      <Title>Dodaj Lek</Title>
+      <Title>Edytuj Lek</Title>
       <Formik
         initialValues={{
           name: medicine[0].name,
@@ -105,6 +114,7 @@ const FormEdit = ({ medicine, changeMed, removeMed }) => {
           return errors;
         }}
         onSubmit={(values) => {
+          values.name = values.name.charAt(0).toUpperCase() + values.name.slice(1);
           changeMed(values, medicine[0]._id);
           backToHome();
         }}
@@ -124,7 +134,6 @@ const FormEdit = ({ medicine, changeMed, removeMed }) => {
                 {errors.name && touched.name && errors.name}
               </MedicineLabel>
             </WrapperMedicine>
-
             <WrapperMedicine>
               <MedicineLabel>
                 <TitleMed>Ilość</TitleMed>
@@ -139,7 +148,6 @@ const FormEdit = ({ medicine, changeMed, removeMed }) => {
                 {errors.amount && touched.amount && errors.amount}
               </MedicineLabel>
             </WrapperMedicine>
-
             <WrapperMedicine>
               <MedicineLabel>
                 <TitleMed>Data ważności</TitleMed>
@@ -152,22 +160,20 @@ const FormEdit = ({ medicine, changeMed, removeMed }) => {
                 {errors.date && touched.date && errors.date}
               </MedicineLabel>
             </WrapperMedicine>
-            <ButtonAdd
-              as={Link}
-              to="/ApteczkaProject"
-              onClick={() => {
-                removeMed(medicine[0]._id);
-                backToHome();
-              }}
-            >
-              Usuń lek
-            </ButtonAdd>
             <ButtonAdd type="submit" disabled={isSubmitting}>
               Zapisz i wyjdz
             </ButtonAdd>
           </Forms>
         )}
       </Formik>
+      <ButtonRemove
+        onClick={() => {
+          removeMed(medicine[0]._id);
+          backToHome();
+        }}
+      >
+        Usuń lek
+      </ButtonRemove>
     </Wrapper>
   );
 };
