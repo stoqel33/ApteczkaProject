@@ -14,4 +14,4 @@ NodeJS, ExpressJS
 
 ### Front-end JS Frameworks
 
-React
+React, Redux
