@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  margin-top: 20px;
+  margin: 30px 0;
   color: white;
 `;
 
@@ -35,7 +35,10 @@ const ButtonAddNew = styled.button`
   background-color: transparent;
   border: none;
 `;
-
+const Info = styled.h1`
+  padding-top: 150px;
+  text-align: center;
+`;
 class Medicine extends React.Component {
   componentDidMount() {
     const { fetchMed } = this.props;
@@ -45,8 +48,7 @@ class Medicine extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     const { response } = this.props;
     if (response === true) {
-      const { refresh } = this.props;
-      const { fetchMed } = this.props;
+      const { refresh, fetchMed } = this.props;
       if (refresh !== prevProps.refresh) {
         fetchMed();
       }
@@ -59,7 +61,7 @@ class Medicine extends React.Component {
       <>
         {response ? (
           isLoading ? (
-            <h1>Wczytywanie</h1>
+            <Info>Loading...</Info>
           ) : (
             <Wrapper>
               <Title>Apteczka</Title>
@@ -82,7 +84,7 @@ class Medicine extends React.Component {
             </Wrapper>
           )
         ) : (
-          <h1>Sorry, database is down</h1>
+          <Info>Sorry, database is down</Info>
         )}
       </>
     );
