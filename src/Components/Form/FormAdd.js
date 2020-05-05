@@ -1,4 +1,5 @@
 import React from 'react';
+import Proptypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
@@ -48,25 +49,21 @@ const TitleMed = styled.h2`
 const Forms = styled(Form)`
   width: 100%;
 `;
-
 const WrapperMedicine = styled.div`
   padding: 20px 5px;
   margin: 30px 0;
   background: rgba(245, 245, 245, 0.3);
 `;
-
 const ButtonAdd = styled.button`
   width: 250px;
   height: 50px;
-  margin-top: 20px;
+  margin: 20px auto 0 auto;
   letter-spacing: 2px;
   font-size: 20px;
   font-weight: 700;
   color: #a55f62;
   border: 2px solid black;
   background-color: black;
-  list-style: none;
-  text-decoration: none;
   line-height: 45px;
   text-align: center;
 `;
@@ -74,10 +71,10 @@ const ButtonAdd = styled.button`
 const FormAdd = ({ addMed }) => {
   const today = new Date().toISOString().slice(0, 10);
   const history = useHistory();
-
   const backToHome = () => {
     history.push('/ApteczkaProject');
   };
+
   return (
     <Wrapper>
       <Title>Dodaj Lek</Title>
@@ -108,6 +105,7 @@ const FormAdd = ({ addMed }) => {
           return errors;
         }}
         onSubmit={(values) => {
+          // eslint-disable-next-line no-param-reassign
           values.name = values.name.charAt(0).toUpperCase() + values.name.slice(1);
           addMed(values);
           backToHome();
@@ -125,8 +123,6 @@ const FormAdd = ({ addMed }) => {
                   autoComplete="off"
                   onChange={handleChange}
                   value={values.name}
-                  // value={this.state.nameMedicine}
-                  // onChange={this.handleInputChange}
                 />
                 {errors.name && touched.name && errors.name}
               </MedicineLabel>
@@ -140,11 +136,8 @@ const FormAdd = ({ addMed }) => {
                   type="number"
                   placeholder="0"
                   autoComplete="off"
-                  // minAmount="1"
                   onChange={handleChange}
                   value={values.amount}
-                  // value={this.state.amountMedicine}
-                  // onChange={this.handleInputChange}
                 />
                 {errors.amount && touched.amount && errors.amount}
               </MedicineLabel>
@@ -158,21 +151,22 @@ const FormAdd = ({ addMed }) => {
                   type="date"
                   onChange={handleChange}
                   value={values.date}
-                  // minDate={today}
-                  // value={this.state.dateMedicine}
-                  // onChange={this.handleInputChange}
                 />
                 {errors.date && touched.date && errors.date}
               </MedicineLabel>
             </WrapperMedicine>
             <ButtonAdd type="submit" disabled={isSubmitting}>
-              Submit
+              Dodaj lek
             </ButtonAdd>
           </Forms>
         )}
       </Formik>
     </Wrapper>
   );
+};
+
+FormAdd.propTypes = {
+  addMed: Proptypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

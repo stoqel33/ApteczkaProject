@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
-/* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { Formik, Form } from 'formik';
 import { useHistory } from 'react-router-dom';
@@ -176,6 +176,19 @@ const FormEdit = ({ medicine, changeMed, removeMed }) => {
       </ButtonRemove>
     </Wrapper>
   );
+};
+
+FormEdit.propTypes = {
+  medicine: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
+      expiryDate: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  changeMed: PropTypes.func.isRequired,
+  removeMed: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

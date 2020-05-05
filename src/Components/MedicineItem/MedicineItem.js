@@ -80,6 +80,7 @@ MedicineItem.propTypes = {
   name: PropTypes.string.isRequired,
   amount: PropTypes.number.isRequired,
   date: PropTypes.string.isRequired,
+  takePill: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
