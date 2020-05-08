@@ -35,9 +35,11 @@ const ButtonAddNew = styled.button`
   background-color: transparent;
   border: none;
 `;
-const Info = styled.h1`
-  padding-top: 150px;
-  text-align: center;
+const Info = styled.span`
+  display: flex;
+  position: fixed;
+  align-self: center;
+  padding-top: 0px;
 `;
 class Medicine extends React.Component {
   componentDidMount() {
@@ -45,7 +47,7 @@ class Medicine extends React.Component {
     fetchMed();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const { response } = this.props;
     if (response === true) {
       const { refresh, fetchMed } = this.props;
@@ -60,29 +62,26 @@ class Medicine extends React.Component {
     return (
       <>
         {response ? (
-          isLoading ? (
-            <Info>Loading...</Info>
-          ) : (
-            <Wrapper>
-              <Title>Apteczka</Title>
-              {medicines.length > 0 ? (
-                medicines.map(({ name, amount, expiryDate, _id }) => (
-                  <MedicineItem
-                    key={_id}
-                    id={_id}
-                    name={name}
-                    amount={amount}
-                    date={expiryDate}
-                  />
-                ))
-              ) : (
-                <Empty>Brak leków</Empty>
-              )}
-              <ButtonAddNew>
-                <Link to="/ApteczkaProject/addMedicine">Dodaj nowy lek</Link>
-              </ButtonAddNew>
-            </Wrapper>
-          )
+          <Wrapper>
+            <Title>Apteczka</Title>
+            {isLoading ? <Info>Loading...</Info> : null}
+            {medicines.length > 0 ? (
+              medicines.map(({ name, amount, expiryDate, _id }) => (
+                <MedicineItem
+                  key={_id}
+                  id={_id}
+                  name={name}
+                  amount={amount}
+                  date={expiryDate}
+                />
+              ))
+            ) : (
+              <Empty>Brak leków</Empty>
+            )}
+            <ButtonAddNew>
+              <Link to="/ApteczkaProject/addMedicine">Dodaj nowy lek</Link>
+            </ButtonAddNew>
+          </Wrapper>
         ) : (
           <Info>Sorry, database is down</Info>
         )}
@@ -100,10 +99,16 @@ Medicine.propTypes = {
       expiryDate: PropTypes.string.isRequired,
     }),
   ),
+  isLoading: PropTypes.bool,
+  response: PropTypes.bool.isRequired,
+  refresh: PropTypes.bool,
+  fetchMed: PropTypes.func.isRequired,
 };
 
 Medicine.defaultProps = {
   medicines: [],
+  isLoading: false,
+  refresh: false,
 };
 const mapStateToProps = (state) => {
   const { medicines, isLoading, response, refresh } = state;
