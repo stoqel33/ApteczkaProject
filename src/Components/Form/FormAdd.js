@@ -1,10 +1,11 @@
+/* eslint-disable no-restricted-syntax */
 import React from 'react';
 import Proptypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
 import { addMedicine } from 'Actions';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 const Wrapper = styled.div`
   display: flex;
@@ -68,13 +69,12 @@ const ButtonAdd = styled.button`
   text-align: center;
 `;
 
-const FormAdd = ({ addMed }) => {
+const FormAdd = ({ addMed, medicines }) => {
   const today = new Date().toISOString().slice(0, 10);
   const history = useHistory();
   const backToHome = () => {
     history.push('/ApteczkaProject');
   };
-
   return (
     <Wrapper>
       <Title>Dodaj Lek</Title>
@@ -87,6 +87,13 @@ const FormAdd = ({ addMed }) => {
         }}
         validate={(values) => {
           const errors = {};
+          for (const medicine of medicines) {
+            if (
+              medicine.name ===
+              values.name.charAt(0).toUpperCase() + values.name.slice(1)
+            )
+              errors.name = 'Masz już taki lek';
+          }
           if (!values.name) {
             errors.name = 'Wpisz nazwę leku!';
           } else if (/[^a-zA-Z]+/i.test(values.name)) {
@@ -102,6 +109,7 @@ const FormAdd = ({ addMed }) => {
           } else if (values.date < today) {
             errors.date = 'Nie możesz wprowadzić starego leku';
           }
+
           return errors;
         }}
         onSubmit={(values) => {
@@ -161,6 +169,9 @@ const FormAdd = ({ addMed }) => {
           </Forms>
         )}
       </Formik>
+      <ButtonAdd as={Link} to="/ApteczkaProject">
+        Wróć
+      </ButtonAdd>
     </Wrapper>
   );
 };
@@ -169,8 +180,13 @@ FormAdd.propTypes = {
   addMed: Proptypes.func.isRequired,
 };
 
+const mapStateToProps = (state) => {
+  const { medicines } = state;
+  return { medicines };
+};
+
 const mapDispatchToProps = (dispatch) => ({
   addMed: (medicine) => dispatch(addMedicine(medicine)),
 });
 
-export default connect(null, mapDispatchToProps)(FormAdd);
+export default connect(mapStateToProps, mapDispatchToProps)(FormAdd);
