@@ -6,6 +6,9 @@ import { connect } from 'react-redux';
 import { fetchMedicines } from 'Actions';
 import Link from 'Styled/Link';
 import MedicineItem from 'Components/MedicineItem/MedicineItem';
+import Search from 'Components/Search/Search';
+import MagnifyingGlass from 'Components/Icons/MagnifyingGlass.js';
+import BurgerMenu from 'Components/Icons/BurgerMenu.js';
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,12 +16,15 @@ const Wrapper = styled.div`
   min-height: 100vh;
   text-align: center;
 `;
-
 const Title = styled.h1`
   margin: 30px 0;
   color: white;
 `;
-
+const TitleWrap = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`;
 const Empty = styled.h1`
   margin: 50px 20px;
   padding: 100px 40px;
@@ -26,7 +32,9 @@ const Empty = styled.h1`
   border-radius: 10%;
   color: black;
 `;
-
+const Icon = styled.div`
+  top: 15px;
+`;
 const ButtonAddNew = styled.button`
   width: 100%;
   margin-bottom: 20px;
@@ -42,6 +50,9 @@ const Info = styled.span`
   padding-top: 0px;
 `;
 class Medicine extends React.Component {
+  state = {
+    search: false,
+  };
   componentDidMount() {
     const { fetchMed } = this.props;
     fetchMed();
@@ -57,15 +68,32 @@ class Medicine extends React.Component {
     }
   }
 
+  handleSearchToogle = () => {
+    this.setState((prevState) => ({
+      search: !prevState.search,
+    }));
+  };
+
   render() {
     const { medicines, isLoading, response } = this.props;
+
     return (
       <>
         {response ? (
           <Wrapper>
-            <Title>Apteczka</Title>
+            <TitleWrap>
+              <Icon onClick={() => this.handleSearchToogle()}>
+                <MagnifyingGlass />
+              </Icon>
+              <Title>Apteczka</Title>
+              <Icon>
+                <BurgerMenu />
+              </Icon>
+            </TitleWrap>
             {isLoading ? <Info>Loading...</Info> : null}
-            {medicines.length > 0 ? (
+            {this.state.search ? (
+              <Search medicines={medicines} />
+            ) : medicines.length > 0 ? (
               medicines.map(({ name, amount, expiryDate, _id }) => (
                 <MedicineItem
                   key={_id}
@@ -89,7 +117,6 @@ class Medicine extends React.Component {
     );
   }
 }
-
 Medicine.propTypes = {
   medicines: PropTypes.arrayOf(
     PropTypes.shape({
@@ -104,7 +131,6 @@ Medicine.propTypes = {
   refresh: PropTypes.bool,
   fetchMed: PropTypes.func.isRequired,
 };
-
 Medicine.defaultProps = {
   medicines: [],
   isLoading: false,
