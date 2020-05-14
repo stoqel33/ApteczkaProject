@@ -151,6 +151,7 @@ const FormEdit = ({ medicine, changeMed, removeMed }) => {
             <WrapperMedicine>
               <MedicineLabel>
                 <TitleMed>Data ważności</TitleMed>
+                {values.date < today ? <span>Lek jest przeterminowany!</span> : null}
                 <Input
                   name="date"
                   type="date"

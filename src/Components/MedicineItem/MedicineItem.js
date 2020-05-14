@@ -13,11 +13,12 @@ const Wrapper = styled.div`
   background-color: rgba(245, 245, 245, 0.3);
   border-radius: 10%;
 
+  transition: 1s;
+
   &:last-child {
     margin-bottom: 30px;
   }
 `;
-
 const Title = styled.span`
   font-size: 18px;
   margin-bottom: 7px;
@@ -26,14 +27,13 @@ const Title = styled.span`
     margin-bottom: 0;
   }
 `;
-
 const TitleName = styled(Title)`
   font-size: 25px;
 `;
-
 const Value = styled.span`
   margin-left: 8px;
   font-weight: 700;
+  display: inline-block;
 `;
 const BtnDrug = styled.button`
   font-size: 18px;
@@ -45,7 +45,11 @@ const Options = styled.div`
   display: flex;
   justify-content: space-evenly;
 `;
-const MedicineItem = ({ id, name, amount, date, takePill }) => {
+const MedicineItem = ({ id, name, amount, date, takePill, today }) => {
+  const handleTakeMedicine = () => {
+    if (amount > 0) takePill(id);
+  };
+
   return (
     <Wrapper>
       <TitleName>
@@ -55,21 +59,14 @@ const MedicineItem = ({ id, name, amount, date, takePill }) => {
         Ilość <Value>{amount}</Value>
       </Title>
       <Title>
-        Data ważności <Value>{date.slice(0, 10)}</Value>
+        Data ważności <Value>{date.slice(0, 10)} </Value>
+        {date < today ? <span style={{ color: 'white' }}>!!!</span> : null}
       </Title>
       <Options>
         <Link to={`/ApteczkaProject/editMedicine/${id}`}>
           <span>edytuj</span>
         </Link>
-        <BtnDrug
-          onClick={() => {
-            if (amount > 0) {
-              takePill(id);
-            }
-          }}
-        >
-          Zażyj
-        </BtnDrug>
+        <BtnDrug onClick={handleTakeMedicine}>Zażyj</BtnDrug>
       </Options>
     </Wrapper>
   );
@@ -81,6 +78,7 @@ MedicineItem.propTypes = {
   amount: PropTypes.number.isRequired,
   date: PropTypes.string.isRequired,
   takePill: PropTypes.func.isRequired,
+  today: PropTypes.string.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
