@@ -4,13 +4,35 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import FormEdit from 'Components/Form/FormEdit';
 
-const EditMedicine = ({ medicine }) => {
-  return (
-    <>
-      <FormEdit medicine={medicine} />
-    </>
-  );
-};
+class EditMedicine extends React.Component {
+  state = {
+    deleteQuery: false,
+  };
+
+  handleEnableDelete = () => {
+    this.setState({
+      deleteQuery: true,
+    });
+  };
+
+  handleDisableDelete = () => {
+    this.setState({
+      deleteQuery: false,
+    });
+  };
+  render() {
+    return (
+      <>
+        <FormEdit
+          medicine={this.props.medicine}
+          deleteQuery={this.state.deleteQuery}
+          handleEnableDelete={this.handleEnableDelete}
+          handleDisableDelete={this.handleDisableDelete}
+        />
+      </>
+    );
+  }
+}
 
 EditMedicine.propTypes = {
   medicine: PropTypes.arrayOf(

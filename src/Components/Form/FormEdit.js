@@ -13,6 +13,12 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+
+  @media screen and (min-width: 1000px) {
+    position: relative;
+    margin: 0 auto;
+    width: 70%;
+  }
 `;
 const Title = styled.h1`
   margin: 20px 0;
@@ -78,12 +84,50 @@ const ButtonRemove = styled(ButtonAdd)`
   height: 40px;
   font-size: 18px;
 `;
+const RemoveWrap = styled.div`
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.6);
+`;
+const RemoveTitle = styled.h1`
+  margin: 30% 20px;
+  color: white;
 
-const FormEdit = ({ medicine, changeMed, removeMed }) => {
+  @media screen and (min-width: 768px) {
+    margin: 15% 0;
+  }
+`;
+const RemoveButton = styled.button`
+  margin: 0 20px;
+  width: 35%;
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+  background-color: #5f0745;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+`;
+
+const FormEdit = ({
+  medicine,
+  changeMed,
+  removeMed,
+  deleteQuery,
+  handleEnableDelete,
+  handleDisableDelete,
+}) => {
   const today = new Date().toISOString().slice(0, 10);
   const history = useHistory();
   const backToHome = () => {
     history.push('/ApteczkaProject');
+  };
+  const handleRemove = () => {
+    removeMed(medicine[0]._id);
+    backToHome();
   };
   return (
     <Wrapper>
@@ -167,14 +211,14 @@ const FormEdit = ({ medicine, changeMed, removeMed }) => {
           </Forms>
         )}
       </Formik>
-      <ButtonRemove
-        onClick={() => {
-          removeMed(medicine[0]._id);
-          backToHome();
-        }}
-      >
-        Usuń lek
-      </ButtonRemove>
+      {deleteQuery ? (
+        <RemoveWrap>
+          <RemoveTitle>Usunąć lek {medicine[0].name}?</RemoveTitle>
+          <RemoveButton onClick={handleRemove}>TAK</RemoveButton>
+          <RemoveButton onClick={handleDisableDelete}>NIE</RemoveButton>
+        </RemoveWrap>
+      ) : null}
+      <ButtonRemove onClick={handleEnableDelete}>Usuń lek</ButtonRemove>
     </Wrapper>
   );
 };
@@ -190,6 +234,9 @@ FormEdit.propTypes = {
   ).isRequired,
   changeMed: PropTypes.func.isRequired,
   removeMed: PropTypes.func.isRequired,
+  deleteQuery: PropTypes.bool.isRequired,
+  handleEnableDelete: PropTypes.func.isRequired,
+  handleDisableDelete: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
