@@ -26,7 +26,7 @@ const TitleWrap = styled.div`
   align-items: center;
 `;
 const Empty = styled.h1`
-  margin: 50px 20px;
+  margin: 50px 10px;
   padding: 100px 40px;
   background-color: rgba(245, 245, 245, 0.3);
   border-radius: 10%;
@@ -34,6 +34,7 @@ const Empty = styled.h1`
 `;
 const Icon = styled.div`
   top: 15px;
+  cursor: pointer;
 `;
 const ButtonAddNew = styled.button`
   width: 100%;
@@ -49,9 +50,28 @@ const Info = styled.span`
   align-self: center;
   padding-top: 0px;
 `;
+const MedicinesWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 0 auto;
+  @media screen and (min-width: 768px) {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  @media screen and (min-width: 1000px) {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+`;
 class Medicine extends React.Component {
   state = {
     search: false,
+    today: new Date().toISOString().slice(0, 10),
   };
   componentDidMount() {
     const { fetchMed } = this.props;
@@ -82,8 +102,8 @@ class Medicine extends React.Component {
         {response ? (
           <Wrapper>
             <TitleWrap>
-              <Icon onClick={() => this.handleSearchToogle()}>
-                <MagnifyingGlass />
+              <Icon onClick={this.handleSearchToogle}>
+                {medicines.length > 0 ? <MagnifyingGlass /> : null}
               </Icon>
               <Title>Apteczka</Title>
               <Icon>
@@ -92,19 +112,28 @@ class Medicine extends React.Component {
             </TitleWrap>
             {isLoading ? <Info>Loading...</Info> : null}
             {this.state.search ? (
-              <Search medicines={medicines} />
-            ) : medicines.length > 0 ? (
-              medicines.map(({ name, amount, expiryDate, _id }) => (
-                <MedicineItem
-                  key={_id}
-                  id={_id}
-                  name={name}
-                  amount={amount}
-                  date={expiryDate}
-                />
-              ))
+              <Search
+                medicines={medicines}
+                today={this.state.today}
+                toggle={this.handleSearchToogle}
+              />
             ) : (
-              <Empty>Brak leków</Empty>
+              <MedicinesWrap>
+                {medicines.length > 0 ? (
+                  medicines.map(({ name, amount, expiryDate, _id }) => (
+                    <MedicineItem
+                      key={_id}
+                      id={_id}
+                      name={name}
+                      amount={amount}
+                      date={expiryDate}
+                      today={this.state.today}
+                    />
+                  ))
+                ) : (
+                  <Empty>Brak leków</Empty>
+                )}
+              </MedicinesWrap>
             )}
             <ButtonAddNew>
               <Link to="/ApteczkaProject/addMedicine">Dodaj nowy lek</Link>
