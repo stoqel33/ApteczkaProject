@@ -7,6 +7,7 @@ import { Formik, Form } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { changeMedicine, removeMedicine } from 'Actions';
+import Bin from 'Components/Icons/Bin';
 
 const Wrapper = styled.div`
   display: flex;
@@ -78,11 +79,12 @@ const ButtonAdd = styled.button`
   text-align: center;
   cursor: pointer;
 `;
-const ButtonRemove = styled(ButtonAdd)`
-  width: 200px;
-  line-height: 40px;
-  height: 40px;
-  font-size: 18px;
+const ButtonRemove = styled.button`
+  position: absolute;
+  margin-bottom: 50px;
+  bottom: 0;
+  background-color: transparent;
+  border: none;
 `;
 const RemoveWrap = styled.div`
   display: block;
@@ -211,6 +213,7 @@ const FormEdit = ({
           </Forms>
         )}
       </Formik>
+      <ButtonAdd onClick={backToHome}>Wróć</ButtonAdd>
       {deleteQuery ? (
         <RemoveWrap>
           <RemoveTitle>Usunąć lek {medicine[0].name}?</RemoveTitle>
@@ -218,7 +221,9 @@ const FormEdit = ({
           <RemoveButton onClick={handleDisableDelete}>NIE</RemoveButton>
         </RemoveWrap>
       ) : null}
-      <ButtonRemove onClick={handleEnableDelete}>Usuń lek</ButtonRemove>
+      <ButtonRemove onClick={handleEnableDelete}>
+        <Bin />
+      </ButtonRemove>
     </Wrapper>
   );
 };
