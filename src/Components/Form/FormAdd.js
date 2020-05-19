@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import React from 'react';
 import Proptypes from 'prop-types';
 import styled from 'styled-components/macro';
@@ -12,6 +11,16 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+
+  @media screen and (min-width: 768px) {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  @media screen and (min-width: 1000px) {
+    margin: 0 auto;
+    width: 70%;
+  }
 `;
 const MedicineLabel = styled.label`
   display: flex;
@@ -30,6 +39,7 @@ const Title = styled.h1`
 const Input = styled.input`
   color: white;
   padding: 10px 0 10px 15px;
+  font-size: 16px;
   margin-right: 10px;
   background-color: transparent;
   border: none;
@@ -56,7 +66,7 @@ const WrapperMedicine = styled.div`
   background: rgba(245, 245, 245, 0.3);
 `;
 const ButtonAdd = styled.button`
-  width: 250px;
+  width: 100%;
   height: 50px;
   margin: 20px auto 0 auto;
   letter-spacing: 2px;
@@ -67,14 +77,63 @@ const ButtonAdd = styled.button`
   background-color: black;
   line-height: 45px;
   text-align: center;
+  text-decoration: none;
+`;
+const SelfSameWrap = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+`;
+const SelfSameTitle = styled.h1`
+  text-align: center;
+  margin: 35% 5% 10%;
+  color: white;
+`;
+const SelfSameButton = styled.button`
+  width: 100%;
+  height: 10%;
+  font-size: 22px;
+  background-color: black;
+  border: 2px solid #a55f62;
+  color: whitesmoke;
+
+  & + button {
+    margin-top: 20px;
+  }
 `;
 
-const FormAdd = ({ addMed, medicines }) => {
+const FormAdd = ({
+  selfsameMed,
+  theSameMedQueryOn,
+  nameMed,
+  amountMed,
+  dateMed,
+  medicines,
+  addMed,
+}) => {
   const today = new Date().toISOString().slice(0, 10);
   const history = useHistory();
   const backToHome = () => {
     history.push('/ApteczkaProject');
   };
+  const addTheSameMed = () => {
+    const theSameNames = [];
+    medicines.forEach((med) => {
+      if (med.name.replace(/[^a-zA-Z ]/g, '').trim() === nameMed)
+        theSameNames.push(med.name.replace(/[^a-zA-Z ]/g, '').trim());
+    });
+    const values = {
+      name: `${nameMed} (${theSameNames.length + 1})`,
+      amount: amountMed,
+      date: dateMed,
+    };
+    addMed(values);
+    backToHome();
+  };
+
   return (
     <Wrapper>
       <Title>Dodaj Lek</Title>
@@ -87,13 +146,6 @@ const FormAdd = ({ addMed, medicines }) => {
         }}
         validate={(values) => {
           const errors = {};
-          for (const medicine of medicines) {
-            if (
-              medicine.name ===
-              values.name.charAt(0).toUpperCase() + values.name.slice(1)
-            )
-              errors.name = 'Masz już taki lek';
-          }
           if (!values.name) {
             errors.name = 'Wpisz nazwę leku!';
           } else if (/[^a-zA-Z]+/i.test(values.name)) {
@@ -109,14 +161,18 @@ const FormAdd = ({ addMed, medicines }) => {
           } else if (values.date < today) {
             errors.date = 'Nie możesz wprowadzić starego leku';
           }
-
           return errors;
         }}
         onSubmit={(values) => {
           // eslint-disable-next-line no-param-reassign
           values.name = values.name.charAt(0).toUpperCase() + values.name.slice(1);
-          addMed(values);
-          backToHome();
+          const names = [];
+          medicines.forEach((med) => names.push(med.name));
+          const same = names.indexOf(values.name) !== -1;
+          if (!same) {
+            backToHome();
+            addMed(values);
+          } else theSameMedQueryOn(values.name, values.amount, values.date);
         }}
       >
         {({ values, errors, touched, handleChange, handleSubmit, isSubmitting }) => (
@@ -169,6 +225,13 @@ const FormAdd = ({ addMed, medicines }) => {
           </Forms>
         )}
       </Formik>
+      {selfsameMed ? (
+        <SelfSameWrap>
+          <SelfSameTitle>Masz już lek {nameMed}, czy chcesz dodać kolejny?</SelfSameTitle>
+          <SelfSameButton onClick={addTheSameMed}>Tak</SelfSameButton>
+          <SelfSameButton onClick={backToHome}>Nie</SelfSameButton>
+        </SelfSameWrap>
+      ) : null}
       <ButtonAdd as={Link} to="/ApteczkaProject">
         Wróć
       </ButtonAdd>
@@ -177,6 +240,12 @@ const FormAdd = ({ addMed, medicines }) => {
 };
 
 FormAdd.propTypes = {
+  selfsameMed: Proptypes.bool.isRequired,
+  theSameMedQueryOn: Proptypes.func.isRequired,
+  nameMed: Proptypes.string.isRequired,
+  amountMed: Proptypes.number.isRequired,
+  dateMed: Proptypes.string.isRequired,
+  medicines: Proptypes.array.isRequired,
   addMed: Proptypes.func.isRequired,
 };
 
@@ -184,7 +253,6 @@ const mapStateToProps = (state) => {
   const { medicines } = state;
   return { medicines };
 };
-
 const mapDispatchToProps = (dispatch) => ({
   addMed: (medicine) => dispatch(addMedicine(medicine)),
 });
