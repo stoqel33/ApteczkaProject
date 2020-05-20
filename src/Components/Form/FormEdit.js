@@ -1,5 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable no-restricted-syntax */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
@@ -80,9 +82,8 @@ const ButtonAdd = styled.button`
   cursor: pointer;
 `;
 const ButtonRemove = styled.button`
-  position: absolute;
   margin-bottom: 50px;
-  bottom: 0;
+  margin-top: 20px;
   background-color: transparent;
   border: none;
 `;
@@ -113,6 +114,12 @@ const RemoveButton = styled.button`
   font-size: 16px;
   cursor: pointer;
 `;
+const InputCopy = styled(Input)`
+  padding: 0;
+  font-size: 18px;
+  text-align: end;
+  border: none;
+`;
 
 const FormEdit = ({
   medicine,
@@ -142,10 +149,12 @@ const FormEdit = ({
         }}
         validate={(values) => {
           const errors = {};
-          if (!values.name) {
-            errors.name = 'Wpisz nazwę leku!';
-          } else if (/[^a-zA-Z]+/i.test(values.name)) {
-            errors.name = 'Nazwa zawiera niedozwolone znaki';
+          if (!medicine[0].copy) {
+            if (!values.name) {
+              errors.name = 'Wpisz nazwę leku!';
+            } else if (/[^a-zA-Z]+/i.test(values.name)) {
+              errors.name = 'Nazwa zawiera niedozwolone znaki';
+            }
           }
           if (!values.amount) {
             errors.amount = 'Podaj ilość leku!';
@@ -170,13 +179,23 @@ const FormEdit = ({
             <WrapperMedicine>
               <MedicineLabel>
                 <TitleMed>Nazwa</TitleMed>
-                <Input
-                  name="name"
-                  type="text"
-                  autoComplete="off"
-                  onChange={handleChange}
-                  value={values.name}
-                />
+                {medicine[0].copy ? (
+                  <InputCopy
+                    name="name"
+                    type="text"
+                    autoComplete="off"
+                    readOnly
+                    value={values.name}
+                  />
+                ) : (
+                  <Input
+                    name="name"
+                    type="text"
+                    autoComplete="off"
+                    onChange={handleChange}
+                    value={values.name}
+                  />
+                )}
                 {errors.name && touched.name && errors.name}
               </MedicineLabel>
             </WrapperMedicine>
@@ -235,6 +254,7 @@ FormEdit.propTypes = {
       name: PropTypes.string.isRequired,
       amount: PropTypes.number.isRequired,
       expiryDate: PropTypes.string.isRequired,
+      copy: PropTypes.bool.isRequired,
     }),
   ).isRequired,
   changeMed: PropTypes.func.isRequired,
