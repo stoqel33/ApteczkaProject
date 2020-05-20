@@ -8,13 +8,14 @@ router.route('/').get((req, res) => {
     .catch((err) => res.status(400).json(`Error ${err}`));
 });
 router.route('/addMedicine').post((req, res) => {
-  const { name } = req.body.type;
+  const { name, copy } = req.body.type;
   const amount = Number(req.body.type.amount);
   const expiryDate = Date.parse(req.body.type.date);
   const newMedicine = new Medicines({
     name,
     amount,
     expiryDate,
+    copy,
   });
   newMedicine
     .save()

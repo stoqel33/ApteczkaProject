@@ -129,6 +129,7 @@ const FormAdd = ({
       name: `${nameMed} (${theSameNames.length + 1})`,
       amount: amountMed,
       date: dateMed,
+      copy: true,
     };
     addMed(values);
     backToHome();
@@ -142,7 +143,7 @@ const FormAdd = ({
           name: '',
           amount: '',
           date: today,
-          show: true,
+          copy: false,
         }}
         validate={(values) => {
           const errors = {};
