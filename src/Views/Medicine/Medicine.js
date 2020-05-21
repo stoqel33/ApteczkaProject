@@ -9,6 +9,7 @@ import MedicineItem from 'Components/MedicineItem/MedicineItem';
 import Search from 'Components/Search/Search';
 import MagnifyingGlass from 'Components/Icons/MagnifyingGlass.js';
 import BurgerMenu from 'Components/Icons/BurgerMenu.js';
+import Load from '../../Components/Load/Load';
 
 const Wrapper = styled.div`
   display: flex;
@@ -96,21 +97,21 @@ class Medicine extends React.Component {
 
   render() {
     const { medicines, isLoading, response } = this.props;
-
+    medicines.sort((a, b) => a.name.toString().localeCompare(b.name, 'pl'));
     return (
       <>
         {response ? (
           <Wrapper>
             <TitleWrap>
               <Icon onClick={this.handleSearchToogle}>
-                {medicines.length > 0 ? <MagnifyingGlass /> : null}
+                {medicines.length > 0 && <MagnifyingGlass />}
               </Icon>
               <Title>Apteczka</Title>
               <Icon>
                 <BurgerMenu />
               </Icon>
             </TitleWrap>
-            {isLoading ? <Info>Loading...</Info> : null}
+            {isLoading && <Load />}
             {this.state.search ? (
               <Search
                 medicines={medicines}
