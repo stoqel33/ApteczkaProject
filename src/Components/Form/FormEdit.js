@@ -8,7 +8,7 @@ import styled from 'styled-components/macro';
 import { Formik, Form } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { changeMedicine, removeMedicine } from 'Actions';
+import { changeMedicine, removeMedicine } from 'data/Actions';
 import Bin from 'Components/Icons/Bin';
 
 const Wrapper = styled.div`
@@ -123,6 +123,7 @@ const InputCopy = styled(Input)`
 
 const FormEdit = ({
   medicine,
+  medicines,
   changeMed,
   removeMed,
   deleteQuery,
@@ -143,6 +144,7 @@ const FormEdit = ({
       <Title>Edytuj Lek</Title>
       <Formik
         initialValues={{
+          id: medicine[0]._id,
           name: medicine[0].name,
           amount: medicine[0].amount,
           date: medicine[0].expiryDate.slice(0, 10),
@@ -150,14 +152,22 @@ const FormEdit = ({
         validate={(values) => {
           const errors = {};
           if (!medicine[0].copy) {
+            medicines.forEach((item) => {
+              if (
+                item._id !== values.id &&
+                item.name === values.name.charAt(0).toUpperCase() + values.name.slice(1)
+              ) {
+                errors.name = 'Masz już taki lek';
+              }
+            });
             if (!values.name) {
-              errors.name = 'Wpisz nazwę leku!';
+              errors.name = 'Wpisz nazwę leku';
             } else if (/[^a-zA-Z]+/i.test(values.name)) {
               errors.name = 'Nazwa zawiera niedozwolone znaki';
             }
           }
           if (!values.amount) {
-            errors.amount = 'Podaj ilość leku!';
+            errors.amount = 'Podaj ilość leku';
           } else if (values.amount < 0) {
             errors.amount = 'Podaj poprawną ilość';
           }
@@ -257,6 +267,7 @@ FormEdit.propTypes = {
       copy: PropTypes.bool.isRequired,
     }),
   ).isRequired,
+  medicines: PropTypes.array.isRequired,
   changeMed: PropTypes.func.isRequired,
   removeMed: PropTypes.func.isRequired,
   deleteQuery: PropTypes.bool.isRequired,

@@ -25,6 +25,7 @@ class EditMedicine extends React.Component {
       <>
         <FormEdit
           medicine={this.props.medicine}
+          medicines={this.props.medicines}
           deleteQuery={this.state.deleteQuery}
           handleEnableDelete={this.handleEnableDelete}
           handleDisableDelete={this.handleDisableDelete}
@@ -49,6 +50,6 @@ const mapStateToProps = (state, ownProps) => {
   const { medicines } = state;
   const url = ownProps.match.params.id;
   const medicine = medicines.filter((item) => item._id === url);
-  return { medicine };
+  return { medicine, medicines };
 };
 export default connect(mapStateToProps)(EditMedicine);
