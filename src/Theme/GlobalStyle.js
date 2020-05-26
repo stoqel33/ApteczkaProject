@@ -5,6 +5,8 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   html{
@@ -14,11 +16,12 @@ const GlobalStyle = createGlobalStyle`
   body{
     font-size: 1.6rem;
     font-family: 'Montserrat', sans-serif;
-    background: linear-gradient(135deg, rgba(97,13,103,1) 41%, rgba(167,98,98,1) 100%);
+    background: ${({ theme }) => theme.lightmode.colors.background};
+    color: ${({ theme }) => theme.lightmode.colors.primary};
     min-height: 100vh;
 
-    @media screen and (min-width: 800px) {
-        max-width: 800px;
+    @media screen and (min-width: 1000px) {
+        max-width: 100rem;
         margin: 0 auto;
       }
     }
