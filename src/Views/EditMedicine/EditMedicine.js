@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import FormEdit from 'Components/Form/FormEdit';
+import FormEdit from 'templates/FormEdit/FormEdit';
 
 class EditMedicine extends React.Component {
   state = {

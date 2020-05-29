@@ -1,5 +1,5 @@
 import React from 'react';
-import FormAdd from 'Components/Form/FormAdd';
+import FormAdd from 'templates/FormAdd/FormAdd';
 
 class AddMedicine extends React.Component {
   state = {
