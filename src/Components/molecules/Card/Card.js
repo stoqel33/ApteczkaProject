@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 
 import Title from 'Components/atoms/Title/Title';
 import ButtonIcon from 'Components/atoms/ButtonIcon/ButtonIcon';
@@ -76,6 +77,16 @@ const Card = ({ name, amount, expired }) => {
       {expired && <ExpiredBar>Minęła data ważności leku</ExpiredBar>}
     </>
   );
+};
+
+Card.propTypes = {
+  name: PropTypes.string.isRequired,
+  amount: PropTypes.number.isRequired,
+  expired: PropTypes.bool,
+};
+
+Card.defaultProps = {
+  expired: false,
 };
 
 export default Card;

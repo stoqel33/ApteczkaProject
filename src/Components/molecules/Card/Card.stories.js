@@ -4,7 +4,7 @@ import Card from './Card';
 
 export default {
   component: Card,
-  title: 'Card',
+  title: 'molecules/Card',
 };
 
 export const MedicineGood = () => <Card name="Apap" amount={18} />;
