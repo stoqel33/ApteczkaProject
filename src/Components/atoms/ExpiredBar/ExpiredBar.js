@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const ExpiredBar = styled.div`
   width: 30rem;
@@ -11,6 +11,12 @@ const ExpiredBar = styled.div`
   text-align: center;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
+
+  ${({ notExpiredYet }) =>
+    notExpiredYet &&
+    css`
+      border: 0.2rem dotted yellow;
+    `}
 `;
 
 export default ExpiredBar;

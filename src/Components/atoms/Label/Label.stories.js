@@ -4,7 +4,7 @@ import Label from './Label';
 
 export default {
   component: Label,
-  title: 'Label',
+  title: 'atoms/Label',
 };
 
 export const Name = () => <Label>Nazwa</Label>;
