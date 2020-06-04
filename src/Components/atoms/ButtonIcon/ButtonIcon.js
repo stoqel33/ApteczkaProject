@@ -5,6 +5,7 @@ const ButtonIcon = styled.button`
   height: ${({ size }) => size || '1.6rem'};
   background-image: url(${({ icon }) => icon});
   border: none;
+  cursor: pointer;
 `;
 
 export default ButtonIcon;

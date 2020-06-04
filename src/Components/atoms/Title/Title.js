@@ -7,7 +7,8 @@ const Title = styled.h1`
   margin-left: ${({ mgl }) => mgl || 0};
   margin-right: ${({ mgr }) => mgr || 0};
   margin-bottom: ${({ mgb }) => mgb || 0};
-  font-size: 2rem;
+  font-size: ${({ fs }) => fs || 2}rem;
+  font-weight: ${({ fw }) => fw || 600};
 `;
 
 export default Title;

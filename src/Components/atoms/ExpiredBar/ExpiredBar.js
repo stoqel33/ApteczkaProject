@@ -11,6 +11,7 @@ const ExpiredBar = styled.div`
   text-align: center;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
+  margin-bottom: 2rem;
 
   ${({ notExpiredYet }) =>
     notExpiredYet &&

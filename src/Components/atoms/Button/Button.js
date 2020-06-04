@@ -23,6 +23,13 @@ const Button = styled.button`
     css`
       background-color: ${({ theme }) => theme.colors.secondary};
     `};
+  ${({ big }) =>
+    big &&
+    css`
+      width: 22rem;
+      height: 6rem;
+      font-size: 1.8rem;
+    `};
 `;
 
 export default Button;
