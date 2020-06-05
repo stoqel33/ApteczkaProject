@@ -7,6 +7,7 @@ import Card from 'Components/molecules/Card/Card';
 import Button from 'Components/atoms/Button/Button';
 import Title from 'Components/atoms/Title/Title';
 import ButtonIcon from 'Components/atoms/ButtonIcon/ButtonIcon';
+import SearchMedicine from 'templates/SearchMedicine/SearchMedicine';
 
 import search from 'assets/icons/search.svg';
 import burger from 'assets/icons/burger-menu.svg';
@@ -63,7 +64,9 @@ const MedicinesList = ({ searchToggle, searching, today, medicines }) => {
           <ButtonIcon icon={burger} size="2.8rem" />
         </Icon>
       </TopBarWrap>
-      {searching ? null : ( // <Search medicines={medicines} today={today} toggle={searchToggle} />
+      {searching ? (
+        <SearchMedicine medicines={medicines} today={today} handleToggle={searchToggle} />
+      ) : (
         <MedicinesWrap>
           {medicines.length > 0 ? (
             medicines.map(({ name, amount, expiryDate, _id }) => (
