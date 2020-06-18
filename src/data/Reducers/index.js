@@ -28,8 +28,8 @@ const rootReducer = (state = initialState, action) => {
         refresh: false,
       };
     case 'CHANGE_MED_SUCCESS': {
-      const newState = { ...state };
-      newState.medicines.forEach((medicine) => {
+      const { medicines } = state;
+      medicines.forEach((medicine) => {
         if (medicine._id === action.payload.id) {
           medicine.name = action.payload.data.name;
           medicine.amount = action.payload.data.amount;
@@ -37,7 +37,7 @@ const rootReducer = (state = initialState, action) => {
         }
       });
       return {
-        medicines: newState.medicines,
+        medicines,
         response: true,
         refresh: false,
       };
@@ -51,8 +51,8 @@ const rootReducer = (state = initialState, action) => {
         refresh: false,
       };
     case 'REMOVE_ONE_MED_SUCCESS':
-      const newState = { ...state };
-      newState.medicines.forEach((medicine) => {
+      const { medicines } = state;
+      medicines.forEach((medicine) => {
         if (medicine._id === action.payload.id) {
           medicine.name = action.payload.data.name;
           medicine.amount = action.payload.data.amount;
@@ -63,7 +63,7 @@ const rootReducer = (state = initialState, action) => {
         refresh: true,
         isLoading: false,
         response: true,
-        medicines: newState.medicines,
+        medicines,
       };
 
     case 'FETCH_FAILURE': {
