@@ -2,12 +2,17 @@
 const router = require('express').Router();
 const Medicines = require('../models/medicines.model');
 
-router.route('/').get((req, res) => {
+// Get medicines
+
+router.get('/', (req, res) => {
   Medicines.find()
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json(`Error ${err}`));
 });
-router.route('/addMedicine').post((req, res) => {
+
+// Add new medicine
+
+router.post('/addMedicine', (req, res) => {
   const { name, copy } = req.body.type;
   const amount = Number(req.body.type.amount);
   const expiryDate = Date.parse(req.body.type.date);
@@ -22,14 +27,20 @@ router.route('/addMedicine').post((req, res) => {
     .then(() => res.json(newMedicine))
     .catch((err) => res.status(400).json(`Error${err} baddd`));
 });
-router.route('/editMedicine/:id').delete((req, res) => {
+
+// Delte current medicine
+
+router.delete('/editMedicine/:id', (req, res) => {
   Medicines.findByIdAndDelete(req.params.id)
     .then(() => {
       res.json('Medicine deleted!');
     })
     .catch((err) => res.status(400).json(`Error ${err}`));
 });
-router.route('/editMedicine/update/:id').post((req, res) => {
+
+// Update current medicine
+
+router.post('/editMedicine/update/:id', (req, res) => {
   Medicines.findById(req.params.id)
     .then((medicine) => {
       medicine.name = req.body.type.name;
@@ -43,7 +54,9 @@ router.route('/editMedicine/update/:id').post((req, res) => {
     .catch((err) => res.status(400).json(`Error ${err}`));
 });
 
-router.route('/takePill/:id').put((req, res) => {
+// Diminish one current medicine
+
+router.put('/takePill/:id', (req, res) => {
   Medicines.findById(req.params.id)
     .then((medicine) => {
       medicine.amount -= 1;

@@ -16,7 +16,7 @@ const validateLoginInput = require('../validation/login');
 
 // User register
 
-router.route('/register').post((req, res) => {
+router.post('/register', (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
   if (!isValid) {
@@ -95,6 +95,12 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
     name: req.user.name,
     email: req.user.email,
   });
+});
+
+router.get('/', (req, res) => {
+  User.find()
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json(`Error ${err}`));
 });
 
 module.exports = router;
