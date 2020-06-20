@@ -4,6 +4,10 @@ const { Schema } = mongoose;
 
 const medicinesSchema = new Schema(
   {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
     name: {
       type: String,
       minlength: 3,
