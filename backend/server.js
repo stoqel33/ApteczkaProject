@@ -5,8 +5,9 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const cors = require('cors');
 
-const home = require('./routes/home');
+const medicines = require('./routes/medicines');
 const user = require('./routes/users');
+const profile = require('./routes/profile');
 
 require('dotenv').config();
 
@@ -42,7 +43,8 @@ connection.once('open', () => {
 });
 
 // Use Routes
-app.use('/ApteczkaProject', home);
+app.use('/ApteczkaProject', medicines);
 app.use('/user', user);
+app.use('/profile', profile);
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
