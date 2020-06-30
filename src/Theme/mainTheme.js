@@ -11,5 +11,6 @@ export const theme = {
     },
   },
 
+  info: 'hsl(193.2, 77.8%, 45.9%)',
   warning: 'hsl(0, 51%, 46%)',
 };
