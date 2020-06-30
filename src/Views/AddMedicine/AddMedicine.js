@@ -20,15 +20,13 @@ class AddMedicine extends React.Component {
 
   render() {
     return (
-      <>
-        <FormAdd
-          selfsameMed={this.state.selfsameMed}
-          theSameMedQueryOn={this.handleTheSameMedicineQuery}
-          nameMed={this.state.name}
-          amountMed={this.state.amount}
-          dateMed={this.state.date}
-        />
-      </>
+      <FormAdd
+        selfsameMed={this.state.selfsameMed}
+        theSameMedQueryOn={this.handleTheSameMedicineQuery}
+        nameMed={this.state.name}
+        amountMed={this.state.amount}
+        dateMed={this.state.date}
+      />
     );
   }
 }
