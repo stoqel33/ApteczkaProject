@@ -47,7 +47,7 @@ EditMedicine.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { medicines } = state;
+  const { medicines } = state.medicines;
   const url = ownProps.match.params.id;
   const medicine = medicines.filter((item) => item._id === url);
   return { medicine, medicines };
