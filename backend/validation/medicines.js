@@ -11,11 +11,8 @@ module.exports = function validateMedicinesInput(data) {
   if (Validator.isEmpty(data.name)) {
     errors.name = 'Name is required';
   }
-  if (Validator.isEmpty(data.amount)) {
-    errors.amount = 'Amount is required';
-  }
   if (Validator.isEmpty(data.date)) {
-    errors.date = 'Date is required';
+    errors.date = 'date is required';
   }
 
   return {
