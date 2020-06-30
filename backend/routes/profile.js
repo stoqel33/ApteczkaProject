@@ -6,7 +6,7 @@ const User = require('../models/user.model');
 
 const validateProfileInput = require('../validation/profile');
 
-// Get current user profile
+// Get user profile
 router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   const errors = {};
   Profile.findOne({ user: req.user.id })
@@ -23,9 +23,8 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 
 // Create or edit user profile
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
-  const { errors, isValid } = validateProfileInput(req.body);
-
   // Check validation
+  const { errors, isValid } = validateProfileInput(req.body);
   // Return errors
   if (!isValid) return res.status(400).json(errors);
 
@@ -45,18 +44,6 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
         { new: true },
       ).then((profile) => res.json(profile));
     } else {
-      // Create profile
-
-      // Check if nickname exists
-      // Profile.findOne({ nickname: profileFields.nickname }).then((profile) => {
-      //   if (profile) {
-      //     errors.nickname = 'That nickname already exists';
-      //     res.status(400).json(errors);
-      //   }
-
-      //   // Save profile
-      // });
-
       new Profile(profileFields).save().then((profile) => res.json(profile));
     }
   });

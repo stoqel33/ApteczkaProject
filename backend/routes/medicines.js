@@ -10,7 +10,9 @@ const validateMedicinesInput = require('../validation/medicines');
 // Get user medicines
 router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   Medicines.find({ user: req.user.id })
-    .then((data) => res.json(data))
+    .then((data) => {
+      res.json(data);
+    })
     .catch((err) => res.status(400).json(`Error ${err}`));
 });
 
@@ -20,8 +22,7 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const { errors, isValid } = validateMedicinesInput(req.body);
-
-    // Check Validation
+    // // Check Validation
     if (!isValid) return res.status(400).json(errors);
 
     const { name, copy } = req.body;
