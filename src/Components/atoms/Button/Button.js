@@ -4,7 +4,7 @@ const Button = styled.button`
   font-family: 'Montserrat', sans-serif;
   height: 4rem;
   width: 12rem;
-  font-size: 1.4rem;
+  font-size: ${({ fs }) => fs || '1.4'}rem;
   font-weight: 400;
   color: ${({ theme }) => theme.lightmode.colors.primary};
   border: 2px solid ${({ theme }) => theme.lightmode.colors.secondary};
@@ -21,7 +21,7 @@ const Button = styled.button`
   ${({ secondary }) =>
     secondary &&
     css`
-      background-color: ${({ theme }) => theme.colors.secondary};
+      background-color: ${({ theme }) => theme.colors.lightmode.secondary};
     `};
   ${({ big }) =>
     big &&
@@ -29,6 +29,12 @@ const Button = styled.button`
       width: 22rem;
       height: 6rem;
       font-size: 1.8rem;
+    `};
+  ${({ info }) =>
+    info &&
+    css`
+      border: none;
+      color: ${({ theme }) => theme.info};
     `};
 `;
 
