@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { removeOneMedicine } from 'data/Actions';
 import { Link } from 'react-router-dom';
+import { decreaseMedicine } from 'data/Actions/medicinesActions';
 
-import Title from 'Components/atoms/Title/Title';
+import Text from 'Components/atoms/Text/Text';
 import ButtonIcon from 'Components/atoms/ButtonIcon/ButtonIcon';
 import ExpiredBar from 'Components/atoms/ExpiredBar/ExpiredBar';
 
@@ -119,12 +119,14 @@ const Card = ({ id, name, amount, date, today, takePill }) => {
     <>
       <Wrapper expired={expired} moreInfo={info}>
         <InnerWrapper medicine>
-          <Title mgb="0.5rem" fw="400">
-            {name}
-          </Title>
-          <Title mgt="0.5rem" fw="400">
-            {amount} tabletek
-          </Title>
+          <Text mgb="0.5rem">{name}</Text>
+          <Text mgt="0.5rem">
+            {amount}
+            {amount > 4 && ' tabletek'}
+            {amount > 1 && amount <= 4 && ' tabletki'}
+            {amount === 1 && ' tabletka'}
+            {amount === 0 && ' tabletek'}
+          </Text>
         </InnerWrapper>
         <InnerWrapper info>
           {info ? (
@@ -144,9 +146,7 @@ const Card = ({ id, name, amount, date, today, takePill }) => {
         </InnerWrapper>
         {info && (
           <InnerWrapper date expired={expired}>
-            <Title fw="400" fs="1.8">
-              Data ważności {date}
-            </Title>
+            <Text fs="1.8">Data ważności {date}</Text>
           </InnerWrapper>
         )}
       </Wrapper>
@@ -165,7 +165,7 @@ Card.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  takePill: (id) => dispatch(removeOneMedicine(id)),
+  takePill: (id) => dispatch(decreaseMedicine(id)),
 });
 
 export default connect(null, mapDispatchToProps)(Card);
