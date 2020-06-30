@@ -8,6 +8,7 @@ const Input = styled.input`
   font-size: 2rem;
   font-weight: 400;
   text-transform: capitalize;
+  text-align: center;
   cursor: pointer;
   outline: none;
 
@@ -53,6 +54,27 @@ const Input = styled.input`
     css`
       background-color: transparent;
       text-align: center;
+    `}
+
+  ${({ user }) =>
+    user &&
+    css`
+      width: 30rem;
+      font-size: 1.8rem;
+      border: none;
+      border-top: 2px solid ${({ theme }) => theme.lightmode.colors.secondary};
+      border-bottom: 2px solid ${({ theme }) => theme.lightmode.colors.secondary};
+
+      text-transform: none;
+      background-color: transparent;
+      border-radius: 0;
+
+      &:focus {
+        border: none;
+        border-radius: 0;
+        border-top: 1px solid ${({ theme }) => theme.lightmode.colors.secondary};
+        border-bottom: 1px solid ${({ theme }) => theme.lightmode.colors.secondary};
+      }
     `}
 `;
 
