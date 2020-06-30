@@ -8,9 +8,10 @@ import Button from 'Components/atoms/Button/Button';
 import Title from 'Components/atoms/Title/Title';
 import ButtonIcon from 'Components/atoms/ButtonIcon/ButtonIcon';
 import SearchMedicine from 'templates/SearchMedicine/SearchMedicine';
+import BurgerMenu from 'templates/BurgerMenu/BurgerMenu';
+import Burger from 'Components/atoms/Burger/Burger';
 
 import search from 'assets/icons/search.svg';
-import burger from 'assets/icons/burger-menu.svg';
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,8 +20,10 @@ const Wrapper = styled.div`
   text-align: center;
 `;
 const TopBarWrap = styled.div`
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 1fr 20rem 1fr;
+  grid-template-rows: 1fr;
+  justify-items: center;
   align-items: center;
   margin: 2rem 0;
 `;
@@ -52,18 +55,28 @@ const ButtonLink = styled(Button)`
   line-height: 100%;
 `;
 
-const MedicinesList = ({ searchToggle, searching, today, medicines }) => {
+const MedicinesList = ({
+  searchToggle,
+  burgerToggle,
+  searching,
+  burgerMenu,
+  today,
+  medicines,
+}) => {
   return (
     <Wrapper>
       <TopBarWrap>
         <Icon onClick={searchToggle}>
-          {medicines.length > 0 && <ButtonIcon icon={search} size="2.8rem" />}
+          {medicines.length > 0 && !burgerMenu && (
+            <ButtonIcon icon={search} size="2.8rem" />
+          )}
         </Icon>
         <Title fs="3">Apteczka</Title>
-        <Icon>
-          <ButtonIcon icon={burger} size="2.8rem" />
+        <Icon onClick={burgerToggle}>
+          <Burger open={burgerMenu} change={burgerToggle} />
         </Icon>
       </TopBarWrap>
+      <BurgerMenu open={burgerMenu} />
       {searching ? (
         <SearchMedicine medicines={medicines} today={today} handleToggle={searchToggle} />
       ) : (
@@ -93,7 +106,9 @@ const MedicinesList = ({ searchToggle, searching, today, medicines }) => {
 
 MedicinesList.propTypes = {
   searchToggle: PropTypes.func.isRequired,
+  burgerToggle: PropTypes.func.isRequired,
   searching: PropTypes.bool.isRequired,
+  burgerMenu: PropTypes.bool.isRequired,
   today: PropTypes.string.isRequired,
   medicines: PropTypes.arrayOf(
     PropTypes.shape({
