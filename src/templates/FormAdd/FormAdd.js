@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
-import { addMedicine } from 'data/Actions';
+import { addMedicines } from 'data/Actions/medicinesActions';
 import { useHistory, Link } from 'react-router-dom';
 
 import FormCell from 'Components/molecules/FormCell/FormCell';
@@ -181,16 +181,20 @@ FormAdd.propTypes = {
   nameMed: PropTypes.string.isRequired,
   amountMed: PropTypes.number.isRequired,
   dateMed: PropTypes.string.isRequired,
-  medicines: PropTypes.arrayOf(PropTypes.object).isRequired,
+  medicines: PropTypes.arrayOf(PropTypes.object),
   addMed: PropTypes.func.isRequired,
 };
 
+FormAdd.defaultProps = {
+  medicines: [],
+};
+
 const mapStateToProps = (state) => {
-  const { medicines } = state;
+  const { medicines } = state.medicines;
   return { medicines };
 };
 const mapDispatchToProps = (dispatch) => ({
-  addMed: (medicine) => dispatch(addMedicine(medicine)),
+  addMed: (medicine) => dispatch(addMedicines(medicine)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormAdd);

@@ -7,7 +7,7 @@ import styled from 'styled-components/macro';
 import { Formik, Form } from 'formik';
 import { useHistory, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { changeMedicine, removeMedicine } from 'data/Actions';
+import { changeMedicine, removeMedicine } from 'data/Actions/medicinesActions';
 
 import FormCell from 'Components/molecules/FormCell/FormCell';
 import Button from 'Components/atoms/Button/Button';
