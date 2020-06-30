@@ -3,7 +3,8 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchMedicines } from 'data/Actions';
+import { getMedicines } from 'data/Actions/medicinesActions';
+
 import Load from '../../Components/Load/Load';
 import MedicinesList from 'templates/MedicinesList/MedicinesList';
 
@@ -17,20 +18,18 @@ const Info = styled.span`
 class Medicine extends React.Component {
   state = {
     search: false,
+    burgerMenu: false,
     today: new Date().toISOString().slice(0, 10),
   };
   componentDidMount() {
-    const { fetchMed } = this.props;
-    fetchMed();
+    const { getMed } = this.props;
+    getMed();
   }
 
   componentDidUpdate(prevProps) {
-    const { response } = this.props;
-    if (response === true) {
-      const { refresh, fetchMed } = this.props;
-      if (refresh !== prevProps.refresh) {
-        fetchMed();
-      }
+    const { refresh, getMed } = this.props;
+    if (refresh !== prevProps.refresh) {
+      getMed();
     }
   }
 
@@ -39,26 +38,28 @@ class Medicine extends React.Component {
       search: !prevState.search,
     }));
   };
+  handleBurgerToogle = () => {
+    this.setState((prevState) => ({
+      burgerMenu: !prevState.burgerMenu,
+    }));
+  };
 
   render() {
-    const { medicines, isLoading, response, refresh } = this.props;
-    medicines.sort((a, b) => a.name.toString().localeCompare(b.name, 'pl'));
+    const { medicines, loading } = this.props;
+    if (medicines.length > 1) {
+      medicines.sort((a, b) => a.name.toString().localeCompare(b.name, 'pl'));
+    }
     return (
       <>
-        {response ? (
-          <MedicinesList
-            searchToggle={this.handleSearchToogle}
-            searching={this.state.search}
-            today={this.state.today}
-            medicines={medicines}
-            isLoading={isLoading}
-            response={response}
-            refresh={refresh}
-          />
-        ) : (
-          <Info>Sorry, database is down</Info>
-        )}
-        {isLoading && <Load />}
+        <MedicinesList
+          searchToggle={this.handleSearchToogle}
+          burgerToggle={this.handleBurgerToogle}
+          searching={this.state.search}
+          burgerMenu={this.state.burgerMenu}
+          today={this.state.today}
+          medicines={medicines}
+        />
+        {loading && <Load />}
       </>
     );
   }
@@ -72,21 +73,18 @@ Medicine.propTypes = {
       expiryDate: PropTypes.string.isRequired,
     }),
   ),
-  isLoading: PropTypes.bool,
-  response: PropTypes.bool.isRequired,
-  refresh: PropTypes.bool,
-  fetchMed: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  getMed: PropTypes.func.isRequired,
 };
 Medicine.defaultProps = {
   medicines: [],
-  isLoading: false,
-  refresh: false,
+  loading: false,
 };
 const mapStateToProps = (state) => {
-  const { medicines, isLoading, response, refresh } = state;
-  return { medicines, isLoading, response, refresh };
+  const { medicines, loading, refresh } = state.medicines;
+  return { medicines, loading, refresh };
 };
 const mapDispatchToProps = (dispatch) => ({
-  fetchMed: () => dispatch(fetchMedicines()),
+  getMed: () => dispatch(getMedicines()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Medicine);
