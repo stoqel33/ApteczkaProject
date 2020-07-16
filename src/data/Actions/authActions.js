@@ -2,13 +2,16 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from 'data/Utils/setAuthToken';
 
-import { GET_ERRORS, SET_CURRENT_USER, URL } from 'data/Actions/types';
+import { GET_ERRORS, SET_CURRENT_USER, CLEAR_ERRORS, URL } from 'data/Actions/types';
 
 // Register User
 export const registerUser = (userData, history) => (dispatch) => {
   return axios
     .post(`${URL}/user/register`, userData)
-    .then(() => history.push('/ApteczkaProject/user/signin'))
+    .then(() => {
+      dispatch(clearErrors());
+      history.push('/ApteczkaProject/user/signin');
+    })
     .catch((err) => {
       dispatch({
         type: GET_ERRORS,
@@ -42,6 +45,12 @@ export const setCurrentUser = (decoded) => {
   return {
     type: SET_CURRENT_USER,
     payload: decoded,
+  };
+};
+
+export const clearErrors = () => {
+  return {
+    type: CLEAR_ERRORS,
   };
 };
 
