@@ -1,19 +1,16 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react';
-import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  clearAllBodyScrollLocks,
+} from 'body-scroll-lock';
 import { getMedicines } from 'data/Actions/medicinesActions';
 
-import Load from '../../Components/Load/Load';
+import Load from 'Components/atoms/Load/Load';
 import MedicinesList from 'templates/MedicinesList/MedicinesList';
-
-const Info = styled.span`
-  display: flex;
-  position: fixed;
-  align-self: center;
-  padding-top: 0px;
-`;
 
 class Medicine extends React.Component {
   state = {
@@ -21,8 +18,12 @@ class Medicine extends React.Component {
     burgerMenu: false,
     today: new Date().toISOString().slice(0, 10),
   };
+
+  targetElement = null;
+
   componentDidMount() {
     const { getMed } = this.props;
+    this.targetElement = document.body;
     getMed();
   }
 
@@ -38,11 +39,29 @@ class Medicine extends React.Component {
       search: !prevState.search,
     }));
   };
+
+  showTargetElement = () => {
+    disableBodyScroll(this.targetElement);
+  };
+
+  hideTargetElement = () => {
+    enableBodyScroll(this.targetElement);
+  };
+
   handleBurgerToogle = () => {
     this.setState((prevState) => ({
       burgerMenu: !prevState.burgerMenu,
     }));
+    if (this.state.burgerMenu) {
+      this.hideTargetElement();
+    } else {
+      window.scrollTo(0, 0);
+      this.showTargetElement();
+    }
   };
+  componentWillUnmount() {
+    clearAllBodyScrollLocks();
+  }
 
   render() {
     const { medicines, loading } = this.props;
