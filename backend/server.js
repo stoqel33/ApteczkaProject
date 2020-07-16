@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Database conifg
-const uri = process.env.ATLAS_URI;
+const uri = require('./config/keys').mongoURI;
 
 // Connect to MongoDB
 mongoose.connect(uri, {
