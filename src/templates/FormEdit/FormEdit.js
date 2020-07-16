@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
+  min-height: 100%;
 `;
 const Forms = styled(Form)`
   width: 100%;
@@ -54,6 +54,9 @@ const InnerWrapButton = styled.div`
   align-items: center;
   margin-top: 7rem;
 `;
+const TitleAdd = styled(Title)`
+  color: ${({ theme }) => theme.info};
+`;
 
 const FormEdit = ({
   medicine,
@@ -75,9 +78,9 @@ const FormEdit = ({
   };
   return (
     <Wrapper>
-      <Title mgt="2rem" mgb="2rem">
+      <TitleAdd mgt="2rem" mgb="2rem">
         Edytuj Lek
-      </Title>
+      </TitleAdd>
       <Formik
         initialValues={{
           id: medicine[0]._id,
@@ -106,6 +109,8 @@ const FormEdit = ({
             errors.amount = 'Podaj ilość leku';
           } else if (values.amount < 0) {
             errors.amount = 'Podaj poprawną ilość';
+          } else if (values.amount > 999) {
+            errors.amount = 'Nie można wprowadzić takiej ilości leku';
           }
           if (!values.date) {
             errors.date = 'Podaj datę ważności!';
