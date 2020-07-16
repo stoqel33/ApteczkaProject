@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "bcrypt": "^5.0.0",
+    "body-scroll-lock": "^3.0.3",
     "formik": "^2.1.4",
     "gh-pages": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
