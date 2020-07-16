@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
-import { registerUser, loginUser } from 'data/Actions/authActions';
+import { registerUser, loginUser, clearErrors } from 'data/Actions/authActions';
 
 import FormCellSignIn from 'Components/molecules/FormCellSignIn/FormCellSignIn';
 import Button from 'Components/atoms/Button/Button';
@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  height: 100%;
 
   background-image: url(${imgXSLuggage});
   background-repeat: no-repeat;
@@ -44,9 +44,20 @@ const TitleInfo = styled(Text)`
   color: ${({ theme }) => theme.info};
 `;
 
-const FormSignIn = ({ registered, registerChange, register, login, errorsBackend }) => {
+const FormSignIn = ({
+  registered,
+  registerChange,
+  register,
+  login,
+  errorsBackend,
+  clearErrors,
+}) => {
   const history = useHistory();
-
+  // change form, Login or Register and clear errors
+  const changeVariant = () => {
+    registerChange();
+    clearErrors();
+  };
   return (
     <Wrapper>
       <Formik
@@ -54,24 +65,16 @@ const FormSignIn = ({ registered, registerChange, register, login, errorsBackend
           email: '',
           password: '',
         }}
-        validate={(values) => {
-          const errors = {};
-          if (!values.email) {
-            errors.email = 'Podaj adres email';
-          }
-          if (!values.password) {
-            errors.password = 'Podaj hasło';
-          }
-          return errors;
-        }}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           // Register
           setTimeout(() => {
             if (!registered) {
               register(values, history);
-              registerChange();
               resetForm({ values: '' });
               setSubmitting(false);
+              if (errorsBackend) {
+                registerChange();
+              }
             }
             // Login if registered
             else {
@@ -81,24 +84,24 @@ const FormSignIn = ({ registered, registerChange, register, login, errorsBackend
           }, 400);
         }}
       >
-        {({ values, errors, touched, handleChange, handleSubmit, isSubmitting }) => (
+        {({ values, handleChange, handleSubmit, isSubmitting }) => (
           <Forms onSubmit={handleSubmit}>
-            <TitleInfo mgb="2rem">{registered ? 'Logowanie' : 'Rejestracja'}</TitleInfo>
+            <TitleInfo mgt="5rem" mgb="2rem">
+              {registered ? 'Logowanie' : 'Rejestracja'}
+            </TitleInfo>
             <FormCellSignIn
               name="email"
               type="text"
               onChange={handleChange}
               value={values.email}
-              errors={errors.email && touched.email && errors.email}
-              backendErr={errorsBackend.email}
+              errors={errorsBackend.email}
             />
             <FormCellSignIn
               name="password"
               type="password"
               onChange={handleChange}
               value={values.password}
-              errors={errors.password && touched.password && errors.password}
-              backendErr={errorsBackend.password}
+              errors={errorsBackend.password}
             />
             <Button mgt="3rem" type="submit" disabled={isSubmitting}>
               {registered ? 'Zaloguj się' : 'Zarajestruj się'}
@@ -109,7 +112,7 @@ const FormSignIn = ({ registered, registerChange, register, login, errorsBackend
       <Text fs="1.4" mgt="2rem">
         {registered ? 'Nie masz konta?' : 'Masz już konto?'}
       </Text>
-      <Button info fs="1.5" onClick={registerChange}>
+      <Button type="button" info fs="1.5" onClick={changeVariant}>
         {registered ? 'Zarejestruj się!' : 'Zaloguj się'}
       </Button>
     </Wrapper>
@@ -132,6 +135,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   register: (userData, history) => dispatch(registerUser(userData, history)),
   login: (userData, history) => dispatch(loginUser(userData, history)),
+  clearErrors: () => dispatch(clearErrors()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormSignIn);
