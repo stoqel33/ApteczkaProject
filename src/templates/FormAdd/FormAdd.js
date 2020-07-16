@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
+  min-height: 100%;
 
   @media screen and (min-width: 768px) {
     width: 80%;
@@ -54,6 +54,9 @@ const ButtonLink = styled(Button)`
   padding: 1rem;
   line-height: 100%;
 `;
+const TitleAdd = styled(Title)`
+  color: ${({ theme }) => theme.info};
+`;
 
 const FormAdd = ({
   selfsameMed,
@@ -87,9 +90,9 @@ const FormAdd = ({
 
   return (
     <Wrapper>
-      <Title mgt="2rem" mgb="2rem">
+      <TitleAdd mgt="2rem" mgb="2rem">
         Dodaj Lek
-      </Title>
+      </TitleAdd>
       <Formik
         initialValues={{
           name: '',
@@ -108,6 +111,8 @@ const FormAdd = ({
             errors.amount = 'Podaj ilość leku!';
           } else if (values.amount < 0) {
             errors.amount = 'Podaj poprawną ilość';
+          } else if (values.amount > 999) {
+            errors.amount = 'Nie można wprowadzić takiej ilości leku';
           }
           if (!values.date) {
             errors.date = 'Podaj datę ważności!';
