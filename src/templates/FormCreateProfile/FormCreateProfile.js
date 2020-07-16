@@ -17,12 +17,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-
-  background-image: url(${imgXsMedicines});
-  background-repeat: no-repeat;
-  background-position-x: center;
-  background-position-y: bottom;
+  height: 100%;
 
   @media screen and (min-width: 768px) {
     width: 80%;
@@ -43,6 +38,15 @@ const Forms = styled(Form)`
 const TitleInfo = styled(Text)`
   color: ${({ theme }) => theme.info};
 `;
+const Image = styled.div`
+  background-image: url(${imgXsMedicines});
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: bottom;
+
+  width: 17rem;
+  height: 17rem;
+`;
 
 const FormCreateProfile = ({ create, getProfile }) => {
   const history = useHistory();
@@ -54,7 +58,7 @@ const FormCreateProfile = ({ create, getProfile }) => {
       <Formik
         initialValues={{
           nickname: '',
-          date: '',
+          date: new Date().toISOString().slice(0, 10),
         }}
         validate={(values) => {
           const errors = {};
@@ -70,7 +74,9 @@ const FormCreateProfile = ({ create, getProfile }) => {
       >
         {({ values, errors, touched, handleChange, handleSubmit, isSubmitting }) => (
           <Forms onSubmit={handleSubmit}>
-            <TitleInfo mgb="5rem">Stwórz nazwę dla swojego profilu</TitleInfo>
+            <TitleInfo mgt="4rem" mgb="5rem">
+              Stwórz profil
+            </TitleInfo>
             <FormCellSignIn
               name="nickname"
               type="text"
@@ -85,7 +91,8 @@ const FormCreateProfile = ({ create, getProfile }) => {
               value={values.date}
               errors={errors.date && touched.date && errors.date}
             />
-            <Button mgt="3rem" type="submit" disabled={isSubmitting}>
+            <Image />
+            <Button mgt="2rem" type="submit" disabled={isSubmitting}>
               Stwórz konto
             </Button>
           </Forms>
