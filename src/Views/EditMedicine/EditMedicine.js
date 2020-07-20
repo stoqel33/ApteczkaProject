@@ -1,39 +1,27 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import FormEdit from 'templates/FormEdit/FormEdit';
 
-class EditMedicine extends React.Component {
-  state = {
-    deleteQuery: false,
+const EditMedicine = ({ medicine, medicines }) => {
+  const [deleteQuery, setDeleteQuery] = useState(false);
+  const handleToggleQuery = () => {
+    if (deleteQuery) setDeleteQuery(false);
+    else setDeleteQuery(true);
   };
-
-  handleEnableDelete = () => {
-    this.setState({
-      deleteQuery: true,
-    });
-  };
-
-  handleDisableDelete = () => {
-    this.setState({
-      deleteQuery: false,
-    });
-  };
-  render() {
-    return (
-      <>
-        <FormEdit
-          medicine={this.props.medicine}
-          medicines={this.props.medicines}
-          deleteQuery={this.state.deleteQuery}
-          handleEnableDelete={this.handleEnableDelete}
-          handleDisableDelete={this.handleDisableDelete}
-        />
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <FormEdit
+        medicine={medicine}
+        medicines={medicines}
+        deleteQuery={deleteQuery}
+        handleToggleQuery={handleToggleQuery}
+      />
+    </>
+  );
+};
 
 EditMedicine.propTypes = {
   medicine: PropTypes.arrayOf(
@@ -44,6 +32,7 @@ EditMedicine.propTypes = {
       expiryDate: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  medicines: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
