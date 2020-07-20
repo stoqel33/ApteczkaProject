@@ -70,7 +70,7 @@ const FormAdd = ({
   const today = new Date().toISOString().slice(0, 10);
   const history = useHistory();
   const backToHome = () => {
-    history.push('/ApteczkaProject');
+    history.push('/Apteczka');
   };
   const addTheSameMed = () => {
     const theSameNames = [];
@@ -173,7 +173,7 @@ const FormAdd = ({
           </Button>
         </SelfSameWrap>
       ) : null}
-      <ButtonLink mgt="5rem" as={Link} to="/ApteczkaProject">
+      <ButtonLink mgt="5rem" as={Link} to="/Apteczka">
         Wróć
       </ButtonLink>
     </Wrapper>
