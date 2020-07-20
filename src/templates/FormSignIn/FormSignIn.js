@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
-import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
 import { registerUser, loginUser, clearErrors } from 'data/Actions/authActions';
+import { withRouter } from 'react-router';
 
 import FormCellSignIn from 'Components/molecules/FormCellSignIn/FormCellSignIn';
 import Button from 'Components/atoms/Button/Button';
@@ -33,7 +32,7 @@ const Wrapper = styled.div`
     width: 70%;
   }
 `;
-const Forms = styled(Form)`
+const Forms = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -44,98 +43,111 @@ const TitleInfo = styled(Text)`
   color: ${({ theme }) => theme.info};
 `;
 
-const FormSignIn = ({
-  registered,
-  registerChange,
-  register,
-  login,
-  errorsBackend,
-  clearErrors,
-}) => {
-  const history = useHistory();
-  // change form, Login or Register and clear errors
-  const changeVariant = () => {
-    registerChange();
-    clearErrors();
+class FormSignIn extends React.Component {
+  state = {
+    email: '',
+    password: '',
+    errors: {},
   };
-  return (
-    <Wrapper>
-      <Formik
-        initialValues={{
-          email: '',
-          password: '',
-        }}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          // Register
-          setTimeout(() => {
-            if (!registered) {
-              register(values, history);
-              resetForm({ values: '' });
-              setSubmitting(false);
-              if (errorsBackend) {
-                registerChange();
-              }
-            }
-            // Login if registered
-            else {
-              login(values, history);
-              setSubmitting(false);
-            }
-          }, 400);
-        }}
-      >
-        {({ values, handleChange, handleSubmit, isSubmitting }) => (
-          <Forms onSubmit={handleSubmit}>
-            <TitleInfo mgt="5rem" mgb="2rem">
-              {registered ? 'Logowanie' : 'Rejestracja'}
-            </TitleInfo>
-            <FormCellSignIn
-              name="email"
-              type="text"
-              onChange={handleChange}
-              value={values.email}
-              errors={errorsBackend.email}
-            />
-            <FormCellSignIn
-              name="password"
-              type="password"
-              onChange={handleChange}
-              value={values.password}
-              errors={errorsBackend.password}
-            />
-            <Button mgt="3rem" type="submit" disabled={isSubmitting}>
-              {registered ? 'Zaloguj się' : 'Zarajestruj się'}
-            </Button>
-          </Forms>
-        )}
-      </Formik>
-      <Text fs="1.4" mgt="2rem">
-        {registered ? 'Nie masz konta?' : 'Masz już konto?'}
-      </Text>
-      <Button type="button" info fs="1.5" onClick={changeVariant}>
-        {registered ? 'Zarejestruj się!' : 'Zaloguj się'}
-      </Button>
-    </Wrapper>
-  );
-};
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.errors !== state.errors) {
+      return {
+        errors: props.errors,
+      };
+    }
+    return null;
+  }
+
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) this.props.history.push('/Apteczka');
+  }
+
+  onChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  onSubmit = (e) => {
+    e.preventDefault();
+
+    const userData = {
+      email: this.state.email,
+      password: this.state.password,
+    };
+
+    if (!this.props.registered) {
+      this.props.register(userData, this.props.history);
+    } else {
+      this.props.login(userData, this.props.history);
+    }
+  };
+
+  onChangeOption = () => {
+    const { registerChange, clear } = this.props;
+    registerChange();
+    clear();
+    this.setState({
+      email: '',
+      password: '',
+    });
+  };
+
+  render() {
+    const { errors } = this.state;
+    const { registered } = this.props;
+
+    return (
+      <Wrapper>
+        <Forms noValidate onSubmit={this.onSubmit}>
+          <TitleInfo mgt="5rem" mgb="2rem">
+            {registered ? 'Logowanie' : 'Rejestracja'}
+          </TitleInfo>
+          <FormCellSignIn
+            name="email"
+            autoComplete="on"
+            type="text"
+            onChange={this.onChange}
+            value={this.state.email}
+            errors={errors.email}
+          />
+          <FormCellSignIn
+            name="password"
+            autoComplete="on"
+            type="password"
+            onChange={this.onChange}
+            value={this.state.password}
+            errors={errors.password}
+          />
+          <Button mgt="3rem" type="submit">
+            {registered ? 'Zaloguj się' : 'Zarajestruj się'}
+          </Button>
+        </Forms>
+        <Text fs="1.4" mgt="2rem">
+          {registered ? 'Nie masz konta?' : 'Masz już konto?'}
+        </Text>
+        <Button type="button" info fs="1.5" onClick={this.onChangeOption}>
+          {registered ? 'Zarejestruj się!' : 'Zaloguj się'}
+        </Button>
+      </Wrapper>
+    );
+  }
+}
 
 FormSignIn.propTypes = {
-  registered: PropTypes.bool.isRequired,
-  registerChange: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
-  errorsBackend: PropTypes.object.isRequired,
+  clear: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.state,
-  errorsBackend: state.errors,
+  auth: state.auth,
+  errors: state.errors,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   register: (userData, history) => dispatch(registerUser(userData, history)),
   login: (userData, history) => dispatch(loginUser(userData, history)),
-  clearErrors: () => dispatch(clearErrors()),
+  clear: () => dispatch(clearErrors()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormSignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(FormSignIn));
