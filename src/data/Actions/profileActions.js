@@ -12,7 +12,7 @@ export const createProfile = (profilData, history) => (dispatch) => {
   return axios
     .post(`${URL}/profile/`, profilData)
     .then(() => {
-      history.push(`/ApteczkaProject/`);
+      history.push(`/Apteczka/`);
     })
     .catch((err) => {
       dispatch({
@@ -31,7 +31,7 @@ export const getProfile = (history) => (dispatch) => {
         type: GET_PROFILE,
         payload: res.data,
       });
-      history.push(`/ApteczkaProject/`);
+      history.push(`/Apteczka/`);
     })
     .catch(() =>
       dispatch({
