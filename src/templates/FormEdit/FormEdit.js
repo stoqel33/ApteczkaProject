@@ -64,13 +64,12 @@ const FormEdit = ({
   changeMed,
   removeMed,
   deleteQuery,
-  handleEnableDelete,
-  handleDisableDelete,
+  handleToggleQuery,
 }) => {
   const today = new Date().toISOString().slice(0, 10);
   const history = useHistory();
   const backToHome = () => {
-    history.push('/ApteczkaProject');
+    history.push('/Apteczka');
   };
   const handleRemove = () => {
     removeMed(medicine[0]._id);
@@ -171,8 +170,8 @@ const FormEdit = ({
         )}
       </Formik>
       <InnerWrapButton>
-        <ButtonIcon onClick={handleEnableDelete} icon={binIcon} size="3rem" />
-        <ButtonLink as={Link} to="/ApteczkaProject">
+        <ButtonIcon onClick={handleToggleQuery} icon={binIcon} size="3rem" />
+        <ButtonLink as={Link} to="/Apteczka">
           Wróć
         </ButtonLink>
       </InnerWrapButton>
@@ -182,7 +181,7 @@ const FormEdit = ({
           <Button mgr="1.5rem" onClick={handleRemove}>
             TAK
           </Button>
-          <Button mgl="1.5rem" onClick={handleDisableDelete}>
+          <Button mgl="1.5rem" onClick={handleToggleQuery}>
             NIE
           </Button>
         </RemoveWrap>
@@ -205,8 +204,7 @@ FormEdit.propTypes = {
   changeMed: PropTypes.func.isRequired,
   removeMed: PropTypes.func.isRequired,
   deleteQuery: PropTypes.bool.isRequired,
-  handleEnableDelete: PropTypes.func.isRequired,
-  handleDisableDelete: PropTypes.func.isRequired,
+  handleToggleQuery: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
