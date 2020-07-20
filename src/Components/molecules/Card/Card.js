@@ -12,7 +12,6 @@ import ExpiredBar from 'Components/atoms/ExpiredBar/ExpiredBar';
 import pillIcon from 'assets/icons/pill.svg';
 import infoIcon from 'assets/icons/info.svg';
 import editIcon from 'assets/icons/edit.svg';
-import exitIcon from 'assets/icons/exit.svg';
 
 const showing = keyframes`
   from {
@@ -35,6 +34,7 @@ const Wrapper = styled.div`
   height: 9rem;
   padding: 0.5rem;
   margin-bottom: 2rem;
+
   border-radius: 2rem 2rem 0.9rem 0.9rem;
   border: 2px solid black;
   border-bottom: none;
@@ -49,6 +49,7 @@ const Wrapper = styled.div`
       margin-bottom: 0;
       border-radius: 2rem 2rem 0 0;
       border: 2px solid red;
+      border-bottom: none;
     `}
   ${({ moreInfo }) =>
     moreInfo &&
@@ -100,15 +101,16 @@ const InnerWrapper = styled.div`
       color: ${() => (expired ? 'red' : 'black')};
     `}
 `;
+const OuterWrapper = styled.div`
+  margin: 0 1rem;
+`;
 
 const Card = ({ id, name, amount, date, today, takePill }) => {
   const [info, setInfo] = useState(false);
 
-  const handleInfoEnable = () => {
-    setInfo(true);
-  };
-  const handleInfoDisable = () => {
-    setInfo(false);
+  const handleToggleInfo = () => {
+    if (info) setInfo(false);
+    else setInfo(true);
   };
 
   const handleTakeMedicine = () => {
@@ -116,7 +118,7 @@ const Card = ({ id, name, amount, date, today, takePill }) => {
   };
   const expired = today > date;
   return (
-    <>
+    <OuterWrapper>
       <Wrapper expired={expired} moreInfo={info}>
         <InnerWrapper medicine>
           <Text mgb="0.5rem">{name}</Text>
@@ -129,18 +131,14 @@ const Card = ({ id, name, amount, date, today, takePill }) => {
           </Text>
         </InnerWrapper>
         <InnerWrapper info>
-          {info ? (
-            <ButtonIcon icon={exitIcon} onClick={handleInfoDisable} />
-          ) : (
-            <ButtonIcon icon={infoIcon} onClick={handleInfoEnable} />
-          )}
+          <ButtonIcon icon={infoIcon} onClick={handleToggleInfo} />
         </InnerWrapper>
         <InnerWrapper button>
           <ButtonIcon
             icon={editIcon}
             size="2.3rem"
             as={Link}
-            to={`/ApteczkaProject/editMedicine/${id}`}
+            to={`/Apteczka/editMedicine/${id}`}
           />
           <ButtonIcon icon={pillIcon} size="2.3rem" onClick={handleTakeMedicine} />
         </InnerWrapper>
@@ -151,7 +149,7 @@ const Card = ({ id, name, amount, date, today, takePill }) => {
         )}
       </Wrapper>
       {expired && <ExpiredBar>Minęła data ważności leku</ExpiredBar>}
-    </>
+    </OuterWrapper>
   );
 };
 
