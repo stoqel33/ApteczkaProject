@@ -10,13 +10,15 @@ import ButtonIcon from 'Components/atoms/ButtonIcon/ButtonIcon';
 import SearchMedicine from 'templates/SearchMedicine/SearchMedicine';
 import BurgerMenu from 'templates/BurgerMenu/BurgerMenu';
 import Burger from 'Components/atoms/Burger/Burger';
+import Text from 'Components/atoms/Text/Text';
 
 import search from 'assets/icons/search.svg';
+import imgXsEmpty from 'assets/image/xsmall-empty.png';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100%;
   text-align: center;
 `;
 const TopBarWrap = styled.div`
@@ -34,6 +36,7 @@ const Icon = styled.div`
 const MedicinesWrap = styled.div`
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   margin: 0 auto;
   @media screen and (min-width: 768px) {
     width: 100%;
@@ -49,10 +52,22 @@ const MedicinesWrap = styled.div`
   }
 `;
 const ButtonLink = styled(Button)`
-  height: 100%;
-  margin: 5rem auto 0;
+  height: 10%;
+  margin: 5rem auto 2rem;
   padding: 1rem;
   line-height: 100%;
+`;
+const TitleApp = styled(Title)`
+  color: ${({ theme }) => theme.lightmode.colors.secondary};
+`;
+const Image = styled.div`
+  width: 17rem;
+  height: 17rem;
+  margin: 5rem auto;
+
+  background-image: url(${imgXsEmpty});
+  background-repeat: no-repeat;
+  background-position-x: center;
 `;
 
 const MedicinesList = ({
@@ -63,20 +78,21 @@ const MedicinesList = ({
   today,
   medicines,
 }) => {
-  return (
-    <Wrapper>
-      <TopBarWrap>
-        <Icon onClick={searchToggle}>
-          {medicines.length > 0 && !burgerMenu && (
-            <ButtonIcon icon={search} size="2.8rem" />
-          )}
-        </Icon>
-        <Title fs="3">Apteczka</Title>
-        <Icon onClick={burgerToggle}>
-          <Burger open={burgerMenu} change={burgerToggle} />
-        </Icon>
-      </TopBarWrap>
-      <BurgerMenu open={burgerMenu} />
+  const TopBar = (
+    <TopBarWrap>
+      <Icon onClick={searchToggle}>
+        {medicines.length > 0 && !burgerMenu && (
+          <ButtonIcon icon={search} size="2.8rem" />
+        )}
+      </Icon>
+      <TitleApp fs="3">Apteczka</TitleApp>
+      <Icon onClick={burgerToggle}>
+        <Burger open={burgerMenu} change={burgerToggle} />
+      </Icon>
+    </TopBarWrap>
+  );
+  const Medicines = (
+    <>
       {searching ? (
         <SearchMedicine medicines={medicines} today={today} handleToggle={searchToggle} />
       ) : (
@@ -93,13 +109,31 @@ const MedicinesList = ({
               />
             ))
           ) : (
-            <Title>Brak leków</Title>
+            <>
+              <Image />
+              <Text mgt="2rem">Twoja apteczka jest pusta</Text>
+            </>
           )}
         </MedicinesWrap>
       )}
-      <ButtonLink big="true" as={Link} to="/ApteczkaProject/addMedicine">
-        Dodaj nowy lek
-      </ButtonLink>
+    </>
+  );
+  const ButtonAdd = (
+    <>
+      {!searching && (
+        <ButtonLink big="true" as={Link} to="/Apteczka/addMedicine">
+          Dodaj nowy lek
+        </ButtonLink>
+      )}
+    </>
+  );
+
+  return (
+    <Wrapper>
+      {TopBar}
+      <BurgerMenu open={burgerMenu} />
+      {Medicines}
+      {ButtonAdd}
     </Wrapper>
   );
 };
