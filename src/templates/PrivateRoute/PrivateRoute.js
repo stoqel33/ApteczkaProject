@@ -3,6 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+// check if user is logged
 const PrivateRoute = ({ component: Component, auth, ...rest }) => {
   return (
     <Route
@@ -11,7 +12,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
         auth.isAuthenticated === true ? (
           <Component {...props} />
         ) : (
-          <Redirect to="/ApteczkaProject/user/signin" />
+          <Redirect to="/Apteczka/user/signin" />
         )
       }
     />
