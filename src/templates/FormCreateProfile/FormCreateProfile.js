@@ -48,10 +48,11 @@ const Image = styled.div`
   height: 17rem;
 `;
 
-const FormCreateProfile = ({ create, getProfile }) => {
+const FormCreateProfile = ({ createUser, getUser }) => {
   const history = useHistory();
   useEffect(() => {
-    getProfile(history);
+    getUser(history);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Wrapper>
@@ -69,7 +70,7 @@ const FormCreateProfile = ({ create, getProfile }) => {
         }}
         onSubmit={(values) => {
           // Create profile
-          create(values, history);
+          createUser(values, history);
         }}
       >
         {({ values, errors, touched, handleChange, handleSubmit, isSubmitting }) => (
@@ -103,8 +104,8 @@ const FormCreateProfile = ({ create, getProfile }) => {
 };
 
 FormCreateProfile.propTypes = {
-  create: PropTypes.func.isRequired,
-  getProfile: PropTypes.func.isRequired,
+  createUser: PropTypes.func.isRequired,
+  getUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -112,8 +113,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  create: (userData, history) => dispatch(createProfile(userData, history)),
-  getProfile: (history) => dispatch(getProfile(history)),
+  createUser: (userData, history) => dispatch(createProfile(userData, history)),
+  getUser: (history) => dispatch(getProfile(history)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormCreateProfile);
