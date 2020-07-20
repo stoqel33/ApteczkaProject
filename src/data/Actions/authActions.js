@@ -10,7 +10,7 @@ export const registerUser = (userData, history) => (dispatch) => {
     .post(`${URL}/user/register`, userData)
     .then(() => {
       dispatch(clearErrors());
-      history.push('/ApteczkaProject/user/signin');
+      history.go();
     })
     .catch((err) => {
       dispatch({
@@ -30,7 +30,8 @@ export const loginUser = (userData, history) => (dispatch) => {
       setAuthToken(token);
       const decoded = jwt_decode(token);
       dispatch(setCurrentUser(decoded));
-      history.push('/ApteczkaProject/profile/create');
+      dispatch(clearErrors());
+      history.push('/Apteczka/profile/create');
     })
     .catch((err) => {
       dispatch({
