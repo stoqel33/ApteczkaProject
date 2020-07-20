@@ -43,7 +43,7 @@ connection.once('open', () => {
 });
 
 // Use Routes
-app.use('/ApteczkaProject', medicines);
+app.use('/Apteczka', medicines);
 app.use('/user', user);
 app.use('/profile', profile);
 
