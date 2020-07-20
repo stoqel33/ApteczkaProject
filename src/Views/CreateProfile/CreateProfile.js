@@ -1,5 +1,5 @@
 import React from 'react';
-import FormCreateProfile from '../../templates/FormCreateProfile/FormCreateProfile';
+import FormCreateProfile from 'templates/FormCreateProfile/FormCreateProfile';
 
 const CreateProfile = () => {
   return <FormCreateProfile />;
