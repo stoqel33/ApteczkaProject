@@ -7,16 +7,16 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from 'data/Utils/setAuthToken';
 import { setCurrentUser, logoutUser } from 'data/Actions/authActions';
 import { clearProfile } from 'data/Actions/profileActions';
-
 import { theme } from 'Theme/mainTheme';
+
 import GlobalStyle from 'Theme/GlobalStyle';
 import Medicine from 'Views/Medicine/Medicine';
 import AddMedicine from 'Views/AddMedicine/AddMedicine';
 import EditMedicine from 'Views/EditMedicine/EditMedicine';
 import SignIn from 'Views/SignIn/SignIn';
 import CreateProfile from 'Views/CreateProfile/CreateProfile';
-
 import PrivateRoute from 'templates/PrivateRoute/PrivateRoute';
+import ProtectedRoute from 'templates/ProtectedRoute/ProtectedRoute';
 
 const Root = () => {
   // Check for token
@@ -40,20 +40,20 @@ const Root = () => {
           <>
             <GlobalStyle />
             <Switch>
-              <PrivateRoute exact path="/ApteczkaProject" component={Medicine} />
-              <PrivateRoute
+              <ProtectedRoute exact path="/Apteczka" component={Medicine} />
+              <PrivateRoute exact path="/Apteczka/addMedicine" component={AddMedicine} />
+              <ProtectedRoute
                 exact
-                path="/ApteczkaProject/addMedicine"
-                component={AddMedicine}
-              />
-              <PrivateRoute
-                exact
-                path="/ApteczkaProject/editMedicine/:id"
+                path="/Apteczka/editMedicine/:id"
                 component={EditMedicine}
               />
-              <Route path="/ApteczkaProject/profile/create" component={CreateProfile} />
+              <PrivateRoute
+                exact
+                path="/Apteczka/profile/create"
+                component={CreateProfile}
+              />
             </Switch>
-            <Route path="/ApteczkaProject/user/signin" component={SignIn} />
+            <Route exact path="/Apteczka/user/signin" component={SignIn} />
           </>
         </ThemeProvider>
       </Router>
