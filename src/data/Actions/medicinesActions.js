@@ -15,7 +15,7 @@ import {
 export const getMedicines = () => (dispatch) => {
   dispatch(setMedicinesLoading());
   axios
-    .get(`${URL}/ApteczkaProject/`)
+    .get(`${URL}/Apteczka/`)
     .then((res) => {
       dispatch({
         type: MEDICINES_GET,
@@ -33,7 +33,7 @@ export const getMedicines = () => (dispatch) => {
 export const addMedicines = (medicine) => (dispatch) => {
   dispatch(clearErrors());
   axios
-    .post(`${URL}/ApteczkaProject/addMedicine`, medicine)
+    .post(`${URL}/Apteczka/addMedicine`, medicine)
     .then((res) => {
       dispatch({
         type: MEDICINES_ADD,
@@ -51,7 +51,7 @@ export const addMedicines = (medicine) => (dispatch) => {
 export const changeMedicine = (medicine, id) => (dispatch) => {
   dispatch(clearErrors());
   axios
-    .post(`${URL}/ApteczkaProject/editMedicine/update/${id}`, medicine)
+    .post(`${URL}/Apteczka/editMedicine/update/${id}`, medicine)
     .then((res) => {
       dispatch({
         type: MEDICINES_CHANGE,
@@ -68,7 +68,7 @@ export const changeMedicine = (medicine, id) => (dispatch) => {
 
 export const removeMedicine = (id) => (dispatch) => {
   axios
-    .delete(`${URL}/ApteczkaProject/editMedicine/${id}`)
+    .delete(`${URL}/Apteczka/editMedicine/${id}`)
     .then(() => {
       dispatch({
         type: MEDICINES_REMOVE,
@@ -86,7 +86,7 @@ export const removeMedicine = (id) => (dispatch) => {
 export const decreaseMedicine = (id) => (dispatch) => {
   dispatch(setMedicinesLoading());
   axios
-    .put(`${URL}/ApteczkaProject/takePill/${id}`)
+    .put(`${URL}/Apteczka/takePill/${id}`)
     .then(() => {
       dispatch({
         type: MEDICINE_DECREASE,
