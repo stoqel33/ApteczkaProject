@@ -1,5 +1,9 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+/* eslint-disable camelcase */
+/* eslint-disable no-undef */
+/* eslint-disable import/no-named-as-default */
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import store from 'data/Store';
@@ -15,10 +19,42 @@ import AddMedicine from 'Views/AddMedicine/AddMedicine';
 import EditMedicine from 'Views/EditMedicine/EditMedicine';
 import SignIn from 'Views/SignIn/SignIn';
 import CreateProfile from 'Views/CreateProfile/CreateProfile';
+import NotFound from 'Views/NotFound/NotFound';
 import PrivateRoute from 'templates/PrivateRoute/PrivateRoute';
 import ProtectedRoute from 'templates/ProtectedRoute/ProtectedRoute';
 
+// get window size and listening resize
+function useWindowSize() {
+  const isClient = typeof window === 'object';
+
+  function getSize() {
+    return {
+      width: isClient ? window.innerWidth : undefined,
+      height: isClient ? window.innerHeight : undefined,
+    };
+  }
+
+  const [windowSize, setWindowSize] = useState(getSize);
+
+  useEffect(() => {
+    if (!isClient) {
+      return false;
+    }
+
+    function handleResize() {
+      setWindowSize(getSize());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowSize;
+}
+
 const Root = () => {
+  const size = useWindowSize();
+
   // Check for token
   if (localStorage.jwtToken) {
     setAuthToken(localStorage.jwtToken);
@@ -38,7 +74,7 @@ const Root = () => {
       <Router>
         <ThemeProvider theme={theme}>
           <>
-            <GlobalStyle />
+            <GlobalStyle size={size} />
             <Switch>
               <ProtectedRoute exact path="/Apteczka" component={Medicine} />
               <PrivateRoute exact path="/Apteczka/addMedicine" component={AddMedicine} />
@@ -52,8 +88,10 @@ const Root = () => {
                 path="/Apteczka/profile/create"
                 component={CreateProfile}
               />
+              <Route exact path="/Apteczka/user/signin" component={SignIn} />
+              <Route path="/404" exact component={NotFound} />
+              <Redirect from="*" to="/404" />
             </Switch>
-            <Route exact path="/Apteczka/user/signin" component={SignIn} />
           </>
         </ThemeProvider>
       </Router>
