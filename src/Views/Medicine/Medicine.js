@@ -16,6 +16,7 @@ class Medicine extends React.Component {
   state = {
     search: false,
     burgerMenu: false,
+    burgerRef: false,
     today: new Date().toISOString().slice(0, 10),
   };
 
@@ -54,11 +55,21 @@ class Medicine extends React.Component {
     }));
     if (this.state.burgerMenu) {
       this.hideTargetElement();
+      setTimeout(() => {
+        this.setState({ burgerRef: false });
+      }, 500);
     } else {
       window.scrollTo(0, 0);
       this.showTargetElement();
     }
   };
+
+  handleCheckRef = () => {
+    this.setState((prevState) => ({
+      burgerRef: !prevState.burgerRef,
+    }));
+  };
+
   componentWillUnmount() {
     clearAllBodyScrollLocks();
   }
@@ -73,6 +84,8 @@ class Medicine extends React.Component {
         <MedicinesList
           searchToggle={this.handleSearchToogle}
           burgerToggle={this.handleBurgerToogle}
+          licencesToggle={this.handleCheckRef}
+          licences={this.state.burgerRef}
           searching={this.state.search}
           burgerMenu={this.state.burgerMenu}
           today={this.state.today}
