@@ -12,6 +12,7 @@ const Button = styled.button`
   background-color: ${({ theme }) => theme.lightmode.colors.background};
   text-align: center;
   text-decoration: none;
+  cursor: pointer;
 
   margin-top: ${({ mgt }) => mgt || '0'};
   margin-right: ${({ mgr }) => mgr || '0'};
@@ -27,8 +28,9 @@ const Button = styled.button`
     big &&
     css`
       width: 22rem;
-      height: 6rem;
+      height: 5rem;
       font-size: 1.8rem;
+      line-height: 5rem;
     `};
   ${({ info }) =>
     info &&
