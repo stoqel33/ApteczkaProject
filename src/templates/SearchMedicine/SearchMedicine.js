@@ -6,12 +6,12 @@ import Input from 'Components/atoms/Input/Input';
 import ButtonIcon from 'Components/atoms/ButtonIcon/ButtonIcon';
 import Card from 'Components/molecules/Card/Card';
 
-import exit from 'assets/icons/exit.svg';
+import close from 'assets/icons/close.svg';
 
 const WrapInput = styled.div`
   position: relative;
   width: 25rem;
-  margin: 0 auto 4rem;
+  margin: 0 auto 2rem;
 `;
 const MedicinesWrap = styled.div`
   display: flex;
@@ -31,6 +31,7 @@ const MedicinesWrap = styled.div`
   }
 `;
 const InputSearch = styled(Input)`
+  padding: 0.5rem;
   padding-right: 3rem;
 `;
 const ButtonIconExit = styled(ButtonIcon)`
@@ -38,9 +39,7 @@ const ButtonIconExit = styled(ButtonIcon)`
   top: 50%;
   right: 1rem;
   transform: translateY(-50%);
-  fill: red;
-  color: red;
-  background-color: white;
+  background-color: transparent;
 `;
 
 const SearchMedicine = ({ medicines, today, handleToggle }) => {
@@ -58,7 +57,7 @@ const SearchMedicine = ({ medicines, today, handleToggle }) => {
     <>
       <WrapInput>
         <InputSearch type="text" value={nameMed} onChange={handleNameSearch} />
-        <ButtonIconExit icon={exit} size="1.4rem" onClick={handleToggle} />
+        <ButtonIconExit icon={close} size="1.4rem" onClick={handleToggle} />
       </WrapInput>
       <MedicinesWrap>
         {searchMedicine.map(({ _id, name, amount, expiryDate }) => (
