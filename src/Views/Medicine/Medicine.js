@@ -8,6 +8,7 @@ import {
   clearAllBodyScrollLocks,
 } from 'body-scroll-lock';
 import { getMedicines } from 'data/Actions/medicinesActions';
+import AppContect from 'context';
 
 import Load from 'Components/atoms/Load/Load';
 import MedicinesList from 'templates/MedicinesList/MedicinesList';
@@ -80,19 +81,22 @@ class Medicine extends React.Component {
       medicines.sort((a, b) => a.name.toString().localeCompare(b.name, 'pl'));
     }
     return (
-      <>
+      <AppContect.Provider
+        value={{
+          licencesState: this.state.burgerRef,
+          handleLicences: this.handleCheckRef,
+        }}
+      >
         <MedicinesList
           searchToggle={this.handleSearchToogle}
           burgerToggle={this.handleBurgerToogle}
-          licencesToggle={this.handleCheckRef}
-          licences={this.state.burgerRef}
           searching={this.state.search}
           burgerMenu={this.state.burgerMenu}
           today={this.state.today}
           medicines={medicines}
         />
         {loading && <Load />}
-      </>
+      </AppContect.Provider>
     );
   }
 }

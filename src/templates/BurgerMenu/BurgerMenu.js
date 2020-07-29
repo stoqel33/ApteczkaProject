@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import AppContext from 'context';
 
 // import { device } from 'Theme/mainTheme';
 import { logoutUser } from 'data/Actions/authActions';
@@ -48,20 +49,20 @@ const HrefWrapper = styled.div`
 const IconWrapper = styled.div``;
 const ImageWrapper = styled.div``;
 
-const BurgerMenu = ({ height, open, logout, clear, licencesToggle, licences }) => {
+const BurgerMenu = ({ height, open, logout, clear }) => {
   const handleLogout = () => {
     logout();
     clear();
   };
 
-  const List = (
+  const List = ({ handleLicences }) => (
     <InnerWrapper>
-      <Option onClick={licencesToggle}>Źródła</Option>
+      <Option onClick={handleLicences}>Źródła</Option>
       <Option onClick={handleLogout}>Wyloguj</Option>
     </InnerWrapper>
   );
 
-  const References = (
+  const References = ({ handleLicences }) => (
     <InnerWrapper style={{ justifyContent: 'space-between' }}>
       <HrefWrapper>
         <Text>Ikony</Text>
@@ -106,17 +107,21 @@ const BurgerMenu = ({ height, open, logout, clear, licencesToggle, licences }) =
           </Href>
         </ImageWrapper>
       </HrefWrapper>
-      <Button style={{ alignSelf: 'center' }} onClick={licencesToggle}>
+      <Button style={{ alignSelf: 'center' }} onClick={handleLicences}>
         Wróć
       </Button>
     </InnerWrapper>
   );
 
   return (
-    <Wrapper open={open} height={height}>
-      {licences ? null : List}
-      {licences && References}
-    </Wrapper>
+    <AppContext.Consumer>
+      {(context) => (
+        <Wrapper open={open} height={height}>
+          {context.licencesState ? null : List(context)}
+          {context.licencesState && References(context)}
+        </Wrapper>
+      )}
+    </AppContext.Consumer>
   );
 };
 
@@ -125,8 +130,10 @@ BurgerMenu.propTypes = {
   open: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
   clear: PropTypes.func.isRequired,
-  licencesToggle: PropTypes.func.isRequired,
-  licences: PropTypes.bool.isRequired,
+  context: PropTypes.shape({
+    handleLicences: PropTypes.func.isRequired,
+    licencesState: PropTypes.bool.isRequired,
+  }).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
