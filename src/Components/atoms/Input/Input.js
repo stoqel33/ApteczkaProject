@@ -1,9 +1,11 @@
 import styled, { css } from 'styled-components';
 
 const Input = styled.input`
+  display: inline-block;
   padding: 1rem 2rem;
   width: 25rem;
   border-radius: 1rem;
+  background-color: transparent;
   border: 2px solid ${({ theme }) => theme.lightmode.colors.primary};
   font-size: 2rem;
   font-weight: 400;
@@ -28,6 +30,7 @@ const Input = styled.input`
 
   &[type='date'] {
     font-size: 1.5rem;
+    padding-left: 4rem;
   }
 
   ${({ error }) =>
@@ -74,6 +77,16 @@ const Input = styled.input`
         border-radius: 0;
         border-top: 1px solid ${({ theme }) => theme.lightmode.colors.secondary};
         border-bottom: 1px solid ${({ theme }) => theme.lightmode.colors.secondary};
+      }
+
+      &[type='date']::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        display: none;
+      }
+
+      &[type='date']::-webkit-calendar-picker-indicator {
+        -webkit-appearance: none;
+        display: none;
       }
     `}
 `;
