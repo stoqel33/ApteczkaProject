@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components/macro';
+import { device } from 'Theme/mainTheme';
 
 const GlobalStyle = createGlobalStyle`
   *{
@@ -7,10 +8,12 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-decoration: none;
   }
 
   html{
     font-size: 62.5%;
+    height: ${(props) => (props.size ? props.size.height : '700')}px;
   }
 
   body{
@@ -18,14 +21,23 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Montserrat', sans-serif;
     background: ${({ theme }) => theme.lightmode.colors.background};
     color: ${({ theme }) => theme.lightmode.colors.primary};
-    min-height: 100vh;
+    height: ${(props) => (props.size ? props.size.height : '700')}px;
 
-    @media screen and (min-width: 1000px) {
-        max-width: 100rem;
+    @media screen and ${device.laptop} {
         margin: 0 auto;
       }
     }
 
+  #root{
+    height: 100%;
+  }
+
+  input{
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    -webkit-appearance: none;
+  }
+  
   textarea:focus,
   input:focus,
   button:focus {
@@ -41,6 +53,7 @@ const GlobalStyle = createGlobalStyle`
   input[type='number'] {
     -moz-appearance: textfield;
   }
+
 `;
 
 export default GlobalStyle;
