@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { device } from 'Theme/mainTheme';
 
 import Card from 'Components/molecules/Card/Card';
 import Button from 'Components/atoms/Button/Button';
@@ -14,12 +15,15 @@ import Text from 'Components/atoms/Text/Text';
 
 import search from 'assets/icons/search.svg';
 import imgXsEmpty from 'assets/image/xsmall-empty.png';
+import imgSEmpty from 'assets/image/small-empty.png';
+import imgMEmpty from 'assets/image/medium-empty.png';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
   text-align: center;
+  transition: 1s;
 `;
 const TopBarWrap = styled.div`
   display: grid;
@@ -28,6 +32,10 @@ const TopBarWrap = styled.div`
   justify-items: center;
   align-items: center;
   margin: 2rem 0;
+
+  @media screen and ${device.laptop} {
+    grid-template-columns: 1fr 20rem 1fr;
+  }
 `;
 const Icon = styled.div`
   top: 15px;
@@ -36,26 +44,23 @@ const Icon = styled.div`
 const MedicinesWrap = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   margin: 0 auto;
-  @media screen and (min-width: 768px) {
+
+  @media screen and ${device.tablet} {
     width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
   }
-  @media screen and (min-width: 1000px) {
-    width: 100%;
+  @media screen and ${device.laptop} {
+    width: 100rem;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-evenly;
   }
 `;
 const ButtonLink = styled(Button)`
-  height: 10%;
-  margin: 5rem auto 2rem;
-  padding: 1rem;
-  line-height: 100%;
+  margin: 5rem auto 5rem;
 `;
 const TitleApp = styled(Title)`
   color: ${({ theme }) => theme.lightmode.colors.secondary};
@@ -68,6 +73,21 @@ const Image = styled.div`
   background-image: url(${imgXsEmpty});
   background-repeat: no-repeat;
   background-position-x: center;
+
+  @media screen and (${device.mobileM}) {
+    width: 22rem;
+    height: 22rem;
+    background-image: url(${imgSEmpty});
+  }
+  @media screen and (${device.tablet}) {
+    width: 30rem;
+    height: 30rem;
+    background-image: url(${imgMEmpty});
+  }
+`;
+const InnerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const MedicinesList = ({
@@ -78,8 +98,14 @@ const MedicinesList = ({
   today,
   medicines,
 }) => {
+  const [heightTop, setHeightTop] = useState(0);
+  useEffect(() => {
+    const height = document.getElementById('topBar').offsetHeight + 30;
+    setHeightTop(height);
+  }, []);
+
   const TopBar = (
-    <TopBarWrap>
+    <TopBarWrap id="topBar">
       <Icon onClick={searchToggle}>
         {medicines.length > 0 && !burgerMenu && (
           <ButtonIcon icon={search} size="2.8rem" />
@@ -91,6 +117,7 @@ const MedicinesList = ({
       </Icon>
     </TopBarWrap>
   );
+
   const Medicines = (
     <>
       {searching ? (
@@ -109,15 +136,16 @@ const MedicinesList = ({
               />
             ))
           ) : (
-            <>
+            <InnerWrapper>
               <Image />
               <Text mgt="2rem">Twoja apteczka jest pusta</Text>
-            </>
+            </InnerWrapper>
           )}
         </MedicinesWrap>
       )}
     </>
   );
+
   const ButtonAdd = (
     <>
       {!searching && (
@@ -131,7 +159,7 @@ const MedicinesList = ({
   return (
     <Wrapper>
       {TopBar}
-      <BurgerMenu open={burgerMenu} />
+      <BurgerMenu open={burgerMenu} height={heightTop} />
       {Medicines}
       {ButtonAdd}
     </Wrapper>
