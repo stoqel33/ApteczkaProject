@@ -66,7 +66,7 @@ const SearchMedicine = ({ medicines, today, handleToggle }) => {
             id={_id}
             name={name}
             amount={amount}
-            date={expiryDate}
+            date={expiryDate.slice(0, 10)}
             today={today}
           />
         ))}
