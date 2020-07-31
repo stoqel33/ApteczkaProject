@@ -1,5 +1,5 @@
 {
-  "homepage": "https://stoqel33.github.io/ApteczkaProject/",
+  "homepage": "https://stoqel33.github.io/Apteczka/",
   "name": "apteczka-projekt",
   "version": "0.1.0",
   "private": true,
@@ -33,7 +33,8 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "browserslist": {
     "production": [

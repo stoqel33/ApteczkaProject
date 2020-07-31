@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const path = require('path');
 const cors = require('cors');
 
 const medicines = require('./routes/medicines');
@@ -46,5 +47,15 @@ connection.once('open', () => {
 app.use('/Apteczka', medicines);
 app.use('/user', user);
 app.use('/profile', profile);
+
+// Server static assets if in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('../build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../', 'build', 'index.html'));
+  });
+}
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
