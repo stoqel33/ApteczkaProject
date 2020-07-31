@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import AppContext from 'context';
+import { device } from 'Theme/mainTheme';
 
 // import { device } from 'Theme/mainTheme';
 import { logoutUser } from 'data/Actions/authActions';
@@ -24,14 +25,15 @@ const Wrapper = styled.div`
   transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(100%)')};
   background-color: ${({ theme }) => theme.lightmode.colors.background};
   transition: transform 0.3s ease-in-out;
+  z-index: 1;
 `;
 const InnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 70%;
-  height: 70%;
-  margin-top: 5rem;
+  width: 80%;
+  height: 80%;
+  margin-top: 3rem;
 `;
 const Option = styled(Text)`
   color: ${({ theme }) => theme.info};
@@ -46,8 +48,19 @@ const HrefWrapper = styled.div`
   justify-content: space-around;
   flex-grow: 0.5;
 `;
-const IconWrapper = styled.div``;
-const ImageWrapper = styled.div``;
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  line-height: 135%;
+
+  @media screen and ${device.tablet} {
+    line-height: 180%;
+  }
+
+  @media screen and ${device.laptop} {
+    line-height: 200%;
+  }
+`;
 
 const BurgerMenu = ({ height, open, logout, clear }) => {
   const handleLogout = () => {
@@ -66,7 +79,7 @@ const BurgerMenu = ({ height, open, logout, clear }) => {
     <InnerWrapper style={{ justifyContent: 'space-between' }}>
       <HrefWrapper>
         <Text>Ikony</Text>
-        <IconWrapper>
+        <ContentWrapper>
           Icons made by{' '}
           <Href href="https://www.flaticon.com/authors/those-icons" title="Those Icons">
             Those Icons,
@@ -90,22 +103,22 @@ const BurgerMenu = ({ height, open, logout, clear }) => {
           <Href href="https://www.flaticon.com/" title="Flaticon">
             www.flaticon.com
           </Href>
-        </IconWrapper>
+        </ContentWrapper>
         <Text mgt="2rem">Obrazki</Text>
-        <ImageWrapper>
+        <ContentWrapper>
           <Href href="https://www.freepik.com/free-photos-vectors/hand">
-            Hand vector created by studiogstock,
+            Hand vector created by studiogstock - www.freepik.com,
           </Href>{' '}
           <Href href="https://www.freepik.com/free-photos-vectors/people">
-            People vector created by gstudioimagen,
+            People vector created by gstudioimagen - www.freepik.com,
           </Href>{' '}
           <Href href="https://www.freepik.com/free-photos-vectors/design">
-            Design vector created by cornecoba,
+            Design vector created by cornecoba - www.freepik.com,
           </Href>{' '}
           <Href href="https://www.freepik.com/free-photos-vectors/design">
             Design vector created by photoroyalty - www.freepik.com
           </Href>
-        </ImageWrapper>
+        </ContentWrapper>
       </HrefWrapper>
       <Button style={{ alignSelf: 'center' }} onClick={handleLicences}>
         Wróć
