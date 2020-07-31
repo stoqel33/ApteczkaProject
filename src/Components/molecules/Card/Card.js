@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css } from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -7,21 +7,11 @@ import { decreaseMedicine } from 'data/Actions/medicinesActions';
 
 import Text from 'Components/atoms/Text/Text';
 import ButtonIcon from 'Components/atoms/ButtonIcon/ButtonIcon';
-import ExpiredBar from 'Components/atoms/ExpiredBar/ExpiredBar';
 
 import pillIcon from 'assets/icons/pill.svg';
-import infoIcon from 'assets/icons/info.svg';
 import editIcon from 'assets/icons/edit.svg';
+import infoIcon from 'assets/icons/information.svg';
 
-const showing = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 7rem 7rem;
@@ -33,33 +23,23 @@ const Wrapper = styled.div`
   width: 30rem;
   height: 9rem;
   padding: 0.5rem;
-  margin-bottom: 2rem;
 
   border-radius: 2rem 2rem 0.9rem 0.9rem;
-  border: 2px solid black;
   border-bottom: none;
   box-shadow: 0px 6px 10px -5px ${({ theme }) => theme.lightmode.colors.secondary};
-  background-color: ${({ theme }) => theme.lightmode.colors.background};
+  background: linear-gradient(15deg, rgb(167, 206, 246) 50%, rgb(154, 197, 230) 50%);
+  z-index: 1;
   transition: 0.4s;
 
   ${({ expired }) =>
     expired &&
     css`
-      box-shadow: none;
-      margin-bottom: 0;
-      border-radius: 2rem 2rem 0 0;
-      border: 2px solid red;
-      border-bottom: none;
+      box-shadow: 0 6px 10px -5px red;
     `}
   ${({ moreInfo }) =>
     moreInfo &&
     css`
-      height: 14rem;
-      grid-template-rows: 4.5rem 3.5rem 5rem;
-      grid-template-areas:
-        'medicine info info'
-        'medicine button button'
-        'date date date';
+      margin-bottom: 0;
     `};
 `;
 const InnerWrapper = styled.div`
@@ -90,19 +70,50 @@ const InnerWrapper = styled.div`
       margin-right: 0.5rem;
       margin-top: 0.3rem;
     `}
-  ${({ date, expired }) =>
-    date &&
-    css`
-      grid-area: date;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      animation: ${showing} 0.4s;
-      color: ${() => (expired ? 'red' : 'black')};
-    `}
 `;
 const OuterWrapper = styled.div`
-  margin: 0 1rem;
+  position: relative;
+  margin: 0 1rem 2rem 1rem;
+  transition: 0.5s;
+
+  @media screen and (min-width: 768px) {
+    margin-bottom: 5rem;
+  }
+
+  @media screen and (max-width: 767px) {
+    ${({ info }) =>
+      info &&
+      css`
+        margin-bottom: 5rem;
+      `}
+  }
+`;
+const DateInfo = styled.div`
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3rem;
+  width: 85%;
+  padding-top: 0.5rem;
+
+  background-color: ${({ theme }) => theme.lightmode.colors.secondary};
+  box-shadow: 0 6px 10px -5px ${({ theme }) => theme.lightmode.colors.secondary};
+  border-radius: 0 0 10px 10px;
+  transition: 0.5s;
+  z-index: -5;
+
+  ${({ show }) =>
+    show &&
+    css`
+      bottom: -3rem;
+    `}
+  ${({ expired }) =>
+    expired &&
+    css`
+      background-color: red;
+      box-shadow: 0 6px 10px -5px red;
+    `}
 `;
 
 const Card = ({ id, name, amount, date, today, takePill }) => {
@@ -118,20 +129,16 @@ const Card = ({ id, name, amount, date, today, takePill }) => {
   };
   const expired = today > date;
   return (
-    <OuterWrapper>
+    <OuterWrapper info={info}>
       <Wrapper expired={expired} moreInfo={info}>
         <InnerWrapper medicine>
-          <Text mgb="0.5rem">{name}</Text>
-          <Text mgt="0.5rem">
-            {amount}
-            {amount > 4 && ' tabletek'}
-            {amount > 1 && amount <= 4 && ' tabletki'}
-            {amount === 1 && ' tabletka'}
-            {amount === 0 && ' tabletek'}
+          <Text mgb="0.5rem" fw="600">
+            {name}
           </Text>
+          <Text mgt="0.5rem">Ilość {amount}</Text>
         </InnerWrapper>
         <InnerWrapper info>
-          <ButtonIcon icon={infoIcon} onClick={handleToggleInfo} />
+          <ButtonIcon icon={infoIcon} size="2rem" onClick={handleToggleInfo} />
         </InnerWrapper>
         <InnerWrapper button>
           <ButtonIcon
@@ -142,13 +149,10 @@ const Card = ({ id, name, amount, date, today, takePill }) => {
           />
           <ButtonIcon icon={pillIcon} size="2.3rem" onClick={handleTakeMedicine} />
         </InnerWrapper>
-        {info && (
-          <InnerWrapper date expired={expired}>
-            <Text fs="1.8">Data ważności {date}</Text>
-          </InnerWrapper>
-        )}
+        <DateInfo show={info} expired={expired}>
+          <Text fs="1.5">Data ważności {date}</Text>
+        </DateInfo>
       </Wrapper>
-      {expired && <ExpiredBar>Minęła data ważności leku</ExpiredBar>}
     </OuterWrapper>
   );
 };
