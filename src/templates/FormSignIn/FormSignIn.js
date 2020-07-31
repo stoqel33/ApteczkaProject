@@ -104,7 +104,6 @@ class FormSignIn extends React.Component {
           </TitleInfo>
           <FormCellSignIn
             name="email"
-            autoComplete="on"
             type="text"
             onChange={this.onChange}
             value={this.state.email}
@@ -112,7 +111,6 @@ class FormSignIn extends React.Component {
           />
           <FormCellSignIn
             name="password"
-            autoComplete="on"
             type="password"
             onChange={this.onChange}
             value={this.state.password}
