@@ -8,6 +8,7 @@ import { Formik, Form } from 'formik';
 import { useHistory, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { changeMedicine, removeMedicine } from 'data/Actions/medicinesActions';
+import { device } from 'Theme/mainTheme';
 
 import FormCell from 'Components/molecules/FormCell/FormCell';
 import Button from 'Components/atoms/Button/Button';
@@ -38,7 +39,7 @@ const RemoveWrap = styled.div`
   background-color: rgba(0, 0, 0, 0.85);
 `;
 const RemoveTitle = styled(Title)`
-  margin: 30% 20px;
+  margin: 18rem 2rem;
   font-size: 2.5rem;
   color: ${({ theme }) => theme.warning};
 `;
@@ -47,12 +48,16 @@ const ButtonLink = styled(Button)`
   padding: 1rem;
   line-height: 100%;
 `;
-const InnerWrapButton = styled.div`
+const InnerWrapButtons = styled.div`
   display: flex;
   width: 80%;
   justify-content: space-between;
   align-items: center;
   margin-top: 7rem;
+
+  @media screen and ${device.laptop} {
+    width: 40rem;
+  }
 `;
 const TitleAdd = styled(Title)`
   color: ${({ theme }) => theme.info};
@@ -169,12 +174,12 @@ const FormEdit = ({
           </Forms>
         )}
       </Formik>
-      <InnerWrapButton>
+      <InnerWrapButtons>
         <ButtonIcon onClick={handleToggleQuery} icon={binIcon} size="3rem" />
         <ButtonLink as={Link} to="/Apteczka">
           Wróć
         </ButtonLink>
-      </InnerWrapButton>
+      </InnerWrapButtons>
       {deleteQuery ? (
         <RemoveWrap>
           <RemoveTitle>Usunąć lek {medicine[0].name}?</RemoveTitle>
