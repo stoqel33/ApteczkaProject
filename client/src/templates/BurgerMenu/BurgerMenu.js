@@ -81,41 +81,58 @@ const BurgerMenu = ({ height, open, logout, clear }) => {
         <Text>Ikony</Text>
         <ContentWrapper>
           Icons made by{' '}
-          <Href href="https://www.flaticon.com/authors/those-icons" title="Those Icons">
+          <Href
+            href="https://www.flaticon.com/authors/those-icons"
+            target="_blank"
+            title="Those Icons"
+          >
             Those Icons,
           </Href>{' '}
-          <Href href="https://www.flaticon.com/authors/freepik" title="Freepik">
+          <Href
+            href="https://www.flaticon.com/authors/freepik"
+            target="_blank"
+            title="Freepik"
+          >
             Freepik,
           </Href>{' '}
           <Href
             href="https://www.flaticon.com/authors/pixel-perfect"
+            target="_blank"
             title="Pixel perfect"
           >
             Pixel perfect,
           </Href>{' '}
-          <Href href="https://www.flaticon.com/authors/kiranshastry" title="Kiranshastry">
+          <Href
+            href="https://www.flaticon.com/authors/kiranshastry"
+            target="_blank"
+            title="Kiranshastry"
+          >
             Kiranshastry,
           </Href>{' '}
-          <Href href="https://www.flaticon.com/authors/prettycons/" title="prettycons">
+          <Href
+            href="https://www.flaticon.com/authors/prettycons/"
+            target="_blank"
+            title="prettycons"
+          >
             prettycons
           </Href>{' '}
           from{' '}
-          <Href href="https://www.flaticon.com/" title="Flaticon">
+          <Href href="https://www.flaticon.com/" target="_blank" title="Flaticon">
             www.flaticon.com
           </Href>
         </ContentWrapper>
         <Text mgt="2rem">Obrazki</Text>
         <ContentWrapper>
-          <Href href="https://www.freepik.com/free-photos-vectors/hand">
+          <Href href="https://www.freepik.com/free-photos-vectors/hand" target="_blank">
             Hand vector created by studiogstock - www.freepik.com,
           </Href>{' '}
-          <Href href="https://www.freepik.com/free-photos-vectors/people">
+          <Href href="https://www.freepik.com/free-photos-vectors/people" target="_blank">
             People vector created by gstudioimagen - www.freepik.com,
           </Href>{' '}
-          <Href href="https://www.freepik.com/free-photos-vectors/design">
+          <Href href="https://www.freepik.com/free-photos-vectors/design" target="_blank">
             Design vector created by cornecoba - www.freepik.com,
           </Href>{' '}
-          <Href href="https://www.freepik.com/free-photos-vectors/design">
+          <Href href="https://www.freepik.com/free-photos-vectors/design" target="_blank">
             Design vector created by photoroyalty - www.freepik.com
           </Href>
         </ContentWrapper>
@@ -146,7 +163,7 @@ BurgerMenu.propTypes = {
   context: PropTypes.shape({
     handleLicences: PropTypes.func.isRequired,
     licencesState: PropTypes.bool.isRequired,
-  }).isRequired,
+  }),
 };
 
 const mapDispatchToProps = (dispatch) => ({
