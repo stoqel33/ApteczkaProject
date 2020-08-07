@@ -5,7 +5,6 @@ import {
   PROFILE_LOADING,
   CLEAR_PROFILE,
   GET_ERRORS,
-  URL,
 } from 'data/Actions/types';
 
 export const createProfile = (profilData, history) => (dispatch) => {

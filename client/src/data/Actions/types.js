@@ -13,5 +13,3 @@ export const PROFILE_LOADING = 'PROFILE_LOADING';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
-
-export const URL = 'http://192.168.2.104:3000';

@@ -9,7 +9,6 @@ import {
   MEDICINE_DECREASE,
   GET_ERRORS,
   CLEAR_ERRORS,
-  URL,
 } from 'data/Actions/types';
 
 export const getMedicines = () => (dispatch) => {
