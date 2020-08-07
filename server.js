@@ -13,7 +13,7 @@ const profile = require("./routes/profile");
 require("dotenv").config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
@@ -44,9 +44,9 @@ connection.once("open", () => {
 });
 
 // Use Routes
-app.use("/Apteczka", medicines);
-app.use("/user", user);
-app.use("/profile", profile);
+app.use("/api/Apteczka", medicines);
+app.use("/api/Apteczka/user", user);
+app.use("/api/Apteczka/profile", profile);
 
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {

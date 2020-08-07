@@ -10,7 +10,7 @@ import {
 
 export const createProfile = (profilData, history) => (dispatch) => {
   return axios
-    .post(`${URL}/profile/`, profilData)
+    .post(`/api/Apteczka/profile/`, profilData)
     .then(() => {
       history.push(`/Apteczka/`);
     })
@@ -25,7 +25,7 @@ export const createProfile = (profilData, history) => (dispatch) => {
 export const getProfile = (history) => (dispatch) => {
   dispatch(loadingProfile());
   axios
-    .get(`${URL}/profile/`)
+    .get(`/api/Apteczka/profile/`)
     .then((res) => {
       dispatch({
         type: GET_PROFILE,

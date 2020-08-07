@@ -1,22 +1,22 @@
 /* eslint-disable consistent-return */
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const passport = require('passport');
+const express = require("express");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const passport = require("passport");
 
 const router = express.Router();
 
-const keys = require('../config/keys');
-const User = require('../models/user.model');
+const keys = require("../config/keys");
+const User = require("../models/user.model");
 
 // Load input validation
 
-const validateRegisterInput = require('../validation/register');
-const validateLoginInput = require('../validation/login');
+const validateRegisterInput = require("../validation/register");
+const validateLoginInput = require("../validation/login");
 
 // User register
 
-router.post('/register', (req, res) => {
+router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
   if (!isValid) {
     return res.status(400).json(errors);
@@ -24,7 +24,7 @@ router.post('/register', (req, res) => {
 
   User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
-      errors.email = 'Email already exists';
+      errors.email = "Email already exists";
       return res.status(400).json(errors);
     }
 
@@ -48,7 +48,7 @@ router.post('/register', (req, res) => {
 
 // User login
 
-router.post('/login', (req, res) => {
+router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
   if (!isValid) {
     return res.status(400).json(errors);
@@ -58,7 +58,7 @@ router.post('/login', (req, res) => {
 
   User.findOne({ email }).then((user) => {
     if (!user) {
-      errors.email = 'User email not found';
+      errors.email = "User email not found";
       return res.status(404).json(errors);
     }
 
@@ -69,14 +69,19 @@ router.post('/login', (req, res) => {
           username: user.username,
         };
 
-        jwt.sign(payload, keys.secretKey, { expiresIn: 3600 }, (err, token) => {
-          res.json({
-            success: true,
-            token: `Bearer ${token}`,
-          });
-        });
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          { expiresIn: 3600 },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: `Bearer ${token}`,
+            });
+          }
+        );
       } else {
-        errors.password = 'Password incorrect';
+        errors.password = "Password incorrect";
         return res.status(400).json(errors);
       }
     });
@@ -85,14 +90,18 @@ router.post('/login', (req, res) => {
 
 // Current user
 
-router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.json({
-    id: req.user.id,
-    email: req.user.email,
-  });
-});
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json({
+      id: req.user.id,
+      email: req.user.email,
+    });
+  }
+);
 
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
   User.find()
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json(`Error ${err}`));

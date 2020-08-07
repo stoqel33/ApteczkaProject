@@ -7,7 +7,7 @@ import { GET_ERRORS, SET_CURRENT_USER, CLEAR_ERRORS, URL } from 'data/Actions/ty
 // Register User
 export const registerUser = (userData, history) => (dispatch) => {
   return axios
-    .post(`${URL}/user/register`, userData)
+    .post('/api/Apteczka/user/register', userData)
     .then(() => {
       dispatch(clearErrors());
       history.go();
@@ -23,7 +23,7 @@ export const registerUser = (userData, history) => (dispatch) => {
 // Login User, get Token
 export const loginUser = (userData, history) => (dispatch) => {
   return axios
-    .post(`${URL}/user/login`, userData)
+    .post(`/api/Apteczka/user/login`, userData)
     .then((res) => {
       const { token } = res.data;
       localStorage.setItem('jwtToken', token);
@@ -31,7 +31,7 @@ export const loginUser = (userData, history) => (dispatch) => {
       const decoded = jwt_decode(token);
       dispatch(setCurrentUser(decoded));
       dispatch(clearErrors());
-      history.push('/Apteczka/profile/create');
+      history.push('/Apteczka/profile/create/');
     })
     .catch((err) => {
       dispatch({
