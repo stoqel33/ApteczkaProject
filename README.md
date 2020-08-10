@@ -34,7 +34,7 @@ This project is a University Project, I decided to create medical kit app. The p
 * prettier
 * storybook
 
-## How application look like
+## How application looks like
 
 ### Register, login and create user profile
 ![Alt Text](https://github.com/stoqel33/ApteczkaProject/blob/master/readme/startApp.gif)
