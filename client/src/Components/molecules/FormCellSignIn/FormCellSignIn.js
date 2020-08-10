@@ -36,7 +36,7 @@ const FormCellSignIn = ({ name, type, errors, onChange, value, backendErr }) => 
         ) : name === 'email' ? (
           <Label>email</Label>
         ) : type === 'date' ? (
-          <Label> Data urodzenia</Label>
+          <Label>Data urodzenia</Label>
         ) : (
           <Label>nazwa użytkownika</Label>
         )}
