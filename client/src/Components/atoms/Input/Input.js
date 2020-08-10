@@ -30,7 +30,6 @@ const Input = styled.input`
 
   &[type='date'] {
     font-size: 1.5rem;
-    padding-left: 4rem;
   }
 
   ${({ error }) =>
