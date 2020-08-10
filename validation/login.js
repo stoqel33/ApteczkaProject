@@ -1,20 +1,20 @@
-const Validator = require('validator');
-const isNotError = require('./isNotError');
+const Validator = require("validator");
+const isNotError = require("./isNotError");
 
 module.exports = function validateLoginInput(data) {
   const errors = {};
 
-  data.email = !isNotError(data.email) ? data.email : '';
-  data.password = !isNotError(data.password) ? data.password : '';
+  data.email = !isNotError(data.email) ? data.email : "";
+  data.password = !isNotError(data.password) ? data.password : "";
 
   if (Validator.isEmpty(data.email)) {
-    errors.email = 'Email is required';
+    errors.email = "Email jest wymagany";
   }
   if (!Validator.isEmail(data.email)) {
-    errors.email = 'Email is invalid';
+    errors.email = "Email jest nieprawidłowy";
   }
   if (Validator.isEmpty(data.password)) {
-    errors.password = 'Password is required';
+    errors.password = "Hasło jest wymagane";
   }
 
   return {
