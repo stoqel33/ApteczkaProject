@@ -1,17 +1,36 @@
-## Apteczka - University Project
+![alt text](https://github.com/stoqel33/ApteczkaProject/blob/master/readme/icon.png?raw=true)
 
+## Apteczka - University Project
 ### General Info
 
-This project is a University Project, I decided to create medical kit app. Project is still in progress.
+This project is a University Project, I decided to create medical kit app.
 
-### Database
+## Front-end
 
-MognoDB Atlas
+* axios
+* formik
+* react-create-app
+* redux
+* react-router
+* styled-components
 
-### Application Servers
+## Back-end
 
-NodeJS, ExpressJS
+* express
+* bcrypt
+* body-parser
+* cors
+* dotenv
+* jsonwebtoken
+* mongoose
+* passport
+* passport-jwt
 
-### Front-end JS Frameworks
+## Tools
 
-React, Redux
+* atomic design pattern(front-end version)
+* eslint(airbnb standarts)
+* nodemon
+* prettier
+* storybook
+
