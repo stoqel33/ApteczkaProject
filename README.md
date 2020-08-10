@@ -3,7 +3,7 @@
 # Apteczka - University Project
 ### General Info
 
-This project is a University Project, I decided to create medical kit app. The project is building with a back-end version with Node.js connecting with MongoDB Atlas and front-end version build witch React.
+This project is a University Project, I decided to create medical kit app. The project is building with a back-end version with Node.js connecting with MongoDB Atlas and front-end version build with React.
 
 ## Front-end
 
