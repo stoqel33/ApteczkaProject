@@ -5,6 +5,9 @@
 
 This project is a University Project, I decided to create medical kit app. The project is building with a back-end version with Node.js connecting with MongoDB Atlas and front-end version build with React.
 
+This app is on heroku!
+https://apteczka.herokuapp.com/Apteczka/user/signin
+
 ## Front-end
 
 * axios
@@ -33,20 +36,3 @@ This project is a University Project, I decided to create medical kit app. The p
 * nodemon
 * prettier
 * storybook
-
-## How application looks like
-
-### Register, login and create user profile
-![Alt Text](https://github.com/stoqel33/ApteczkaProject/blob/master/readme/startApp.gif)
-
-### Add new medicine
-![Alt Text](https://github.com/stoqel33/ApteczkaProject/blob/master/readme/addMedcine.gif)
-
-### Edit medicine
-![Alt Text](https://github.com/stoqel33/ApteczkaProject/blob/master/readme/editMedicine.gif)
-
-### Show info about expiry date, when medicine is expired color is red
-![Alt Text](https://github.com/stoqel33/ApteczkaProject/blob/master/readme/info.gif)
-
-### Burger menu and logout
-![Alt Text](https://github.com/stoqel33/ApteczkaProject/blob/master/readme/burgerPanelAndLogout.gif)
