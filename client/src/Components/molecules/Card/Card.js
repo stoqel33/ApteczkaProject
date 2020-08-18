@@ -14,11 +14,11 @@ import infoIcon from 'assets/icons/information.svg';
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 7rem 7rem;
-  grid-template-rows: 4.5rem 3.5rem;
+  grid-template-columns: 15rem 7rem 7rem;
+  grid-template-rows: 5rem 3rem;
   grid-template-areas:
-    'medicine info info'
-    'medicine button button';
+    'medicine medicine info'
+    'amount button button';
 
   width: 30rem;
   height: 9rem;
@@ -48,10 +48,19 @@ const InnerWrapper = styled.div`
     css`
       grid-area: medicine;
       display: flex;
-      flex-direction: column;
       justify-content: center;
+      align-items: center;
       padding: 1rem;
+      word-break: break-word;
     `}
+    ${({ amount }) =>
+      amount &&
+      css`
+        grid-area: amount;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      `}
   ${({ button }) =>
     button &&
     css`
@@ -132,10 +141,10 @@ const Card = ({ id, name, amount, date, today, takePill }) => {
     <OuterWrapper info={info}>
       <Wrapper expired={expired} moreInfo={info}>
         <InnerWrapper medicine>
-          <Text mgb="0.5rem" fw="600">
-            {name}
-          </Text>
-          <Text mgt="0.5rem">Ilość {amount}</Text>
+          <Text fw="600">{name}</Text>
+        </InnerWrapper>
+        <InnerWrapper amount>
+          <Text>Ilość {amount}</Text>
         </InnerWrapper>
         <InnerWrapper info>
           <ButtonIcon icon={infoIcon} size="2rem" onClick={handleToggleInfo} />
