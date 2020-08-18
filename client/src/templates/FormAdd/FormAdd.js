@@ -106,6 +106,8 @@ const FormAdd = ({
             errors.name = 'Wpisz nazwę leku!';
           } else if (/[^a-zA-Z\s]+/i.test(values.name)) {
             errors.name = 'Nazwa zawiera niedozwolone znaki';
+          } else if (values.name.length > 30) {
+            errors.name = 'Zbyt długa nazwa (max 30)';
           }
           if (!values.amount) {
             errors.amount = 'Podaj ilość leku!';

@@ -109,6 +109,9 @@ const FormEdit = ({
               errors.name = 'Nazwa zawiera niedozwolone znaki';
             }
           }
+          if (values.name.length > 30) {
+            errors.name = 'Zbyt długa nazwa (max 30)';
+          }
           if (!values.amount) {
             errors.amount = 'Podaj ilość leku';
           } else if (values.amount < 0) {
