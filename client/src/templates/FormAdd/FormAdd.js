@@ -104,7 +104,7 @@ const FormAdd = ({
           const errors = {};
           if (!values.name) {
             errors.name = 'Wpisz nazwę leku!';
-          } else if (/[^a-zA-Z]+/i.test(values.name)) {
+          } else if (/[^a-zA-Z\s]+/i.test(values.name)) {
             errors.name = 'Nazwa zawiera niedozwolone znaki';
           }
           if (!values.amount) {
