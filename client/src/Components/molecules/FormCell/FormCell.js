@@ -24,6 +24,7 @@ const FormCell = ({ type, name, errors, onChange, value, expired, copy }) => {
       {type === 'text' ? (
         <Wrapper>
           <Input
+            name={name}
             spellCheck="false"
             id={name}
             error={errors}
@@ -40,6 +41,7 @@ const FormCell = ({ type, name, errors, onChange, value, expired, copy }) => {
       ) : type === 'number' ? (
         <Wrapper>
           <Input
+            name={name}
             id={name}
             type={type}
             placeholder=" "
@@ -54,6 +56,7 @@ const FormCell = ({ type, name, errors, onChange, value, expired, copy }) => {
       ) : (
         <Wrapper>
           <Input
+            name={name}
             id={name}
             error={errors}
             type={type}
