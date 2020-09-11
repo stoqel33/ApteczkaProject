@@ -44,11 +44,19 @@ class Medicine extends React.Component {
 
   showTargetElement = () => {
     disableBodyScroll(this.targetElement);
+    this.targetElement.style.position = 'fixed';
+    this.targetElement.style.left = '50%';
+    this.targetElement.style.transform = 'translate(-50%)';
   };
-
   hideTargetElement = () => {
     enableBodyScroll(this.targetElement);
+    this.targetElement.style.position = '';
+    this.targetElement.style.left = '';
+    this.targetElement.style.transform = '';
   };
+  componentWillUnmount() {
+    clearAllBodyScrollLocks();
+  }
 
   handleBurgerToogle = () => {
     this.setState((prevState) => ({
@@ -70,10 +78,6 @@ class Medicine extends React.Component {
       burgerRef: !prevState.burgerRef,
     }));
   };
-
-  componentWillUnmount() {
-    clearAllBodyScrollLocks();
-  }
 
   render() {
     const { medicines, loading } = this.props;
