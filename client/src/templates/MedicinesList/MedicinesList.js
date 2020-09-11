@@ -21,7 +21,7 @@ import imgMEmpty from 'assets/image/medium-empty.png';
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: min-content;
   text-align: center;
   transition: 1s;
 `;
@@ -29,6 +29,7 @@ const TopBarWrap = styled.div`
   display: grid;
   grid-template-columns: 1fr 20rem 1fr;
   grid-template-rows: 1fr;
+  width: 100vw;
   justify-items: center;
   align-items: center;
   margin: 2rem 0;
@@ -149,9 +150,9 @@ const MedicinesList = ({
   const ButtonAdd = (
     <>
       {!searching && (
-        <ButtonLink big="true" as={Link} to="/Apteczka/addMedicine">
-          Dodaj nowy lek
-        </ButtonLink>
+        <Link to="/Apteczka/addMedicine">
+          <ButtonLink big="true">Dodaj nowy lek</ButtonLink>
+        </Link>
       )}
     </>
   );
