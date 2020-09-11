@@ -36,6 +36,7 @@ const Input = styled.input`
     error &&
     css`
       border-color: ${({ theme }) => theme.warning};
+      color: ${({ theme }) => theme.warning};
       & + label {
         color: ${({ theme }) => theme.warning};
       }
