@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Formik, Form } from 'formik';
 import { addMedicines } from 'data/Actions/medicinesActions';
 import { useHistory, Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
-import FormCell from 'Components/molecules/FormCell/FormCell';
 import Title from 'Components/atoms/Title/Title';
+import InputError from 'Components/atoms/InputError/InputError';
+import Label from 'Components/atoms/Label/Label';
 import Button from 'Components/atoms/Button/Button';
+import Input from 'Components/atoms/Input/Input';
+
+import medicinesDB from 'assets/medicines.json';
 
 const Wrapper = styled.div`
   display: flex;
@@ -25,12 +29,6 @@ const Wrapper = styled.div`
     margin: 0 auto;
     width: 70%;
   }
-`;
-const Forms = styled(Form)`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 `;
 const SelfSameWrap = styled.div`
   position: absolute;
@@ -57,6 +55,82 @@ const ButtonLink = styled(Button)`
 const TitleAdd = styled(Title)`
   color: ${({ theme }) => theme.info};
 `;
+const InnerWrapper = styled.div`
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem 0;
+  margin-bottom: 1rem;
+  background-color: ${({ theme }) => theme.lightmode.colors.background};
+`;
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+`;
+const SearchList = styled.ul`
+  width: 80%;
+  max-height: 25rem;
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+  padding: 1rem 0;
+
+  background-position: 0 0, 0 0, 100% 0, 0 100%;
+  background-size: 3px 100%, 100% 3px, 3px 100%, 100% 3px;
+  background-repeat: no-repeat;
+
+  font-size: 1.8rem;
+  text-align: center;
+  overflow-y: scroll;
+
+  background-image: linear-gradient(
+      0deg,
+      ${({ theme }) => theme.lightmode.colors.secondary},
+      ${({ theme }) => theme.lightmode.colors.secondary} 25%,
+      transparent 25%,
+      transparent 75%,
+      ${({ theme }) => theme.lightmode.colors.secondary} 75%
+    ),
+    // left
+      linear-gradient(
+        90deg,
+        ${({ theme }) => theme.lightmode.colors.secondary},
+        ${({ theme }) => theme.lightmode.colors.secondary} 25%,
+        transparent 25%,
+        transparent 75%,
+        ${({ theme }) => theme.lightmode.colors.secondary} 75%
+      ),
+    // top
+      linear-gradient(
+        180deg,
+        ${({ theme }) => theme.lightmode.colors.secondary},
+        ${({ theme }) => theme.lightmode.colors.secondary} 25%,
+        transparent 25%,
+        transparent 75%,
+        ${({ theme }) => theme.lightmode.colors.secondary} 75%
+      ),
+    // right
+      linear-gradient(
+        270deg,
+        ${({ theme }) => theme.lightmode.colors.secondary},
+        ${({ theme }) => theme.lightmode.colors.secondary} 25%,
+        transparent 25%,
+        transparent 75%,
+        ${({ theme }) => theme.lightmode.colors.secondary} 75%
+      );
+  // bottom;;
+
+  & > li {
+    margin-bottom: 0.35rem;
+  }
+  & > li:nth-last-child(1) {
+    margin: 0;
+  }
+`;
 
 const FormAdd = ({
   selfsameMed,
@@ -67,11 +141,34 @@ const FormAdd = ({
   medicines,
   addMed,
 }) => {
+  const { handleSubmit, register, errors } = useForm();
   const today = new Date().toISOString().slice(0, 10);
+  const [name, setName] = useState('');
+  const [suggest, setSuggest] = useState([]);
   const history = useHistory();
+
   const backToHome = () => {
     history.push('/Apteczka');
   };
+
+  const onSubmit = (values) => {
+    const newMed = {
+      name: values.name,
+      amount: values.amount,
+      date: values.date,
+      copy: false,
+    };
+
+    newMed.name = newMed.name.charAt(0).toUpperCase() + newMed.name.slice(1);
+    const names = [];
+    medicines.forEach((med) => names.push(med.name));
+    const same = names.indexOf(newMed.name) !== -1;
+    if (!same) {
+      backToHome();
+      addMed(newMed);
+    } else theSameMedQueryOn(newMed.name, newMed.amount, newMed.date);
+  };
+
   const addTheSameMed = () => {
     const theSameNames = [];
     medicines.forEach((med) => {
@@ -88,82 +185,110 @@ const FormAdd = ({
     backToHome();
   };
 
+  const handleChangeName = (e) => {
+    setName(e.target.value);
+    if (e.target.value.length === 0) {
+      setSuggest([]);
+    } else if (e.target.value.length > 1) {
+      const regex = new RegExp(`^${name}`, 'i');
+      const suggest = medicinesDB.sort().filter((v) => regex.test(v));
+      setSuggest(suggest);
+    }
+  };
+
+  const rederSuggestName = () => {
+    if (suggest.length > 0) {
+      return (
+        <SearchList>
+          {suggest.map((item) => (
+            <li key={item} onClick={() => handleChooseSuggested(item)}>
+              {item}
+            </li>
+          ))}
+        </SearchList>
+      );
+    } else return null;
+  };
+
+  const handleChooseSuggested = (name) => {
+    setName(name);
+    setSuggest([]);
+  };
+
   return (
     <Wrapper>
       <TitleAdd mgt="2rem" mgb="2rem">
         Dodaj Lek
       </TitleAdd>
-      <Formik
-        initialValues={{
-          name: '',
-          amount: '',
-          date: today,
-          copy: false,
-        }}
-        validate={(values) => {
-          const errors = {};
-          if (!values.name) {
-            errors.name = 'Wpisz nazwę leku!';
-          } else if (/[^a-zA-Z\s]+/i.test(values.name)) {
-            errors.name = 'Nazwa zawiera niedozwolone znaki';
-          } else if (values.name.length > 30) {
-            errors.name = 'Zbyt długa nazwa (max 30)';
-          }
-          if (!values.amount) {
-            errors.amount = 'Podaj ilość leku!';
-          } else if (values.amount < 0) {
-            errors.amount = 'Podaj poprawną ilość';
-          } else if (values.amount > 999) {
-            errors.amount = 'Nie można wprowadzić takiej ilości leku';
-          }
-          if (!values.date) {
-            errors.date = 'Podaj datę ważności!';
-          } else if (values.date < today) {
-            errors.date = 'Nie możesz wprowadzić starego leku';
-          }
-          return errors;
-        }}
-        onSubmit={(values) => {
-          // eslint-disable-next-line no-param-reassign
-          values.name = values.name.charAt(0).toUpperCase() + values.name.slice(1);
-          const names = [];
-          medicines.forEach((med) => names.push(med.name));
-          const same = names.indexOf(values.name) !== -1;
-          if (!same) {
-            backToHome();
-            addMed(values);
-          } else theSameMedQueryOn(values.name, values.amount, values.date);
-        }}
-      >
-        {({ values, errors, touched, handleChange, handleSubmit, isSubmitting }) => (
-          <Forms onSubmit={handleSubmit}>
-            <FormCell
-              name="name"
-              type="text"
-              onChange={handleChange}
-              value={values.name}
-              errors={errors.name && touched.name && errors.name}
-            />
-            <FormCell
-              name="amount"
-              type="number"
-              onChange={handleChange}
-              value={values.amount}
-              errors={errors.amount && touched.amount && errors.amount}
-            />
-            <FormCell
-              name="date"
-              type="date"
-              onChange={handleChange}
-              value={values.date}
-              errors={errors.date && touched.date && errors.date}
-            />
-            <Button mgt="3rem" type="submit" disabled={isSubmitting}>
-              Dodaj lek
-            </Button>
-          </Forms>
-        )}
-      </Formik>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <InnerWrapper>
+          <Input
+            type="text"
+            id="name"
+            name="name"
+            placeholder=" "
+            autoComplete="off"
+            onChange={handleChangeName}
+            value={name}
+            error={errors.name}
+            ref={register({
+              required: { value: true, message: 'Podaj nazwę leku' },
+              maxLength: {
+                value: 30,
+                message: 'Nazwa leku jest zbyt długa (max 30 liter)',
+              },
+              pattern: {
+                value: /^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s]+(([-]?)+[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s])+([+]?)+([0-9\s]?)+([+]?)+([A-Za-z\s]{0,10})+([A-Za-z]{0,10})$/i,
+                message: 'Nieprawidłowa nazwa',
+              },
+            })}
+          />
+          <Label htmlFor="name">Nazwa Leku</Label>
+          {errors.name && <InputError>{errors.name.message}</InputError>}
+        </InnerWrapper>
+        {rederSuggestName()}
+        <InnerWrapper>
+          <Input
+            type="number"
+            name="amount"
+            placeholder=" "
+            error={errors.amount}
+            ref={register({
+              required: { value: true, message: 'Podaj ilość leku' },
+              maxLength: {
+                value: 3,
+                message: 'Nie można wprowadzić takiej ilości (max 999)',
+              },
+              min: {
+                value: 1,
+                message: 'Nie możesz wprowadzić takiej ilości (min 1)',
+              },
+            })}
+          />
+          <Label htmlFor="amount">Ilość</Label>
+          {errors.amount && <InputError>{errors.amount.message}</InputError>}
+        </InnerWrapper>
+        <InnerWrapper>
+          <Input
+            type="date"
+            name="date"
+            defaultValue={today}
+            error={errors.date}
+            ref={register({
+              required: { value: true, message: 'Podaj datę ważności' },
+              min: {
+                value: today,
+                message: 'Nie możesz wprowadzić starego leku',
+              },
+            })}
+          />
+          <Label htmlFor={name}>Data ważności</Label>
+          {errors.date && <InputError>{errors.date.message}</InputError>}
+        </InnerWrapper>
+        <Button type="submit" mgt="3rem">
+          Dodaj Lek
+        </Button>
+      </Form>
       {selfsameMed ? (
         <SelfSameWrap>
           <SelfSameTitle>Masz już lek {nameMed}, czy chcesz dodać kolejny?</SelfSameTitle>
