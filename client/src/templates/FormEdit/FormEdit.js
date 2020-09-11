@@ -105,7 +105,11 @@ const FormEdit = ({
             });
             if (!values.name) {
               errors.name = 'Wpisz nazwę leku';
-            } else if (/[^a-zA-Z\s]+/i.test(values.name)) {
+            } else if (
+              !/^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s]+(([-]?)+[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s])+([+]?)+([0-9\s]?)+([+]?)+([A-Za-z\s]{0,10})+([A-Za-z]{0,10})$/i.test(
+                values.name,
+              )
+            ) {
               errors.name = 'Nazwa zawiera niedozwolone znaki';
             }
           }
