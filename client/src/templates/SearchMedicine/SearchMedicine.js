@@ -24,7 +24,7 @@ const MedicinesWrap = styled.div`
     justify-content: center;
   }
   @media screen and (min-width: 1000px) {
-    width: 100%;
+    width: 100rem;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
