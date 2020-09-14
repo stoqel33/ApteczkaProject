@@ -83,9 +83,19 @@ const SearchList = styled.ul`
   background-size: 3px 100%, 100% 3px, 3px 100%, 100% 3px;
   background-repeat: no-repeat;
 
+  &::-webkit-scrollbar {
+    width: 1rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.lightmode.colors.secondary};
+    border-radius: 1rem;
+  }
+
   font-size: 1.8rem;
   text-align: center;
   overflow-y: scroll;
+  cursor: pointer;
 
   background-image: linear-gradient(
       0deg,
