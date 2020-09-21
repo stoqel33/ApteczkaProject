@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { addMedicines } from 'data/Actions/medicinesActions';
 import { useHistory, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { device } from 'Theme/mainTheme';
 
 import Title from 'Components/atoms/Title/Title';
 import InputError from 'Components/atoms/InputError/InputError';
@@ -140,6 +141,14 @@ const SearchList = styled.ul`
   & > li:nth-last-child(1) {
     margin: 0;
   }
+
+  @media screen and ${device.tablet} {
+    width: 60%;
+  }
+
+  @media screen and ${device.desktop} {
+    width: 40%;
+  }
 `;
 
 const FormAdd = ({
@@ -252,6 +261,7 @@ const FormAdd = ({
                 message: 'Nieprawidłowa nazwa',
               },
             })}
+            data-testid="name"
           />
           <Label htmlFor="name">Nazwa Leku</Label>
           {errors.name && <InputError>{errors.name.message}</InputError>}
@@ -274,6 +284,7 @@ const FormAdd = ({
                 message: 'Nie możesz wprowadzić takiej ilości (min 1)',
               },
             })}
+            data-testid="amount"
           />
           <Label htmlFor="amount">Ilość</Label>
           {errors.amount && <InputError>{errors.amount.message}</InputError>}
@@ -291,11 +302,12 @@ const FormAdd = ({
                 message: 'Nie możesz wprowadzić starego leku',
               },
             })}
+            data-testid="date"
           />
-          <Label htmlFor={name}>Data ważności</Label>
+          <Label htmlFor="date">Data ważności</Label>
           {errors.date && <InputError>{errors.date.message}</InputError>}
         </InnerWrapper>
-        <Button type="submit" mgt="3rem">
+        <Button type="submit" mgt="3rem" data-testid="submit">
           Dodaj Lek
         </Button>
       </Form>
@@ -328,7 +340,13 @@ FormAdd.propTypes = {
 };
 
 FormAdd.defaultProps = {
+  selfsameMed: false,
+  theSameMedQueryOn: () => {},
+  nameMed: '',
+  amountMed: 0,
+  dateMed: '',
   medicines: [],
+  addMed: () => {},
 };
 
 const mapStateToProps = (state) => {
