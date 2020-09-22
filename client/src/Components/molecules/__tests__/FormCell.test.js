@@ -5,34 +5,28 @@ import { theme } from 'Theme/mainTheme';
 
 import FormCell from 'Components/molecules/FormCell/FormCell';
 
+const renderForm = (props) => {
+  const utils = render(
+    <ThemeProvider theme={theme}>
+      <FormCell {...props} />
+    </ThemeProvider>,
+  );
+  return { ...utils };
+};
+
 describe('FormCell molecule', () => {
   it('renders current component (name medicine)', () => {
-    const { getByText } = render(
-      <ThemeProvider theme={theme}>
-        <FormCell type="text" name="name" value="apap" />
-      </ThemeProvider>,
-    );
-
+    const { getByText } = renderForm({ type: 'text', name: 'name', value: 'apap' });
     getByText('Nazwa Leku');
   });
 
   it('renders current component (amount medicine)', () => {
-    const { getByText } = render(
-      <ThemeProvider theme={theme}>
-        <FormCell type="number" name="amount" value="8" />
-      </ThemeProvider>,
-    );
-
+    const { getByText } = renderForm({ type: 'number', name: 'amount', value: 8 });
     getByText('Ilość');
   });
 
   it('renders current component (date medicine)', () => {
-    const { getByText } = render(
-      <ThemeProvider theme={theme}>
-        <FormCell type="date" name="date" value="2020-01-01" />
-      </ThemeProvider>,
-    );
-
+    const { getByText } = renderForm({ type: 'date', name: 'date', value: '2020-01-01' });
     getByText('Data Ważności');
   });
 });
