@@ -90,9 +90,8 @@ const FormCreateProfile = ({ createUser, getUser }) => {
               type="date"
               onChange={handleChange}
               value={values.date}
-              errors={errors.date && touched.date && errors.date}
             />
-            <Text fs="1.2">*Data urodzenie nie jest wymagana</Text>
+            <Text fs="1.2">*Data urodzenia nie jest wymagana</Text>
             <Image />
             <Button mgt="2rem" type="submit" disabled={isSubmitting}>
               Stwórz konto
