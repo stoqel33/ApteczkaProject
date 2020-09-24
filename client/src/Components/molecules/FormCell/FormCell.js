@@ -34,6 +34,7 @@ const FormCell = ({ type, name, errors, onChange, value, expired, copy }) => {
             onChange={onChange}
             value={value}
             disabled={copy}
+            data-testid="input"
           />
           <Label htmlFor={name}>Nazwa Leku</Label>
           {errors && <InputError>{errors}</InputError>}
@@ -50,7 +51,7 @@ const FormCell = ({ type, name, errors, onChange, value, expired, copy }) => {
             value={value}
             error={errors}
           />
-          <Label htmlFor={name}>Ilość tabletek</Label>
+          <Label htmlFor={name}>Ilość</Label>
           {errors && <InputError>{errors}</InputError>}
         </Wrapper>
       ) : (
@@ -65,7 +66,7 @@ const FormCell = ({ type, name, errors, onChange, value, expired, copy }) => {
             placeholder=" "
             expired={expired}
           />
-          <Label htmlFor={name}>Data ważności</Label>
+          <Label htmlFor={name}>Data Ważności</Label>
           {errors && <InputError>{errors}</InputError>}
           {expired && <InputError>Lek jest przeterminowany!</InputError>}
         </Wrapper>
@@ -84,8 +85,11 @@ FormCell.propTypes = {
   copy: PropTypes.bool,
 };
 FormCell.defaultProps = {
+  type: '',
+  name: '',
   errors: null,
-  onChange: null,
+  onChange: () => {},
+  value: '',
   expired: false,
   copy: false,
 };

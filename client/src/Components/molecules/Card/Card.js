@@ -129,8 +129,9 @@ const Card = ({ id, name, amount, date, today, takePill }) => {
   const [info, setInfo] = useState(false);
 
   const handleToggleInfo = () => {
-    if (info) setInfo(false);
-    else setInfo(true);
+    // if (info) setInfo(false);
+    // else setInfo(true);
+    info ? setInfo(false) : setInfo(true);
   };
 
   const handleTakeMedicine = () => {
@@ -173,6 +174,15 @@ Card.propTypes = {
   date: PropTypes.string.isRequired,
   today: PropTypes.string.isRequired,
   takePill: PropTypes.func.isRequired,
+};
+
+Card.defaultProps = {
+  id: '',
+  name: '',
+  amount: '',
+  date: '',
+  today: '',
+  takePill: () => {},
 };
 
 const mapDispatchToProps = (dispatch) => ({

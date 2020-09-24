@@ -166,6 +166,17 @@ BurgerMenu.propTypes = {
   }),
 };
 
+BurgerMenu.defaultProps = {
+  height: 0,
+  open: false,
+  logout: () => {},
+  clear: () => {},
+  context: {
+    handleLicences: () => {},
+    licencesState: false,
+  },
+};
+
 const mapDispatchToProps = (dispatch) => ({
   logout: () => dispatch(logoutUser()),
   clear: () => dispatch(clearProfile()),

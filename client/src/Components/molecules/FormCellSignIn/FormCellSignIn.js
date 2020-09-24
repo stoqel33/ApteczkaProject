@@ -20,30 +20,28 @@ const Wrapper = styled.div`
 
 const FormCellSignIn = ({ name, type, errors, onChange, value, backendErr }) => {
   return (
-    <>
-      <Wrapper>
-        <Input
-          user
-          name={name}
-          error={errors}
-          type={type}
-          placeholder=" "
-          onChange={onChange}
-          value={value}
-        />
-        {type === 'password' ? (
-          <Label>hasło</Label>
-        ) : name === 'email' ? (
-          <Label>email</Label>
-        ) : type === 'date' ? (
-          <Label>Data urodzenia</Label>
-        ) : (
-          <Label>nazwa użytkownika</Label>
-        )}
-        {errors && <InputError>{errors}</InputError>}
-        {backendErr && <InputError>{backendErr}</InputError>}
-      </Wrapper>
-    </>
+    <Wrapper>
+      <Input
+        user
+        name={name}
+        error={errors}
+        type={type}
+        placeholder=" "
+        onChange={onChange}
+        value={value}
+      />
+      {type === 'password' ? (
+        <Label>hasło</Label>
+      ) : name === 'email' ? (
+        <Label>email</Label>
+      ) : type === 'date' ? (
+        <Label>Data urodzenia</Label>
+      ) : (
+        <Label>nazwa użytkownika</Label>
+      )}
+      {errors && <InputError>{errors}</InputError>}
+      {backendErr && <InputError>{backendErr}</InputError>}
+    </Wrapper>
   );
 };
 
@@ -56,6 +54,10 @@ FormCellSignIn.propTypes = {
   backendErr: PropTypes.string,
 };
 FormCellSignIn.defaultProps = {
+  name: '',
+  type: '',
+  onChange: () => {},
+  value: '',
   errors: null,
   backendErr: null,
 };
