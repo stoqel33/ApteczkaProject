@@ -183,4 +183,13 @@ MedicinesList.propTypes = {
   ).isRequired,
 };
 
+MedicinesList.defaultProps = {
+  burgerToggle: () => {},
+  searchToggle: () => {},
+  searching: false,
+  burgerMenu: false,
+  today: new Date().toISOString(),
+  medicines: [],
+};
+
 export default MedicinesList;

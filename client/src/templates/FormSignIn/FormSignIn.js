@@ -137,6 +137,12 @@ FormSignIn.propTypes = {
   clear: PropTypes.func.isRequired,
 };
 
+FormSignIn.defaultProps = {
+  register: () => {},
+  login: () => {},
+  clear: () => {},
+};
+
 const mapStateToProps = (state) => ({
   auth: state.auth,
   errors: state.errors,

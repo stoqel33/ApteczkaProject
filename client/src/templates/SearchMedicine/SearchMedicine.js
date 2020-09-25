@@ -56,7 +56,12 @@ const SearchMedicine = ({ medicines, today, handleToggle }) => {
   return (
     <>
       <WrapInput>
-        <InputSearch type="text" value={nameMed} onChange={handleNameSearch} />
+        <InputSearch
+          type="text"
+          value={nameMed}
+          onChange={handleNameSearch}
+          data-testid="input"
+        />
         <ButtonIconExit icon={close} size="1.4rem" onClick={handleToggle} />
       </WrapInput>
       <MedicinesWrap>
@@ -87,6 +92,12 @@ SearchMedicine.propTypes = {
   ).isRequired,
   today: PropTypes.string.isRequired,
   handleToggle: PropTypes.func.isRequired,
+};
+
+SearchMedicine.defaultProps = {
+  medicines: [],
+  today: new Date().toISOString(),
+  handleToggle: () => {},
 };
 
 export default SearchMedicine;

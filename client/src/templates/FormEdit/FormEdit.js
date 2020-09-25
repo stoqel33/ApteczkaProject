@@ -174,8 +174,7 @@ const FormEdit = ({
               errors={errors.date && touched.date && errors.date && values.date < today}
               expired={values.date < today}
             />
-
-            <Button mgt="3rem" type="submit" disabled={isSubmitting}>
+            <Button data-testid="button" mgt="3rem" type="submit" disabled={isSubmitting}>
               Zapisz i wyjdz
             </Button>
           </Forms>
@@ -217,6 +216,15 @@ FormEdit.propTypes = {
   removeMed: PropTypes.func.isRequired,
   deleteQuery: PropTypes.bool.isRequired,
   handleToggleQuery: PropTypes.func.isRequired,
+};
+
+FormEdit.defaultProps = {
+  medicine: [{}],
+  medicines: [],
+  changeMed: () => {},
+  removeMed: () => {},
+  deleteQuery: false,
+  handleToggleQuery: () => {},
 };
 
 const mapDispatchToProps = (dispatch) => ({
