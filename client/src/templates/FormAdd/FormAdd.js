@@ -164,6 +164,7 @@ const FormAdd = ({
   const today = new Date().toISOString().slice(0, 10);
   const [name, setName] = useState('');
   const [suggest, setSuggest] = useState([]);
+  const [inputIsActive, setInputStatus] = useState(false);
   const history = useHistory();
 
   const backToHome = () => {
@@ -206,17 +207,20 @@ const FormAdd = ({
 
   const handleChangeName = (e) => {
     setName(e.target.value);
-    if (e.target.value.length === 0) {
-      setSuggest([]);
-    } else if (e.target.value.length > 1) {
-      const regex = new RegExp(`^${name}`, 'i');
-      const suggest = medicinesDB.sort().filter((v) => regex.test(v));
+    SuggestNames(e.target.value);
+  };
+
+  const SuggestNames = (typedName) => {
+    if (typedName.length > 1) {
+      const suggest = medicinesDB
+        .sort()
+        .filter((medicine) => medicine.toLowerCase().includes(typedName));
       setSuggest(suggest);
-    }
+    } else setSuggest([]);
   };
 
   const rederSuggestName = () => {
-    if (suggest.length > 0) {
+    if (suggest.length > 0 && inputIsActive) {
       return (
         <SearchList>
           {suggest.map((item) => (
@@ -234,6 +238,10 @@ const FormAdd = ({
     setSuggest([]);
   };
 
+  const handleActive = (e) => {
+    if (e.type === 'blur' || 'focus') setInputStatus(!inputIsActive);
+  };
+
   return (
     <Wrapper>
       <TitleAdd mgt="2rem" mgb="2rem">
@@ -248,6 +256,8 @@ const FormAdd = ({
             placeholder=" "
             autoComplete="off"
             onChange={handleChangeName}
+            onFocus={handleActive}
+            onBlur={handleActive}
             value={name}
             error={errors.name}
             ref={register({
