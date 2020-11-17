@@ -212,10 +212,10 @@ const FormAdd = ({
 
   const SuggestNames = (typedName) => {
     if (typedName.length > 1) {
-      const suggest = medicinesDB
+      const suggested = medicinesDB
         .sort()
-        .filter((medicine) => medicine.toLowerCase().includes(typedName));
-      setSuggest(suggest);
+        .filter((medicine) => medicine.toLowerCase().includes(typedName.toLowerCase()));
+      setSuggest(suggested);
     } else setSuggest([]);
   };
 
@@ -238,8 +238,8 @@ const FormAdd = ({
     setSuggest([]);
   };
 
-  const handleActive = (e) => {
-    if (e.type === 'blur' || 'focus') setInputStatus(!inputIsActive);
+  const handleActive = () => {
+    setInputStatus(!inputIsActive);
   };
 
   return (
