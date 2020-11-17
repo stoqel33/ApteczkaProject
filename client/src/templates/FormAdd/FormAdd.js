@@ -207,16 +207,26 @@ const FormAdd = ({
 
   const handleChangeName = (e) => {
     setName(e.target.value);
-    SuggestNames(e.target.value);
+    suggestNames(e.target.value);
   };
 
-  const SuggestNames = (typedName) => {
+  const collectSuggestedNames = (item) => {
+    const suggested = medicinesDB
+      .sort()
+      .filter((medicine) => medicine.toLowerCase().includes(item.toLowerCase()));
+    setSuggest(suggested);
+  };
+
+  const suggestNames = (typedName) => {
     if (typedName.length > 1) {
-      const suggested = medicinesDB
-        .sort()
-        .filter((medicine) => medicine.toLowerCase().includes(typedName.toLowerCase()));
-      setSuggest(suggested);
+      collectSuggestedNames(typedName);
     } else setSuggest([]);
+  };
+
+  const handleChooseSuggested = (item) => {
+    setName(item);
+    collectSuggestedNames(item);
+    setInputStatus(false);
   };
 
   const rederSuggestName = () => {
@@ -233,13 +243,9 @@ const FormAdd = ({
     } else return null;
   };
 
-  const handleChooseSuggested = (name) => {
-    setName(name);
-    setSuggest([]);
-  };
-
-  const handleActive = () => {
-    setInputStatus(!inputIsActive);
+  const handleActive = (e) => {
+    if (e.target.type === 'text') setInputStatus(true);
+    else setInputStatus(false);
   };
 
   return (
@@ -257,7 +263,6 @@ const FormAdd = ({
             autoComplete="off"
             onChange={handleChangeName}
             onFocus={handleActive}
-            onBlur={handleActive}
             value={name}
             error={errors.name}
             ref={register({
@@ -282,6 +287,7 @@ const FormAdd = ({
             type="number"
             name="amount"
             placeholder=" "
+            onFocus={handleActive}
             error={errors.amount}
             ref={register({
               required: { value: true, message: 'Podaj ilość leku' },
@@ -304,6 +310,7 @@ const FormAdd = ({
             type="date"
             name="date"
             defaultValue={today}
+            onFocus={handleActive}
             error={errors.date}
             ref={register({
               required: { value: true, message: 'Podaj datę ważności' },
