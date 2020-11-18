@@ -103,6 +103,7 @@ class FormSignIn extends React.Component {
             {registered ? 'Logowanie' : 'Rejestracja'}
           </TitleInfo>
           <FormCellSignIn
+            id="email"
             name="email"
             type="text"
             onChange={this.onChange}
@@ -110,6 +111,7 @@ class FormSignIn extends React.Component {
             errors={errors.email}
           />
           <FormCellSignIn
+            id="password"
             name="password"
             type="password"
             onChange={this.onChange}
@@ -117,7 +119,7 @@ class FormSignIn extends React.Component {
             errors={errors.password}
           />
           <Button mgt="3rem" type="submit">
-            {registered ? 'Zaloguj się' : 'Zarajestruj się'}
+            {registered ? 'Zaloguj się' : 'Zarejestruj się'}
           </Button>
         </Forms>
         <Text fs="1.4" mgt="2rem">

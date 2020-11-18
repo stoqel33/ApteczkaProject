@@ -284,6 +284,7 @@ const FormAdd = ({
         {rederSuggestName()}
         <InnerWrapper>
           <Input
+            id="amount"
             type="number"
             name="amount"
             placeholder=" "
@@ -307,6 +308,7 @@ const FormAdd = ({
         </InnerWrapper>
         <InnerWrapper>
           <Input
+            id="date"
             type="date"
             name="date"
             defaultValue={today}

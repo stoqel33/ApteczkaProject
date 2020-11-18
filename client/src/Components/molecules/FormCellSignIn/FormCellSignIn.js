@@ -18,11 +18,12 @@ const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.lightmode.colors.background};
 `;
 
-const FormCellSignIn = ({ name, type, errors, onChange, value, backendErr }) => {
+const FormCellSignIn = ({ id, name, type, errors, onChange, value, backendErr }) => {
   return (
     <Wrapper>
       <Input
         user
+        id={id}
         name={name}
         error={errors}
         type={type}
@@ -31,13 +32,13 @@ const FormCellSignIn = ({ name, type, errors, onChange, value, backendErr }) => 
         value={value}
       />
       {type === 'password' ? (
-        <Label>hasło</Label>
+        <Label htmlFor={id}>hasło</Label>
       ) : name === 'email' ? (
-        <Label>email</Label>
+        <Label htmlFor={id}>email</Label>
       ) : type === 'date' ? (
-        <Label>Data urodzenia</Label>
+        <Label htmlFor={id}>Data urodzenia</Label>
       ) : (
-        <Label>nazwa użytkownika</Label>
+        <Label htmlFor={id}>nazwa użytkownika</Label>
       )}
       {errors && <InputError>{errors}</InputError>}
       {backendErr && <InputError>{backendErr}</InputError>}

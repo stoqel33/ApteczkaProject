@@ -63,9 +63,9 @@ const FormCreateProfile = ({ createUser, getUser }) => {
         }}
         validate={(values) => {
           const errors = {};
-          if (!values.nickname) {
-            errors.nickname = 'Podaj nazwę swojego profilu';
-          }
+          if (!values.nickname) errors.nickname = 'Podaj nazwę swojego profilu';
+          if (values.nickname.length > 0 && values.nickname.length < 3)
+            errors.nickname = 'Nazwa profilu musi mieć minimum 3 znaki';
           return errors;
         }}
         onSubmit={(values) => {
@@ -79,6 +79,7 @@ const FormCreateProfile = ({ createUser, getUser }) => {
               Stwórz profil
             </TitleInfo>
             <FormCellSignIn
+              id="nickname"
               name="nickname"
               type="text"
               onChange={handleChange}
