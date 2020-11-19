@@ -98,7 +98,8 @@ const FormEdit = ({
             medicines.forEach((item) => {
               if (
                 item._id !== values.id &&
-                item.name === values.name.charAt(0).toUpperCase() + values.name.slice(1)
+                item.name ===
+                  values.name.charAt(0).toUpperCase() + values.name.slice(1).trim()
               ) {
                 errors.name = 'Masz już taki lek';
               }
