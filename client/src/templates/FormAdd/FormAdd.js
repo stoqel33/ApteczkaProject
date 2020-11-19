@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -167,6 +167,24 @@ const FormAdd = ({
   const [inputIsActive, setInputStatus] = useState(false);
   const history = useHistory();
 
+  useEffect(() => {
+    document.addEventListener('mousedown', handleCloseSuggestedNames);
+
+    return () => {
+      document.removeEventListener('mousedown', handleCloseSuggestedNames);
+    };
+  }, []);
+
+  const handleCloseSuggestedNames = (e) => {
+    e.target.id === 'name' || e.target.id === 'suggest' || e.target.id === 'suggestItem'
+      ? setInputStatus(true)
+      : setInputStatus(false);
+  };
+
+  const handleActiveSuggest = (e) => {
+    e.target.id === 'name' ? setInputStatus(true) : setInputStatus(false);
+  };
+
   const backToHome = () => {
     history.push('/Apteczka');
   };
@@ -178,25 +196,26 @@ const FormAdd = ({
       date: values.date,
       copy: false,
     };
-
     newMed.name = newMed.name.charAt(0).toUpperCase() + newMed.name.slice(1);
-    const names = [];
-    medicines.forEach((med) => names.push(med.name));
-    const same = names.indexOf(newMed.name) !== -1;
-    if (!same) {
+
+    // Check if entered medicine already is in medical kit
+    const isDuplicate = medicines.filter((item) => item.name === newMed.name.trim());
+
+    if (isDuplicate.length) theSameMedQueryOn(newMed.name, newMed.amount, newMed.date);
+    else {
       backToHome();
       addMed(newMed);
-    } else theSameMedQueryOn(newMed.name, newMed.amount, newMed.date);
+    }
   };
 
   const addTheSameMed = () => {
     const theSameNames = [];
     medicines.forEach((med) => {
-      if (med.name.replace(/[^a-zA-Z ]/g, '').trim() === nameMed)
+      if (med.name.replace(/[^a-zA-Z ]/g, '').trim() === nameMed.trim())
         theSameNames.push(med.name.replace(/[^a-zA-Z ]/g, '').trim());
     });
     const values = {
-      name: `${nameMed} (${theSameNames.length + 1})`,
+      name: `${nameMed.trim()} (${theSameNames.length + 1})`,
       amount: amountMed,
       date: dateMed,
       copy: true,
@@ -218,9 +237,7 @@ const FormAdd = ({
   };
 
   const suggestNames = (typedName) => {
-    if (typedName.length > 1) {
-      collectSuggestedNames(typedName);
-    } else setSuggest([]);
+    typedName.length > 1 ? collectSuggestedNames(typedName) : setSuggest([]);
   };
 
   const handleChooseSuggested = (item) => {
@@ -232,20 +249,15 @@ const FormAdd = ({
   const rederSuggestName = () => {
     if (suggest.length > 0 && inputIsActive) {
       return (
-        <SearchList>
+        <SearchList id="suggest">
           {suggest.map((item) => (
-            <li key={item} onClick={() => handleChooseSuggested(item)}>
+            <li id="suggestItem" key={item} onClick={() => handleChooseSuggested(item)}>
               {item}
             </li>
           ))}
         </SearchList>
       );
     } else return null;
-  };
-
-  const handleActive = (e) => {
-    if (e.target.type === 'text') setInputStatus(true);
-    else setInputStatus(false);
   };
 
   return (
@@ -262,7 +274,7 @@ const FormAdd = ({
             placeholder=" "
             autoComplete="off"
             onChange={handleChangeName}
-            onFocus={handleActive}
+            onFocus={handleActiveSuggest}
             value={name}
             error={errors.name}
             ref={register({
@@ -288,7 +300,7 @@ const FormAdd = ({
             type="number"
             name="amount"
             placeholder=" "
-            onFocus={handleActive}
+            onFocus={handleActiveSuggest}
             error={errors.amount}
             ref={register({
               required: { value: true, message: 'Podaj ilość leku' },
@@ -311,8 +323,8 @@ const FormAdd = ({
             id="date"
             type="date"
             name="date"
+            onFocus={handleActiveSuggest}
             defaultValue={today}
-            onFocus={handleActive}
             error={errors.date}
             ref={register({
               required: { value: true, message: 'Podaj datę ważności' },
@@ -352,7 +364,7 @@ FormAdd.propTypes = {
   selfsameMed: PropTypes.bool.isRequired,
   theSameMedQueryOn: PropTypes.func.isRequired,
   nameMed: PropTypes.string.isRequired,
-  amountMed: PropTypes.number.isRequired,
+  amountMed: PropTypes.string.isRequired,
   dateMed: PropTypes.string.isRequired,
   medicines: PropTypes.arrayOf(PropTypes.object),
   addMed: PropTypes.func.isRequired,
