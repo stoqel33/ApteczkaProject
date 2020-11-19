@@ -5,7 +5,7 @@ class AddMedicine extends React.Component {
   state = {
     selfsameMed: false,
     name: '',
-    amount: 0,
+    amount: '0',
     date: '',
   };
 
