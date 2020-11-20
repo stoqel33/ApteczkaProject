@@ -129,15 +129,14 @@ const Card = ({ id, name, amount, date, today, takePill }) => {
   const [info, setInfo] = useState(false);
 
   const handleToggleInfo = () => {
-    // if (info) setInfo(false);
-    // else setInfo(true);
     info ? setInfo(false) : setInfo(true);
   };
-
   const handleTakeMedicine = () => {
     if (amount > 0) takePill(id);
   };
+
   const expired = today > date;
+
   return (
     <OuterWrapper info={info}>
       <Wrapper expired={expired} moreInfo={info}>
