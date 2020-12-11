@@ -1,16 +1,27 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components/macro';
+import styled, { keyframes } from 'styled-components/macro';
 import { useHistory } from 'react-router-dom';
-import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
 import { createProfile, getProfile } from 'data/Actions/profileActions';
 import PropTypes from 'prop-types';
+import { useForm } from 'react-hook-form';
 
-import FormCellSignIn from 'Components/molecules/FormCellSignIn/FormCellSignIn';
 import Button from 'Components/atoms/Button/Button';
 import Text from 'Components/atoms/Text/Text';
+import Input from 'Components/atoms/Input/Input';
+import Label from 'Components/atoms/Label/Label';
+import InputError from 'Components/atoms/InputError/InputError';
 
 import imgXsMedicines from 'assets/image/xsmall-medicines.png';
+
+const showingMedicines = keyframes`
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,11 +40,25 @@ const Wrapper = styled.div`
     width: 70%;
   }
 `;
-const Forms = styled(Form)`
+const Forms = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+const InputWrapper = styled.div`
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem 0;
+  margin-bottom: 1rem;
+  background-color: ${({ theme }) => theme.lightmode.colors.background};
+
+  &:focus-within {
+    margin-bottom: 1.2rem;
+  }
 `;
 const TitleInfo = styled(Text)`
   color: ${({ theme }) => theme.info};
@@ -46,6 +71,8 @@ const Image = styled.div`
 
   width: 17rem;
   height: 17rem;
+
+  animation: ${showingMedicines} 0.8s ease-in;
 `;
 
 const FormCreateProfile = ({ createUser, getUser }) => {
@@ -54,52 +81,47 @@ const FormCreateProfile = ({ createUser, getUser }) => {
     getUser(history);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const { errors, register, handleSubmit } = useForm();
+  const today = new Date().toISOString().slice(0, 10);
+
+  const onSubmit = (data) => {
+    createUser(data, history);
+  };
+
   return (
     <Wrapper>
-      <Formik
-        initialValues={{
-          nickname: '',
-          date: new Date().toISOString().slice(0, 10),
-        }}
-        validate={(values) => {
-          const errors = {};
-          if (!values.nickname) errors.nickname = 'Podaj nazwę swojego profilu';
-          if (values.nickname.length > 0 && values.nickname.length < 3)
-            errors.nickname = 'Nazwa profilu musi mieć minimum 3 znaki';
-          return errors;
-        }}
-        onSubmit={(values) => {
-          // Create profile
-          createUser(values, history);
-        }}
-      >
-        {({ values, errors, touched, handleChange, handleSubmit, isSubmitting }) => (
-          <Forms onSubmit={handleSubmit}>
-            <TitleInfo mgt="4rem" mgb="5rem">
-              Stwórz profil
-            </TitleInfo>
-            <FormCellSignIn
-              id="nickname"
-              name="nickname"
-              type="text"
-              onChange={handleChange}
-              value={values.nickname}
-              errors={errors.nickname && touched.nickname && errors.nickname}
-            />
-            <FormCellSignIn
-              name="date"
-              type="date"
-              onChange={handleChange}
-              value={values.date}
-            />
-            <Text fs="1.2">*Data urodzenia nie jest wymagana</Text>
-            <Image />
-            <Button mgt="2rem" type="submit" disabled={isSubmitting}>
-              Stwórz konto
-            </Button>
-          </Forms>
-        )}
-      </Formik>
+      <Forms onSubmit={handleSubmit(onSubmit)}>
+        <TitleInfo mgt="4rem" mgb="5rem">
+          Stwórz profil
+        </TitleInfo>
+        <InputWrapper>
+          <Input
+            user
+            autoComplete="off"
+            id="nickname"
+            name="nickname"
+            type="text"
+            placeholder=" "
+            error={errors.nickname}
+            ref={register({
+              required: { value: true, message: 'Nazwa jest wymagana' },
+              minLength: { value: 3, message: 'Nazwa musi zawierać minimum 3 znaki' },
+            })}
+          />
+          <Label htmlFor="nickname">Nazwa użytkownika</Label>
+          {errors.nickname && <InputError>{errors.nickname.message}</InputError>}
+        </InputWrapper>
+        <InputWrapper>
+          <Input user id="date" name="date" type="date" defaultValue={today} />
+          <Label htmlFor="date">Data urodzenia*</Label>
+        </InputWrapper>
+        <Text fs="1.2">*Data urodzenia nie jest wymagana</Text>
+        <Image />
+        <Button mgt="2rem" type="submit">
+          Stwórz konto
+        </Button>
+      </Forms>
     </Wrapper>
   );
 };
