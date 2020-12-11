@@ -16,6 +16,10 @@ const Wrapper = styled.div`
   padding: 2rem 0;
   margin-bottom: 1rem;
   background-color: ${({ theme }) => theme.lightmode.colors.background};
+
+  &:focus-within {
+    margin-bottom: 1.2rem;
+  }
 `;
 
 const FormCellSignIn = ({ id, name, type, errors, onChange, value, backendErr }) => {
