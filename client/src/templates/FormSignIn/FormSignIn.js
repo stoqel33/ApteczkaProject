@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled, { keyframes } from 'styled-components/macro';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { registerUser, loginUser, clearErrors } from 'data/Actions/authActions';
@@ -11,6 +11,14 @@ import Text from 'Components/atoms/Text/Text';
 
 import imgXSLuggage from 'assets/image/xsmall-luggage.png';
 
+const showingLuggage = keyframes`
+  from{
+    background-position-y: -18rem;
+  }
+  to{
+    background-position-y: top;
+  }`;
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -21,6 +29,8 @@ const Wrapper = styled.div`
   background-image: url(${imgXSLuggage});
   background-repeat: no-repeat;
   background-position-x: center;
+
+  animation: ${showingLuggage} 0.8s ease-out;
 
   @media screen and (min-width: 768px) {
     width: 80%;
