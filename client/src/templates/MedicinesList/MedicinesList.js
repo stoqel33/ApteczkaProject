@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { device } from 'Theme/mainTheme';
@@ -17,6 +17,15 @@ import search from 'assets/icons/search.svg';
 import imgXsEmpty from 'assets/image/xsmall-empty.png';
 import imgSEmpty from 'assets/image/small-empty.png';
 import imgMEmpty from 'assets/image/medium-empty.png';
+
+const showingImage = keyframes`
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -89,6 +98,8 @@ const Image = styled.div`
 const InnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
+  animation: ${showingImage} 0.9s ease-out;
 `;
 
 const MedicinesList = ({
@@ -150,9 +161,9 @@ const MedicinesList = ({
   const ButtonAdd = (
     <>
       {!searching && (
-        <Link to="/Apteczka/addMedicine">
-          <ButtonLink big="true">Dodaj nowy lek</ButtonLink>
-        </Link>
+        <ButtonLink as={Link} to="/Apteczka/addMedicine" big="true">
+          Dodaj nowy lek
+        </ButtonLink>
       )}
     </>
   );
