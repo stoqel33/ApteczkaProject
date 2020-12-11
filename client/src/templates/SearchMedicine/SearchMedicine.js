@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -49,6 +49,18 @@ const SearchMedicine = ({ medicines, today, handleToggle }) => {
     return medicine.name.toLowerCase().includes(value);
   });
 
+  useEffect(() => {
+    document.addEventListener('mousedown', handleCloseComponent);
+
+    return () => {
+      document.removeEventListener('mousedown', handleCloseComponent);
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleCloseComponent = (e) => {
+    e.target.id !== 'search' && handleToggle();
+  };
+
   const handleNameSearch = (e) => {
     setNameMed(e.target.value);
   };
@@ -57,9 +69,11 @@ const SearchMedicine = ({ medicines, today, handleToggle }) => {
     <>
       <WrapInput>
         <InputSearch
+          id="search"
           type="text"
           value={nameMed}
           onChange={handleNameSearch}
+          autoFocus
           data-testid="input"
         />
         <ButtonIconExit icon={close} size="1.4rem" onClick={handleToggle} />
