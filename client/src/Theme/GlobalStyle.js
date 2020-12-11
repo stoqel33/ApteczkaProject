@@ -13,7 +13,6 @@ const GlobalStyle = createGlobalStyle`
 
   html{
     font-size: 62.5%;
-    height: ${(props) => (props.size ? props.size.height : '700')}px;
   }
 
   body{
@@ -27,9 +26,13 @@ const GlobalStyle = createGlobalStyle`
         margin: 0 auto;
       }
     }
-
+    
   #root{
     height: 100%;
+  }
+
+  ::selection{
+    background-color: ${({ theme }) => theme.lightmode.colors.secondary};
   }
 
   input{
