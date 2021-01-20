@@ -1,50 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components/macro';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { addMedicines } from 'data/Actions/medicinesActions';
-import { useHistory, Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { device } from 'Theme/mainTheme';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components/macro";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { addMedicines } from "data/Actions/medicinesActions";
+import { useHistory, Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { device } from "Theme/mainTheme";
 
-import Title from 'Components/atoms/Title/Title';
-import InputError from 'Components/atoms/InputError/InputError';
-import Label from 'Components/atoms/Label/Label';
-import Button from 'Components/atoms/Button/Button';
-import Input from 'Components/atoms/Input/Input';
+import Title from "Components/atoms/Title/Title";
+import InputError from "Components/atoms/InputError/InputError";
+import Label from "Components/atoms/Label/Label";
+import Button from "Components/atoms/Button/Button";
+import Input from "Components/atoms/Input/Input";
 
-import medicinesDB from 'assets/medicines.json';
+import medicinesDB from "assets/medicines.json";
 
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100%;
-
-  @media screen and (min-width: 768px) {
-    width: 80%;
-    margin: 0 auto;
-  }
-
-  @media screen and (min-width: 1000px) {
-    margin: 0 auto;
-    width: 70%;
-  }
 `;
 const SelfSameWrap = styled.div`
   position: absolute;
-
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.85);
 `;
 const SelfSameTitle = styled(Title)`
-  font-size: 2.5rem;
   width: 100%;
+  margin-bottom: 8rem;
+  font-size: 2.5rem;
   text-align: center;
-  margin: 35% 5% 10%;
   padding: 0;
   color: ${({ theme }) => theme.warning};
 `;
@@ -162,31 +154,32 @@ const FormAdd = ({
 }) => {
   const { handleSubmit, register, errors } = useForm();
   const today = new Date().toISOString().slice(0, 10);
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [suggest, setSuggest] = useState([]);
   const [inputIsActive, setInputStatus] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleCloseSuggestedNames);
+    document.addEventListener("mousedown", handleCloseSuggestedNames);
 
     return () => {
-      document.removeEventListener('mousedown', handleCloseSuggestedNames);
+      document.removeEventListener("mousedown", handleCloseSuggestedNames);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCloseSuggestedNames = (e) => {
-    e.target.id === 'name' || e.target.id === 'suggest' || e.target.id === 'suggestItem'
+    e.target.id === "name" || e.target.id === "suggest" || e.target.id === "suggestItem"
       ? setInputStatus(true)
       : setInputStatus(false);
   };
 
   const handleActiveSuggest = (e) => {
-    e.target.id === 'name' ? setInputStatus(true) : setInputStatus(false);
+    e.target.id === "name" ? setInputStatus(true) : setInputStatus(false);
   };
 
   const backToHome = () => {
-    history.push('/Apteczka');
+    history.push("/Apteczka");
   };
 
   const onSubmit = (values) => {
@@ -211,8 +204,8 @@ const FormAdd = ({
   const addTheSameMed = () => {
     const theSameNames = [];
     medicines.forEach((med) => {
-      if (med.name.replace(/[^a-zA-Z ]/g, '').trim() === nameMed.trim())
-        theSameNames.push(med.name.replace(/[^a-zA-Z ]/g, '').trim());
+      if (med.name.replace(/[^a-zA-Z ]/g, "").trim() === nameMed.trim())
+        theSameNames.push(med.name.replace(/[^a-zA-Z ]/g, "").trim());
     });
     const values = {
       name: `${nameMed.trim()} (${theSameNames.length + 1})`,
@@ -278,14 +271,14 @@ const FormAdd = ({
             value={name}
             error={errors.name}
             ref={register({
-              required: { value: true, message: 'Podaj nazwę leku' },
+              required: { value: true, message: "Podaj nazwę leku" },
               maxLength: {
                 value: 30,
-                message: 'Nazwa leku jest zbyt długa (max 30 liter)',
+                message: "Nazwa leku jest zbyt długa (max 30 liter)",
               },
               pattern: {
                 value: /^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s]+(([-]?)+[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s])+([+]?)+([0-9\s]?)+([+]?)+([A-Za-z\s]{0,10})+([A-Za-z]{0,10})$/i,
-                message: 'Nieprawidłowa nazwa',
+                message: "Nieprawidłowa nazwa",
               },
             })}
             data-testid="name"
@@ -303,14 +296,14 @@ const FormAdd = ({
             onFocus={handleActiveSuggest}
             error={errors.amount}
             ref={register({
-              required: { value: true, message: 'Podaj ilość leku' },
+              required: { value: true, message: "Podaj ilość leku" },
               maxLength: {
                 value: 3,
-                message: 'Nie można wprowadzić takiej ilości (max 999)',
+                message: "Nie można wprowadzić takiej ilości (max 999)",
               },
               min: {
                 value: 1,
-                message: 'Nie możesz wprowadzić takiej ilości (min 1)',
+                message: "Nie możesz wprowadzić takiej ilości (min 1)",
               },
             })}
             data-testid="amount"
@@ -327,10 +320,10 @@ const FormAdd = ({
             defaultValue={today}
             error={errors.date}
             ref={register({
-              required: { value: true, message: 'Podaj datę ważności' },
+              required: { value: true, message: "Podaj datę ważności" },
               min: {
                 value: today,
-                message: 'Nie możesz wprowadzić starego leku',
+                message: "Nie możesz wprowadzić starego leku",
               },
             })}
             data-testid="date"
@@ -338,22 +331,24 @@ const FormAdd = ({
           <Label htmlFor="date">Data ważności</Label>
           {errors.date && <InputError>{errors.date.message}</InputError>}
         </InnerWrapper>
-        <Button type="submit" mgt="3rem" data-testid="submit">
+        <Button primary type="submit" mgt="3rem" data-testid="submit">
           Dodaj Lek
         </Button>
       </Form>
       {selfsameMed ? (
         <SelfSameWrap>
           <SelfSameTitle>Masz już lek {nameMed}, czy chcesz dodać kolejny?</SelfSameTitle>
-          <Button mgr="1.5rem" onClick={addTheSameMed}>
-            Tak
-          </Button>
-          <Button mgl="1.5rem" onClick={backToHome}>
-            Nie
-          </Button>
+          <div>
+            <Button warning mgr="1.5rem" onClick={addTheSameMed}>
+              Tak
+            </Button>
+            <Button warning mgl="1.5rem" onClick={backToHome}>
+              Nie
+            </Button>
+          </div>
         </SelfSameWrap>
       ) : null}
-      <ButtonLink mgt="5rem" as={Link} to="/Apteczka">
+      <ButtonLink secondary="true" mgt="5rem" as={Link} to="/Apteczka">
         Wróć
       </ButtonLink>
     </Wrapper>
@@ -373,9 +368,9 @@ FormAdd.propTypes = {
 FormAdd.defaultProps = {
   selfsameMed: false,
   theSameMedQueryOn: () => {},
-  nameMed: '',
+  nameMed: "",
   amountMed: 0,
-  dateMed: '',
+  dateMed: "",
   medicines: [],
   addMed: () => {},
 };
