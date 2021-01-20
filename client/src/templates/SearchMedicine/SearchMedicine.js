@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import PropTypes from "prop-types";
 
-import Input from 'Components/atoms/Input/Input';
-import ButtonIcon from 'Components/atoms/ButtonIcon/ButtonIcon';
-import Card from 'Components/molecules/Card/Card';
+import Input from "Components/atoms/Input/Input";
+import ButtonIcon from "Components/atoms/ButtonIcon/ButtonIcon";
+import Card from "Components/molecules/Card/Card";
 
-import close from 'assets/icons/close.svg';
+import close from "assets/icons/close.svg";
 
 const WrapInput = styled.div`
   position: relative;
@@ -43,22 +43,22 @@ const ButtonIconExit = styled(ButtonIcon)`
 `;
 
 const SearchMedicine = ({ medicines, today, handleToggle }) => {
-  const [nameMed, setNameMed] = useState('');
+  const [nameMed, setNameMed] = useState("");
   const value = nameMed.toLowerCase();
   const searchMedicine = medicines.filter((medicine) => {
     return medicine.name.toLowerCase().includes(value);
   });
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleCloseComponent);
+    document.addEventListener("mousedown", handleCloseComponent);
 
     return () => {
-      document.removeEventListener('mousedown', handleCloseComponent);
+      document.removeEventListener("mousedown", handleCloseComponent);
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleCloseComponent = (e) => {
-    e.target.id !== 'search' && handleToggle();
+    e.target.id === "root" && handleToggle();
   };
 
   const handleNameSearch = (e) => {
@@ -74,9 +74,10 @@ const SearchMedicine = ({ medicines, today, handleToggle }) => {
           value={nameMed}
           onChange={handleNameSearch}
           autoFocus
+          autoComplete="off"
           data-testid="input"
         />
-        <ButtonIconExit icon={close} size="1.4rem" onClick={handleToggle} />
+        <ButtonIconExit clear icon={close} size="1.4rem" onClick={handleToggle} />
       </WrapInput>
       <MedicinesWrap>
         {searchMedicine.map(({ _id, name, amount, expiryDate }) => (
