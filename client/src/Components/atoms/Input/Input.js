@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
 const Input = styled.input`
   display: inline-block;
@@ -76,13 +76,13 @@ const Input = styled.input`
       }
 
       @media screen and (max-width: 1024px) {
-        &[type='date']::-webkit-inner-spin-button {
+        &[type="date"]::-webkit-inner-spin-button {
           position: absolute;
           -webkit-appearance: none;
           display: none;
         }
 
-        &[type='date']::-webkit-calendar-picker-indicator {
+        &[type="date"]::-webkit-calendar-picker-indicator {
           position: absolute;
           -webkit-appearance: none;
           display: none;
@@ -90,7 +90,7 @@ const Input = styled.input`
       }
 
       @media screen and (min-width: 1024px) {
-        &[type='date']::-webkit-inner-spin-button {
+        &[type="date"]::-webkit-inner-spin-button {
           position: absolute;
           top: 50%;
           right: 10%;
@@ -98,7 +98,7 @@ const Input = styled.input`
           cursor: pointer;
         }
 
-        &[type='date']::-webkit-calendar-picker-indicator {
+        &[type="date"]::-webkit-calendar-picker-indicator {
           position: absolute;
           top: 50%;
           right: 10%;
@@ -108,8 +108,8 @@ const Input = styled.input`
       }
     `}
 
-    ${({ error }) =>
-      error &&
+    ${({ errorUser }) =>
+      errorUser &&
       css`
         border-color: ${({ theme }) => theme.warning};
         color: ${({ theme }) => theme.warning};
@@ -119,12 +119,33 @@ const Input = styled.input`
           border-radius: 0;
           border-top: 1px solid ${({ theme }) => theme.warning};
           border-bottom: 1px solid ${({ theme }) => theme.warning};
+
+          & + label {
+            color: ${({ theme }) => theme.warning};
+          }
         }
 
         & + label {
           color: ${({ theme }) => theme.warning};
         }
       `}
+    
+    ${({ error }) =>
+      error &&
+      css`
+        border-color: ${({ theme }) => theme.warning};
+        color: ${({ theme }) => theme.warning};
+
+        &:focus {
+          & + label {
+            color: ${({ theme }) => theme.warning};
+          }
+        }
+
+        & + label {
+          color: ${({ theme }) => theme.warning};
+        }
+      `};
 `;
 
 export default Input;
