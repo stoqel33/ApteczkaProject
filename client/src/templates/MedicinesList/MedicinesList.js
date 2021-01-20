@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import styled, { keyframes } from 'styled-components';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { device } from 'Theme/mainTheme';
+import React, { useState, useEffect } from "react";
+import styled, { keyframes } from "styled-components";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { device } from "Theme/mainTheme";
 
-import Card from 'Components/molecules/Card/Card';
-import Button from 'Components/atoms/Button/Button';
-import Title from 'Components/atoms/Title/Title';
-import ButtonIcon from 'Components/atoms/ButtonIcon/ButtonIcon';
-import SearchMedicine from 'templates/SearchMedicine/SearchMedicine';
-import BurgerMenu from 'templates/BurgerMenu/BurgerMenu';
-import Burger from 'Components/atoms/Burger/Burger';
-import Text from 'Components/atoms/Text/Text';
+import Card from "Components/molecules/Card/Card";
+import Button from "Components/atoms/Button/Button";
+import Title from "Components/atoms/Title/Title";
+import ButtonIcon from "Components/atoms/ButtonIcon/ButtonIcon";
+import SearchMedicine from "templates/SearchMedicine/SearchMedicine";
+import BurgerMenu from "templates/BurgerMenu/BurgerMenu";
+import Burger from "Components/atoms/Burger/Burger";
+import Text from "Components/atoms/Text/Text";
 
-import search from 'assets/icons/search.svg';
-import imgXsEmpty from 'assets/image/xsmall-empty.png';
-import imgSEmpty from 'assets/image/small-empty.png';
-import imgMEmpty from 'assets/image/medium-empty.png';
+import search from "assets/icons/search.svg";
+import imgXsEmpty from "assets/image/xsmall-empty.png";
+import imgSEmpty from "assets/image/small-empty.png";
+import imgMEmpty from "assets/image/medium-empty.png";
 
 const showingImage = keyframes`
   from{
@@ -45,6 +45,7 @@ const TopBarWrap = styled.div`
 
   @media screen and ${device.laptop} {
     grid-template-columns: 1fr 20rem 1fr;
+    margin-bottom: 4rem;
   }
 `;
 const Icon = styled.div`
@@ -84,14 +85,14 @@ const Image = styled.div`
   background-repeat: no-repeat;
   background-position-x: center;
 
-  @media screen and (${device.mobileM}) {
+  @media screen and ${device.mobileM} {
     width: 22rem;
     height: 22rem;
     background-image: url(${imgSEmpty});
   }
-  @media screen and (${device.tablet}) {
-    width: 30rem;
-    height: 30rem;
+  @media screen and ${device.tablet} {
+    width: 26rem;
+    height: 26rem;
     background-image: url(${imgMEmpty});
   }
 `;
@@ -112,7 +113,7 @@ const MedicinesList = ({
 }) => {
   const [heightTop, setHeightTop] = useState(0);
   useEffect(() => {
-    const height = document.getElementById('topBar').offsetHeight + 30;
+    const height = document.getElementById("topBar").offsetHeight + 30;
     setHeightTop(height);
   }, []);
 
@@ -150,7 +151,10 @@ const MedicinesList = ({
           ) : (
             <InnerWrapper>
               <Image />
-              <Text mgt="2rem">Twoja apteczka jest pusta</Text>
+              <Text mgl="2rem" mgr="2rem">
+                Apteczka jest pusta. Kliknij przycisk "Dodaj nowy lek" aby dodać pierwszy
+                lek
+              </Text>
             </InnerWrapper>
           )}
         </MedicinesWrap>
