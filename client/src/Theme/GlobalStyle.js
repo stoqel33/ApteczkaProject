@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components/macro';
-import { device } from 'Theme/mainTheme';
+import { createGlobalStyle } from "styled-components/macro";
+import { device } from "Theme/mainTheme";
 
 const GlobalStyle = createGlobalStyle`
   *{
@@ -20,11 +20,18 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Montserrat', sans-serif;
     background: ${({ theme }) => theme.lightmode.colors.background};
     color: ${({ theme }) => theme.lightmode.colors.primary};
-    height: ${(props) => (props.size ? props.size.height : '700')}px;
+    height: ${(props) => (props.size ? props.size.height : "700")}px;
 
     @media screen and ${device.laptop} {
         margin: 0 auto;
       }
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; 
+    -khtml-user-select: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
     }
     
   #root{
