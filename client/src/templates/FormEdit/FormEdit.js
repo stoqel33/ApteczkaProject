@@ -1,21 +1,21 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-restricted-syntax */
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components/macro';
-import { Formik, Form } from 'formik';
-import { useHistory, Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { changeMedicine, removeMedicine } from 'data/Actions/medicinesActions';
-import { device } from 'Theme/mainTheme';
+import React from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components/macro";
+import { Formik, Form } from "formik";
+import { useHistory, Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { changeMedicine, removeMedicine } from "data/Actions/medicinesActions";
+import { device } from "Theme/mainTheme";
 
-import FormCell from 'Components/molecules/FormCell/FormCell';
-import Button from 'Components/atoms/Button/Button';
-import Title from 'Components/atoms/Title/Title';
-import ButtonIcon from 'Components/atoms/ButtonIcon/ButtonIcon';
+import FormCell from "Components/molecules/FormCell/FormCell";
+import Button from "Components/atoms/Button/Button";
+import Title from "Components/atoms/Title/Title";
+import ButtonIcon from "Components/atoms/ButtonIcon/ButtonIcon";
 
-import binIcon from 'assets/icons/bin.svg';
+import binIcon from "assets/icons/bin.svg";
 
 const Wrapper = styled.div`
   display: flex;
@@ -74,7 +74,7 @@ const FormEdit = ({
   const today = new Date().toISOString().slice(0, 10);
   const history = useHistory();
   const backToHome = () => {
-    history.push('/Apteczka');
+    history.push("/Apteczka");
   };
   const handleRemove = () => {
     removeMed(medicine[0]._id);
@@ -101,33 +101,33 @@ const FormEdit = ({
                 item.name ===
                   values.name.charAt(0).toUpperCase() + values.name.slice(1).trim()
               ) {
-                errors.name = 'Masz już taki lek';
+                errors.name = "Masz już taki lek";
               }
             });
             if (!values.name) {
-              errors.name = 'Wpisz nazwę leku';
+              errors.name = "Wpisz nazwę leku";
             } else if (
               !/^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s]+(([-]?)+[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s])+([+]?)+([0-9\s]?)+([+]?)+([A-Za-z\s]{0,10})+([A-Za-z]{0,10})$/i.test(
                 values.name,
               )
             ) {
-              errors.name = 'Nazwa zawiera niedozwolone znaki';
+              errors.name = "Nazwa zawiera niedozwolone znaki";
             }
           }
           if (values.name.length > 30) {
-            errors.name = 'Zbyt długa nazwa (max 30)';
+            errors.name = "Zbyt długa nazwa (max 30)";
           }
           if (!values.amount) {
-            errors.amount = 'Podaj ilość leku';
+            errors.amount = "Podaj ilość leku";
           } else if (values.amount < 0) {
-            errors.amount = 'Podaj poprawną ilość';
+            errors.amount = "Podaj poprawną ilość";
           } else if (values.amount > 999) {
-            errors.amount = 'Nie można wprowadzić takiej ilości leku';
+            errors.amount = "Nie można wprowadzić takiej ilości leku";
           }
           if (!values.date) {
-            errors.date = 'Podaj datę ważności!';
+            errors.date = "Podaj datę ważności!";
           } else if (values.date < today) {
-            errors.date = 'Nie możesz wprowadzić starego leku';
+            errors.date = "Nie możesz wprowadzić starego leku";
           }
           return errors;
         }}
@@ -175,7 +175,13 @@ const FormEdit = ({
               errors={errors.date && touched.date && errors.date && values.date < today}
               expired={values.date < today}
             />
-            <Button data-testid="button" mgt="3rem" type="submit" disabled={isSubmitting}>
+            <Button
+              primary
+              data-testid="button"
+              mgt="3rem"
+              type="submit"
+              disabled={isSubmitting}
+            >
               Zapisz i wyjdz
             </Button>
           </Forms>
@@ -183,17 +189,17 @@ const FormEdit = ({
       </Formik>
       <InnerWrapButtons>
         <ButtonIcon onClick={handleToggleQuery} icon={binIcon} size="3rem" />
-        <ButtonLink as={Link} to="/Apteczka">
+        <ButtonLink secondary="true" as={Link} to="/Apteczka">
           Wróć
         </ButtonLink>
       </InnerWrapButtons>
       {deleteQuery ? (
         <RemoveWrap>
           <RemoveTitle>Usunąć lek {medicine[0].name}?</RemoveTitle>
-          <Button mgr="1.5rem" onClick={handleRemove}>
+          <Button warning mgr="1.5rem" onClick={handleRemove}>
             TAK
           </Button>
-          <Button mgl="1.5rem" onClick={handleToggleQuery}>
+          <Button warning mgl="1.5rem" onClick={handleToggleQuery}>
             NIE
           </Button>
         </RemoveWrap>
