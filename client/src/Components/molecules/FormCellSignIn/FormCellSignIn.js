@@ -1,11 +1,11 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import React from "react";
+import styled from "styled-components";
+import PropTypes from "prop-types";
 
-import Input from 'Components/atoms/Input/Input';
-import Label from 'Components/atoms/Label/Label';
-import InputError from 'Components/atoms/InputError/InputError';
+import Input from "Components/atoms/Input/Input";
+import Label from "Components/atoms/Label/Label";
+import InputError from "Components/atoms/InputError/InputError";
 
 const Wrapper = styled.div`
   position: relative;
@@ -29,17 +29,17 @@ const FormCellSignIn = ({ id, name, type, errors, onChange, value, backendErr })
         user
         id={id}
         name={name}
-        error={errors}
+        errorUser={errors}
         type={type}
         placeholder=" "
         onChange={onChange}
         value={value}
       />
-      {type === 'password' ? (
+      {type === "password" ? (
         <Label htmlFor={id}>hasło</Label>
-      ) : name === 'email' ? (
+      ) : name === "email" ? (
         <Label htmlFor={id}>email</Label>
-      ) : type === 'date' ? (
+      ) : type === "date" ? (
         <Label htmlFor={id}>Data urodzenia</Label>
       ) : (
         <Label htmlFor={id}>nazwa użytkownika</Label>
@@ -59,10 +59,10 @@ FormCellSignIn.propTypes = {
   backendErr: PropTypes.string,
 };
 FormCellSignIn.defaultProps = {
-  name: '',
-  type: '',
+  name: "",
+  type: "",
   onChange: () => {},
-  value: '',
+  value: "",
   errors: null,
   backendErr: null,
 };
