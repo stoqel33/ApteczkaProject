@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import AppContext from 'context';
 import { device } from 'Theme/mainTheme';
 
-// import { device } from 'Theme/mainTheme';
 import { logoutUser } from 'data/Actions/authActions';
 import { clearProfile } from 'data/Actions/profileActions';
 
@@ -31,7 +30,6 @@ const InnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 80%;
   height: 80%;
   margin-top: 3rem;
 `;
@@ -41,6 +39,8 @@ const Option = styled(Text)`
 `;
 const Href = styled.a`
   color: ${({ theme }) => theme.info};
+  margin: 0 auto;
+  text-align: center;
 `;
 const HrefWrapper = styled.div`
   display: flex;
