@@ -268,10 +268,14 @@ const FormAdd = ({
             autoComplete="off"
             onChange={handleChangeName}
             onFocus={handleActiveSuggest}
-            value={name}
+            defaultValue={name}
             error={errors.name}
             ref={register({
               required: { value: true, message: "Podaj nazwę leku" },
+              minLength: {
+                value: 3,
+                message: "Nazwa leku jest za krótka (min 3 litery)",
+              },
               maxLength: {
                 value: 30,
                 message: "Nazwa leku jest zbyt długa (max 30 liter)",
@@ -290,7 +294,7 @@ const FormAdd = ({
         <InnerWrapper>
           <Input
             id="amount"
-            type="number"
+            type="tel"
             name="amount"
             placeholder=" "
             onFocus={handleActiveSuggest}
@@ -304,6 +308,10 @@ const FormAdd = ({
               min: {
                 value: 1,
                 message: "Nie możesz wprowadzić takiej ilości (min 1)",
+              },
+              pattern: {
+                value: /^[0-9\b]+$/,
+                message: "Podaj poprawną ilość leku",
               },
             })}
             data-testid="amount"
