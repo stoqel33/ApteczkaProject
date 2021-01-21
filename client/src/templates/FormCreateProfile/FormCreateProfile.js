@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react';
-import styled, { keyframes } from 'styled-components/macro';
-import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { createProfile, getProfile } from 'data/Actions/profileActions';
-import PropTypes from 'prop-types';
-import { useForm } from 'react-hook-form';
+import React, { useEffect } from "react";
+import styled, { keyframes } from "styled-components/macro";
+import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { createProfile, getProfile } from "data/Actions/profileActions";
+import PropTypes from "prop-types";
+import { useForm } from "react-hook-form";
 
-import Button from 'Components/atoms/Button/Button';
-import Text from 'Components/atoms/Text/Text';
-import Input from 'Components/atoms/Input/Input';
-import Label from 'Components/atoms/Label/Label';
-import InputError from 'Components/atoms/InputError/InputError';
+import Button from "Components/atoms/Button/Button";
+import Text from "Components/atoms/Text/Text";
+import Input from "Components/atoms/Input/Input";
+import Label from "Components/atoms/Label/Label";
+import InputError from "Components/atoms/InputError/InputError";
 
-import imgXsMedicines from 'assets/image/xsmall-medicines.png';
+import imgXsMedicines from "assets/image/xsmall-medicines.png";
 
 const showingMedicines = keyframes`
   from{
@@ -105,8 +105,9 @@ const FormCreateProfile = ({ createUser, getUser }) => {
             placeholder=" "
             error={errors.nickname}
             ref={register({
-              required: { value: true, message: 'Nazwa jest wymagana' },
-              minLength: { value: 3, message: 'Nazwa musi zawierać minimum 3 znaki' },
+              required: { value: true, message: "Nazwa jest wymagana" },
+              minLength: { value: 3, message: "Nazwa musi zawierać minimum 3 znaki" },
+              maxLength: { value: 30, message: "Nazwa jest za długa (max 30 znaków)" },
             })}
           />
           <Label htmlFor="nickname">Nazwa użytkownika</Label>
