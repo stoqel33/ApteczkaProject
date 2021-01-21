@@ -1,15 +1,16 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components/macro';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { registerUser, loginUser, clearErrors } from 'data/Actions/authActions';
-import { withRouter } from 'react-router';
+import React from "react";
+import styled, { keyframes } from "styled-components/macro";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { registerUser, loginUser, clearErrors } from "data/Actions/authActions";
+import { withRouter } from "react-router";
+import { device } from "Theme/mainTheme";
 
-import FormCellSignIn from 'Components/molecules/FormCellSignIn/FormCellSignIn';
-import Button from 'Components/atoms/Button/Button';
-import Text from 'Components/atoms/Text/Text';
+import FormCellSignIn from "Components/molecules/FormCellSignIn/FormCellSignIn";
+import Button from "Components/atoms/Button/Button";
+import Text from "Components/atoms/Text/Text";
 
-import imgXSLuggage from 'assets/image/xsmall-luggage.png';
+import imgXSLuggage from "assets/image/xsmall-luggage.png";
 
 const showingLuggage = keyframes`
   from{
@@ -32,7 +33,7 @@ const Wrapper = styled.div`
 
   animation: ${showingLuggage} 0.8s ease-out;
 
-  @media screen and (min-width: 768px) {
+  @media screen and ${device.tablet} {
     width: 80%;
     margin: 0 auto;
   }
@@ -55,8 +56,8 @@ const TitleInfo = styled(Text)`
 
 class FormSignIn extends React.Component {
   state = {
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     errors: {},
   };
 
@@ -70,7 +71,7 @@ class FormSignIn extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.auth.isAuthenticated) this.props.history.push('/Apteczka');
+    if (this.props.auth.isAuthenticated) this.props.history.push("/Apteczka");
   }
 
   onChange = (e) => {
@@ -97,8 +98,8 @@ class FormSignIn extends React.Component {
     registerChange();
     clear();
     this.setState({
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     });
   };
 
@@ -110,7 +111,7 @@ class FormSignIn extends React.Component {
       <Wrapper>
         <Forms noValidate onSubmit={this.onSubmit}>
           <TitleInfo mgt="5rem" mgb="2rem">
-            {registered ? 'Logowanie' : 'Rejestracja'}
+            {registered ? "Logowanie" : "Rejestracja"}
           </TitleInfo>
           <FormCellSignIn
             id="email"
@@ -129,14 +130,14 @@ class FormSignIn extends React.Component {
             errors={errors.password}
           />
           <Button mgt="3rem" type="submit">
-            {registered ? 'Zaloguj się' : 'Zarejestruj się'}
+            {registered ? "Zaloguj się" : "Zarejestruj się"}
           </Button>
         </Forms>
         <Text fs="1.4" mgt="2rem">
-          {registered ? 'Nie masz konta?' : 'Masz już konto?'}
+          {registered ? "Nie masz konta?" : "Masz już konto?"}
         </Text>
         <Button type="button" info fs="1.5" onClick={this.onChangeOption}>
-          {registered ? 'Zarejestruj się!' : 'Zaloguj się'}
+          {registered ? "Zarejestruj się!" : "Zaloguj się"}
         </Button>
       </Wrapper>
     );
