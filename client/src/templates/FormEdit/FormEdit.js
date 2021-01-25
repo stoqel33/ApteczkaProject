@@ -115,7 +115,10 @@ const FormEdit = ({
             }
           }
           if (values.name.length > 30) {
-            errors.name = "Zbyt długa nazwa (max 30)";
+            errors.name = "Nazwa leku jest zbyt długa (max 30 liter)";
+          }
+          if (values.name.length < 3) {
+            errors.name = "Nazwa leku jest za krótka (min 3 litery)";
           }
           if (!values.amount) {
             errors.amount = "Podaj ilość leku";
