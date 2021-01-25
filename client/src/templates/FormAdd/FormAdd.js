@@ -152,7 +152,7 @@ const FormAdd = ({
   medicines,
   addMed,
 }) => {
-  const { handleSubmit, register, errors } = useForm();
+  const { handleSubmit, register, errors, setValue } = useForm();
   const today = new Date().toISOString().slice(0, 10);
   const [name, setName] = useState("");
   const [suggest, setSuggest] = useState([]);
@@ -234,6 +234,7 @@ const FormAdd = ({
   };
 
   const handleChooseSuggested = (item) => {
+    setValue("name", item);
     setName(item);
     collectSuggestedNames(item);
     setInputStatus(false);
@@ -306,7 +307,7 @@ const FormAdd = ({
                 message: "Nie można wprowadzić takiej ilości (max 999)",
               },
               min: {
-                value: 1,
+                value: "1",
                 message: "Nie możesz wprowadzić takiej ilości (min 1)",
               },
               pattern: {
