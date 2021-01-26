@@ -7,7 +7,7 @@ export const createProfile = (profilData, history) => (dispatch) => {
   return axios
     .post(`/api/Apteczka/profile/`, profilData)
     .then(() => {
-      history.push(`/Apteczka/`);
+      dispatch(getProfile(history));
     })
     .catch((err) => {
       dispatch(getErrors(err.response.data));
