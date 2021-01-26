@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 import {
   MEDICINES_LOADING,
@@ -7,9 +7,8 @@ import {
   MEDICINES_CHANGE,
   MEDICINES_REMOVE,
   MEDICINE_DECREASE,
-  GET_ERRORS,
-  CLEAR_ERRORS,
-} from 'data/Actions/types';
+} from "data/Actions/types";
+import { getErrors, clearErrors } from "data/Actions/errorActions";
 
 export const getMedicines = () => (dispatch) => {
   dispatch(setMedicinesLoading());
@@ -21,11 +20,8 @@ export const getMedicines = () => (dispatch) => {
         payload: res.data,
       });
     })
-    .catch(() => {
-      dispatch({
-        type: MEDICINES_GET,
-        payload: null,
-      });
+    .catch((err) => {
+      dispatch(getErrors(err.response.data));
     });
 };
 
@@ -40,10 +36,7 @@ export const addMedicines = (medicine) => (dispatch) => {
       });
     })
     .catch((err) => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      });
+      dispatch(getErrors(err.response.data));
     });
 };
 
@@ -58,10 +51,7 @@ export const changeMedicine = (medicine, id) => (dispatch) => {
       });
     })
     .catch((err) => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      });
+      dispatch(getErrors(err.response.data));
     });
 };
 
@@ -75,10 +65,7 @@ export const removeMedicine = (id) => (dispatch) => {
       });
     })
     .catch((err) => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      });
+      dispatch(getErrors(err.response.data));
     });
 };
 
@@ -93,11 +80,7 @@ export const decreaseMedicine = (id) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err);
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      });
+      dispatch(getErrors(err.response.data));
     });
 };
 
@@ -105,12 +88,5 @@ export const decreaseMedicine = (id) => (dispatch) => {
 export const setMedicinesLoading = () => {
   return {
     type: MEDICINES_LOADING,
-  };
-};
-
-// Clear errors
-export const clearErrors = () => {
-  return {
-    type: CLEAR_ERRORS,
   };
 };
