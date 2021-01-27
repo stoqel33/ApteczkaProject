@@ -30,6 +30,7 @@ const showingImage = keyframes`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  min-height: 100%;
   height: min-content;
   text-align: center;
   transition: 1s;
@@ -72,6 +73,10 @@ const MedicinesWrap = styled.div`
 `;
 const ButtonLink = styled(Button)`
   margin: 5rem auto 5rem;
+
+  &:last-of-type {
+    margin-top: auto;
+  }
 `;
 const TitleApp = styled(Title)`
   color: ${({ theme }) => theme.lightmode.colors.secondary};
@@ -121,7 +126,7 @@ const MedicinesList = ({
     <TopBarWrap id="topBar">
       <Icon onClick={searchToggle}>
         {medicines.length > 0 && !burgerMenu && (
-          <ButtonIcon icon={search} size="2.8rem" />
+          <ButtonIcon filterOff icon={search} size="2.8rem" />
         )}
       </Icon>
       <TitleApp fs="3">Apteczka</TitleApp>
