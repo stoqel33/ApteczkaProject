@@ -191,7 +191,7 @@ const FormEdit = ({
         )}
       </Formik>
       <InnerWrapButtons>
-        <ButtonIcon onClick={handleToggleQuery} icon={binIcon} size="3rem" />
+        <ButtonIcon filterBin onClick={handleToggleQuery} icon={binIcon} size="3rem" />
         <ButtonLink secondary="true" as={Link} to="/Apteczka">
           Wróć
         </ButtonLink>
