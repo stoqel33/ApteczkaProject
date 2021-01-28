@@ -20,7 +20,8 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Montserrat', sans-serif;
     background: ${({ theme }) => theme.lightmode.colors.background};
     color: ${({ theme }) => theme.lightmode.colors.primary};
-    height: ${(props) => (props.size ? props.size.height : "700")}px;
+    height: ${(props) =>
+      props.windowHeightDimension ? props.windowHeightDimension.height : "700"}px;
 
     @media screen and ${device.laptop} {
         margin: 0 auto;
