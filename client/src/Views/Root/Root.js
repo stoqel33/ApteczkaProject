@@ -2,59 +2,28 @@
 /* eslint-disable no-undef */
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { ThemeProvider } from 'styled-components';
-import store from 'data/Store';
-import jwt_decode from 'jwt-decode';
-import setAuthToken from 'data/Utils/setAuthToken';
-import { setCurrentUser, logoutUser } from 'data/Actions/authActions';
-import { clearProfile } from 'data/Actions/profileActions';
-import { theme } from 'Theme/mainTheme';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { Provider } from "react-redux";
+import { ThemeProvider } from "styled-components";
+import store from "data/Store";
+import jwt_decode from "jwt-decode";
+import setAuthToken from "data/Utils/setAuthToken";
+import { setCurrentUser, logoutUser } from "data/Actions/authActions";
+import { clearProfile } from "data/Actions/profileActions";
+import { theme } from "Theme/mainTheme";
 
-import GlobalStyle from 'Theme/GlobalStyle';
-import Medicine from 'Views/Medicine/Medicine';
-import AddMedicine from 'Views/AddMedicine/AddMedicine';
-import EditMedicine from 'Views/EditMedicine/EditMedicine';
-import SignIn from 'Views/SignIn/SignIn';
-import CreateProfile from 'Views/CreateProfile/CreateProfile';
-import NotFound from 'Views/NotFound/NotFound';
-import PrivateRoute from 'templates/PrivateRoute/PrivateRoute';
-import ProtectedRoute from 'templates/ProtectedRoute/ProtectedRoute';
-
-// get window size and listening resize
-function useWindowSize() {
-  const isClient = typeof window === 'object';
-
-  function getSize() {
-    return {
-      width: isClient ? window.innerWidth : undefined,
-      height: isClient ? window.innerHeight : undefined,
-    };
-  }
-
-  const [windowSize, setWindowSize] = useState(getSize);
-
-  useEffect(() => {
-    if (!isClient) {
-      return false;
-    }
-
-    function handleResize() {
-      setWindowSize(getSize());
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  return windowSize;
-}
+import Medicine from "Views/Medicine/Medicine";
+import AddMedicine from "Views/AddMedicine/AddMedicine";
+import EditMedicine from "Views/EditMedicine/EditMedicine";
+import SignIn from "Views/SignIn/SignIn";
+import CreateProfile from "Views/CreateProfile/CreateProfile";
+import NotFound from "Views/NotFound/NotFound";
+import PrivateRoute from "templates/PrivateRoute/PrivateRoute";
+import ProtectedRoute from "templates/ProtectedRoute/ProtectedRoute";
+import WindowDimension from "Theme/WindowDimension";
 
 const Root = () => {
-  const size = useWindowSize();
-
   // Check for token
   if (localStorage.jwtToken) {
     setAuthToken(localStorage.jwtToken);
@@ -66,7 +35,7 @@ const Root = () => {
     if (decoded.exp < currentTime) {
       store.dispatch(logoutUser());
       store.dispatch(clearProfile());
-      window.location.href = '/user/signin';
+      window.location.href = "/user/signin";
     }
   }
   return (
@@ -74,7 +43,7 @@ const Root = () => {
       <Router>
         <ThemeProvider theme={theme}>
           <>
-            <GlobalStyle size={size} />
+            <WindowDimension />
             <Switch>
               <ProtectedRoute exact path="/Apteczka" component={Medicine} />
               <PrivateRoute exact path="/Apteczka/addMedicine" component={AddMedicine} />
