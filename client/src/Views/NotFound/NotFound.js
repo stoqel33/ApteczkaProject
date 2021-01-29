@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-import Text from 'Components/atoms/Text/Text';
-import Button from 'Components/atoms/Button/Button';
+import Text from "Components/atoms/Text/Text";
+import Button from "Components/atoms/Button/Button";
 
-import xsmallNotFound from 'assets/image/xsmall-notFound.png';
+import xsmallNotFound from "assets/image/xsmall-notFound.png";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -21,12 +21,6 @@ const Image = styled.div`
   background-repeat: no-repeat;
   background-position: center center;
 `;
-const ButtonBack = styled(Button)`
-  width: 16rem;
-  margin-top: 5rem;
-  background-color: hsl(202, 48%, 60%);
-  color: white;
-`;
 
 const NotFound = () => {
   return (
@@ -34,7 +28,9 @@ const NotFound = () => {
       <Image />
       <Text fs="3">Page Not Found</Text>
       <Link to="/Apteczka">
-        <ButtonBack>Strona główna</ButtonBack>
+        <Button secondary big mgt="6rem">
+          Strona główna
+        </Button>
       </Link>
     </Wrapper>
   );
