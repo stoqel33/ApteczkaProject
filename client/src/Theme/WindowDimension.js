@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+
 import GlobalStyle from "Theme/GlobalStyle";
-import React from "react";
 
 function getWindowHeight() {
   const { innerHeight: height } = window;
