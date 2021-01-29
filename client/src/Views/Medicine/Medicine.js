@@ -1,17 +1,16 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import {
   disableBodyScroll,
   enableBodyScroll,
   clearAllBodyScrollLocks,
-} from 'body-scroll-lock';
-import { getMedicines } from 'data/Actions/medicinesActions';
-import AppContect from 'context';
+} from "body-scroll-lock";
+import { getMedicines } from "data/Actions/medicinesActions";
+import AppContect from "context";
 
-import Load from 'Components/atoms/Load/Load';
-import MedicinesList from 'templates/MedicinesList/MedicinesList';
+import MedicinesList from "templates/MedicinesList/MedicinesList";
 
 class Medicine extends React.Component {
   state = {
@@ -44,15 +43,15 @@ class Medicine extends React.Component {
 
   showTargetElement = () => {
     disableBodyScroll(this.targetElement);
-    this.targetElement.style.position = 'fixed';
-    this.targetElement.style.left = '50%';
-    this.targetElement.style.transform = 'translate(-50%)';
+    this.targetElement.style.position = "fixed";
+    this.targetElement.style.left = "50%";
+    this.targetElement.style.transform = "translate(-50%)";
   };
   hideTargetElement = () => {
     enableBodyScroll(this.targetElement);
-    this.targetElement.style.position = '';
-    this.targetElement.style.left = '';
-    this.targetElement.style.transform = '';
+    this.targetElement.style.position = "";
+    this.targetElement.style.left = "";
+    this.targetElement.style.transform = "";
   };
   componentWillUnmount() {
     clearAllBodyScrollLocks();
@@ -82,7 +81,7 @@ class Medicine extends React.Component {
   render() {
     const { medicines, loading } = this.props;
     if (medicines.length > 1) {
-      medicines.sort((a, b) => a.name.toString().localeCompare(b.name, 'pl'));
+      medicines.sort((a, b) => a.name.toString().localeCompare(b.name, "pl"));
     }
     return (
       <AppContect.Provider
@@ -98,8 +97,8 @@ class Medicine extends React.Component {
           burgerMenu={this.state.burgerMenu}
           today={this.state.today}
           medicines={medicines}
+          loading={loading}
         />
-        {loading && <Load />}
       </AppContect.Provider>
     );
   }
