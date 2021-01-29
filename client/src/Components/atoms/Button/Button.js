@@ -2,7 +2,6 @@ import styled, { css } from "styled-components";
 import { device } from "Theme/mainTheme";
 
 const Button = styled.button`
-  font-family: "Montserrat", sans-serif;
   height: 4rem;
   width: 14rem;
   font-size: ${({ fs }) => fs || "1.4"}rem;

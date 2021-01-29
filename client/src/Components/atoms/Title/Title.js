@@ -1,7 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Title = styled.h1`
-  font-family: 'Montserrat', sans-serif;
   grid-area: ${({ grid }) => grid || null};
   margin-top: ${({ mgt }) => mgt || 0};
   margin-left: ${({ mgl }) => mgl || 0};
