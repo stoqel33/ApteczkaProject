@@ -12,6 +12,7 @@ import SearchMedicine from "templates/SearchMedicine/SearchMedicine";
 import BurgerMenu from "templates/BurgerMenu/BurgerMenu";
 import Burger from "Components/atoms/Burger/Burger";
 import Text from "Components/atoms/Text/Text";
+import Load from "Components/atoms/Load/Load";
 
 import search from "assets/icons/search.svg";
 import imgXsEmpty from "assets/image/xsmall-empty.png";
@@ -115,6 +116,7 @@ const MedicinesList = ({
   burgerMenu,
   today,
   medicines,
+  loading,
 }) => {
   const [heightTop, setHeightTop] = useState(0);
   useEffect(() => {
@@ -182,6 +184,7 @@ const MedicinesList = ({
       {TopBar}
       <BurgerMenu open={burgerMenu} height={heightTop} />
       {Medicines}
+      {loading && <Load />}
       {ButtonAdd}
     </Wrapper>
   );
@@ -210,6 +213,7 @@ MedicinesList.defaultProps = {
   burgerMenu: false,
   today: new Date().toISOString(),
   medicines: [],
+  loading: false,
 };
 
 export default MedicinesList;
