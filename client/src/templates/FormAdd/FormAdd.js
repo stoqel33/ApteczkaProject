@@ -285,7 +285,7 @@ const FormAdd = ({
                 message: "Nazwa leku jest zbyt długa (max 30 liter)",
               },
               pattern: {
-                value: /^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s]+(([-]?)+[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s])+([+]?)+([0-9\s]?)+([+]?)+([A-Za-z\s]{0,10})+([A-Za-z]{0,10})?%$/i,
+                value: /^([A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s]+(([-]?)+[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s])+([+]?)+([0-9\s]?)+([+]?)+([A-Za-z\s]{0,10})+([A-Za-z]{0,10})+%?)$/i,
                 message: "Nieprawidłowa nazwa",
               },
             })}
