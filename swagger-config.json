@@ -1,0 +1,398 @@
+{
+  "info": {
+    "title": "Apteczka Swagger API",
+    "version": "1.0.0",
+    "description": "Endpoints to test the all routes"
+  },
+  "host": "localhost:5000",
+  "basePath": "/api/Apteczka",
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "scheme": "bearer",
+      "in": "header"
+    }
+  },
+  "paths": {
+    "/user/register": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Register to app",
+        "description": "",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Register successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login to app",
+        "description": "",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logged in successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile/": {
+      "get": {
+        "tags": ["Profiles"],
+        "name": "Get profile info",
+        "summary": "Get profile params",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Getting profile params successful"
+          },
+          "401": {
+            "description": "User is not logged in"
+          },
+          "404": {
+            "description": "Profile for current user does not exists"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Profiles"],
+        "name": "Create new profile",
+        "summary": "Create new profile",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Profile"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Creating new profile successful"
+          },
+          "401": {
+            "description": "User is not logged in"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Profiles"],
+        "name": "Delete profile",
+        "summary": "Delete profile",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Deleting profile successfull"
+          },
+          "401": {
+            "description": "User is not logged in"
+          },
+          "404": {
+            "description": "Profile for current user does not exist"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": ["Medicines"],
+        "name": "Get all medicines",
+        "summary": "Get medicine",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Getting all medicines successfull"
+          },
+          "401": {
+            "description": "User is not logged in"
+          }
+        }
+      }
+    },
+    "/addMedicine": {
+      "post": {
+        "tags": ["Medicines"],
+        "name": "Add new medicine",
+        "summary": "Add new medicine",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Medicine"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Adding new medicine successful"
+          },
+          "401": {
+            "description": "User is not logged in"
+          }
+        }
+      }
+    },
+
+    "/editMedicine/update/{id}": {
+      "post": {
+        "tags": ["Medicines"],
+        "name": "Update medicine",
+        "summary": "Update medicine",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Medicine"
+            }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Getting all medicines successful"
+          },
+          "401": {
+            "description": "User is not logged in"
+          }
+        }
+      }
+    },
+    "/takePill/{id}": {
+      "put": {
+        "tags": ["Medicines"],
+        "name": "Take a pill",
+        "summary": "Take a pill",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Diminishing the amount of medicine successful"
+          },
+          "401": {
+            "description": "User is not logged in"
+          }
+        }
+      }
+    },
+    "/editMedicine/{id}": {
+      "delete": {
+        "tags": ["Medicines"],
+        "name": "Delete medicine",
+        "summary": "Delete medicine",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "Enter id of medicine to remove"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Getting all medicines successful"
+          },
+          "401": {
+            "description": "User is not logged in"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "required": ["email", "password"],
+      "properties": {
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Medicine": {
+      "required": ["name", "amount", "date", "copy"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number"
+        },
+        "date": {
+          "type": "string",
+          "pattern": "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/",
+          "example": "YYYY-MM-DD"
+        },
+        "copy": {
+          "type": "boolean",
+          "default": "false"
+        }
+      }
+    },
+    "Profile": {
+      "required": ["nickname"],
+      "properties": {
+        "nickname": {
+          "type": "string"
+        },
+        "birthDate": {
+          "type": "string",
+          "example": "YYYY-MM-DD"
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Profile": {
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "birthDate": {
+            "type": "string"
+          }
+        }
+      },
+      "Medicine": {
+        "required": ["user", "name", "amount", "expiryDate", "copy"],
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "expiryDate": {
+            "type": "date"
+          },
+          "copy": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}
