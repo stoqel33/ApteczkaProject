@@ -298,7 +298,7 @@ const FormAdd = ({
         <InnerWrapper>
           <Input
             id="amount"
-            type="tel"
+            type="number"
             name="amount"
             placeholder=" "
             onFocus={handleActiveSuggest}
@@ -310,7 +310,7 @@ const FormAdd = ({
                 message: "Nie można wprowadzić takiej ilości (max 999)",
               },
               min: {
-                value: "1",
+                value: 1,
                 message: "Nie możesz wprowadzić takiej ilości (min 1)",
               },
               pattern: {
