@@ -1,9 +1,9 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-import FormEdit from 'templates/FormEdit/FormEdit';
+import FormEdit from "templates/FormEdit/FormEdit";
 
 const EditMedicine = ({ medicine, medicines }) => {
   const [deleteQuery, setDeleteQuery] = useState(false);
@@ -24,21 +24,19 @@ const EditMedicine = ({ medicine, medicines }) => {
 };
 
 EditMedicine.propTypes = {
-  medicine: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
-      expiryDate: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  medicine: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    amount: PropTypes.number.isRequired,
+    expiryDate: PropTypes.string.isRequired,
+  }).isRequired,
   medicines: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
   const { medicines } = state.medicines;
   const url = ownProps.match.params.id;
-  const medicine = medicines.filter((item) => item._id === url);
+  const medicine = medicines.find((item) => item._id === url);
   return { medicine, medicines };
 };
 export default connect(mapStateToProps)(EditMedicine);
