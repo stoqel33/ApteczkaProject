@@ -3,14 +3,14 @@
 /* eslint-disable no-restricted-syntax */
 import React from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components/macro";
+import styled from "styled-components";
 import { Formik, Form } from "formik";
 import { useHistory, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { changeMedicine, removeMedicine } from "data/Actions/medicinesActions";
 import { device } from "Theme/mainTheme";
 
-import FormCell from "Components/molecules/FormCell/FormCell";
+import FormCell from "Components/organisms/FormCell/FormCell";
 import Button from "Components/atoms/Button/Button";
 import Title from "Components/atoms/Title/Title";
 import ButtonIcon from "Components/atoms/ButtonIcon/ButtonIcon";
@@ -55,7 +55,7 @@ const InnerWrapButtons = styled.div`
   align-items: center;
   margin-top: 7rem;
 
-  @media screen and ${device.laptop} {
+  @media ${device.laptop} {
     width: 40rem;
   }
 `;
@@ -77,7 +77,7 @@ const FormEdit = ({
     history.push("/Apteczka");
   };
   const handleRemove = () => {
-    removeMed(medicine[0]._id);
+    removeMed(medicine._id);
     backToHome();
   };
   return (
@@ -87,14 +87,14 @@ const FormEdit = ({
       </TitleAdd>
       <Formik
         initialValues={{
-          id: medicine[0]._id,
-          name: medicine[0].name,
-          amount: medicine[0].amount,
-          date: medicine[0].expiryDate.slice(0, 10),
+          id: medicine._id,
+          name: medicine.name,
+          amount: medicine.amount,
+          date: medicine.expiryDate.slice(0, 10),
         }}
         validate={(values) => {
           const errors = {};
-          if (!medicine[0].copy) {
+          if (!medicine.copy) {
             medicines.forEach((item) => {
               if (
                 item._id !== values.id &&
@@ -114,11 +114,13 @@ const FormEdit = ({
               errors.name = "Nazwa zawiera niedozwolone znaki";
             }
           }
-          if (values.name.length > 30) {
-            errors.name = "Nazwa leku jest zbyt długa (max 30 liter)";
-          }
-          if (values.name.length < 3) {
-            errors.name = "Nazwa leku jest za krótka (min 3 litery)";
+          if (medicine.copy === false) {
+            if (values.name.length > 30) {
+              errors.name = "Nazwa leku jest zbyt długa (max 30 liter)";
+            }
+            if (values.name.length < 3) {
+              errors.name = "Nazwa leku jest za krótka (min 3 litery)";
+            }
           }
           if (!values.amount) {
             errors.amount = "Podaj ilość leku";
@@ -136,13 +138,13 @@ const FormEdit = ({
         }}
         onSubmit={(values) => {
           values.name = values.name.charAt(0).toUpperCase() + values.name.slice(1);
-          changeMed(values, medicine[0]._id);
+          changeMed(values, medicine._id);
           backToHome();
         }}
       >
         {({ values, errors, touched, handleChange, handleSubmit, isSubmitting }) => (
           <Forms onSubmit={handleSubmit}>
-            {medicine[0].copy ? (
+            {medicine.copy ? (
               <FormCell
                 name="name"
                 type="text"
@@ -198,7 +200,7 @@ const FormEdit = ({
       </InnerWrapButtons>
       {deleteQuery ? (
         <RemoveWrap>
-          <RemoveTitle>Usunąć lek {medicine[0].name}?</RemoveTitle>
+          <RemoveTitle>Usunąć lek {medicine.name}?</RemoveTitle>
           <Button warning mgr="1.5rem" onClick={handleRemove}>
             TAK
           </Button>
@@ -212,15 +214,13 @@ const FormEdit = ({
 };
 
 FormEdit.propTypes = {
-  medicine: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      amount: PropTypes.number.isRequired,
-      expiryDate: PropTypes.string.isRequired,
-      copy: PropTypes.bool.isRequired,
-    }),
-  ).isRequired,
+  medicine: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    amount: PropTypes.number.isRequired,
+    expiryDate: PropTypes.string.isRequired,
+    copy: PropTypes.bool.isRequired,
+  }).isRequired,
   medicines: PropTypes.arrayOf(PropTypes.object).isRequired,
   changeMed: PropTypes.func.isRequired,
   removeMed: PropTypes.func.isRequired,
