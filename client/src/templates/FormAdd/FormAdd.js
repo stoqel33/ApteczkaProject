@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components/macro";
+import styled from "styled-components";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addMedicines } from "data/Actions/medicinesActions";
@@ -134,11 +134,11 @@ const SearchList = styled.ul`
     margin: 0;
   }
 
-  @media screen and ${device.tablet} {
+  @media ${device.tablet} {
     width: 60%;
   }
 
-  @media screen and ${device.desktop} {
+  @media ${device.desktop} {
     width: 40%;
   }
 `;
@@ -270,6 +270,7 @@ const FormAdd = ({
             name="name"
             placeholder=" "
             autoComplete="off"
+            spellCheck="false"
             onChange={handleChangeName}
             onFocus={handleActiveSuggest}
             defaultValue={name}
