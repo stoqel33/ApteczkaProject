@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { device } from "Theme/mainTheme";
 
 const Input = styled.input`
   display: inline-block;
@@ -89,7 +90,7 @@ const Input = styled.input`
         }
       }
 
-      @media screen and (min-width: 1024px) {
+      @media ${device.laptop} {
         &[type="date"]::-webkit-inner-spin-button {
           position: absolute;
           top: 50%;
@@ -126,6 +127,10 @@ const Input = styled.input`
         }
 
         & + label {
+          color: ${({ theme }) => theme.warning};
+        }
+
+        label + & {
           color: ${({ theme }) => theme.warning};
         }
       `}
