@@ -1,4 +1,4 @@
-import { GET_PROFILE, PROFILE_LOADING, CLEAR_PROFILE } from 'data/Actions/types';
+import { GET_PROFILE, PROFILE_LOADING, CLEAR_PROFILE } from "data/Actions/types";
 
 const initialState = {
   profile: null,
@@ -6,26 +6,36 @@ const initialState = {
   exists: false,
 };
 
+function clearProfile(state) {
+  return {
+    ...state,
+    profile: null,
+  };
+}
+
+function getProfile(state, action) {
+  return Object.assign({}, state, {
+    profile: action.payload,
+    loading: false,
+    exists: true,
+  });
+}
+
+function loading(state) {
+  return {
+    ...state,
+    loading: true,
+  };
+}
+
 export default function (state = initialState, action) {
   switch (action.type) {
     case PROFILE_LOADING:
-      return {
-        ...state,
-        loading: true,
-      };
+      return loading(state);
     case GET_PROFILE:
-      return {
-        ...state,
-        profile: action.payload,
-        loading: false,
-        exists: true,
-      };
-
+      return getProfile(state, action);
     case CLEAR_PROFILE:
-      return {
-        ...state,
-        profile: null,
-      };
+      return clearProfile(state);
     default:
       return state;
   }
