@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { device } from "Theme/mainTheme";
 
 import Input from "Components/atoms/Input/Input";
 import ButtonIcon from "Components/atoms/ButtonIcon/ButtonIcon";
-import Card from "Components/molecules/Card/Card";
+import Card from "Components/organisms/Card/Card";
 
 import close from "assets/icons/close.svg";
 
@@ -17,13 +18,13 @@ const MedicinesWrap = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  @media screen and (min-width: 768px) {
+  @media ${device.tablet} {
     width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
   }
-  @media screen and (min-width: 1000px) {
+  @media (min-width: 1000px) {
     width: 100rem;
     flex-direction: row;
     flex-wrap: wrap;

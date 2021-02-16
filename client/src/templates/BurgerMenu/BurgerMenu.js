@@ -1,19 +1,19 @@
-import React from 'react';
-import styled from 'styled-components';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import AppContext from 'context';
-import { device } from 'Theme/mainTheme';
+import React from "react";
+import styled from "styled-components";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import AppContext from "context";
+import { device } from "Theme/mainTheme";
 
-import { logoutUser } from 'data/Actions/authActions';
-import { clearProfile } from 'data/Actions/profileActions';
+import { logoutUser } from "data/Actions/authActions";
+import { clearProfile } from "data/Actions/profileActions";
 
-import Text from 'Components/atoms/Text/Text';
-import Button from 'Components/atoms/Button/Button';
+import Text from "Components/atoms/Text/Text";
+import Button from "Components/atoms/Button/Button";
 
 const Wrapper = styled.div`
   position: fixed;
-  top: ${({ height }) => (height ? `${height}px` : '0px')};
+  top: ${({ height }) => (height ? `${height}px` : "0px")};
   width: 100vw;
   height: 100%;
   bottom: 0;
@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
 
-  transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(100%)')};
+  transform: ${({ open }) => (open ? "translateX(0)" : "translateX(100%)")};
   background-color: ${({ theme }) => theme.lightmode.colors.background};
   transition: transform 0.3s ease-in-out;
   z-index: 1;
@@ -53,11 +53,11 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   line-height: 135%;
 
-  @media screen and ${device.tablet} {
+  @media ${device.tablet} {
     line-height: 180%;
   }
 
-  @media screen and ${device.laptop} {
+  @media ${device.laptop} {
     line-height: 200%;
   }
 `;
@@ -76,47 +76,47 @@ const BurgerMenu = ({ height, open, logout, clear }) => {
   );
 
   const References = ({ handleLicences }) => (
-    <InnerWrapper style={{ justifyContent: 'space-between' }}>
+    <InnerWrapper style={{ justifyContent: "space-between" }}>
       <HrefWrapper>
         <Text>Ikony</Text>
         <ContentWrapper>
-          Icons made by{' '}
+          Icons made by{" "}
           <Href
             href="https://www.flaticon.com/authors/those-icons"
             target="_blank"
             title="Those Icons"
           >
             Those Icons,
-          </Href>{' '}
+          </Href>{" "}
           <Href
             href="https://www.flaticon.com/authors/freepik"
             target="_blank"
             title="Freepik"
           >
             Freepik,
-          </Href>{' '}
+          </Href>{" "}
           <Href
             href="https://www.flaticon.com/authors/pixel-perfect"
             target="_blank"
             title="Pixel perfect"
           >
             Pixel perfect,
-          </Href>{' '}
+          </Href>{" "}
           <Href
             href="https://www.flaticon.com/authors/kiranshastry"
             target="_blank"
             title="Kiranshastry"
           >
             Kiranshastry,
-          </Href>{' '}
+          </Href>{" "}
           <Href
             href="https://www.flaticon.com/authors/prettycons/"
             target="_blank"
             title="prettycons"
           >
             prettycons
-          </Href>{' '}
-          from{' '}
+          </Href>{" "}
+          from{" "}
           <Href href="https://www.flaticon.com/" target="_blank" title="Flaticon">
             www.flaticon.com
           </Href>
@@ -125,19 +125,19 @@ const BurgerMenu = ({ height, open, logout, clear }) => {
         <ContentWrapper>
           <Href href="https://www.freepik.com/free-photos-vectors/hand" target="_blank">
             Hand vector created by studiogstock - www.freepik.com,
-          </Href>{' '}
+          </Href>{" "}
           <Href href="https://www.freepik.com/free-photos-vectors/people" target="_blank">
             People vector created by gstudioimagen - www.freepik.com,
-          </Href>{' '}
+          </Href>{" "}
           <Href href="https://www.freepik.com/free-photos-vectors/design" target="_blank">
             Design vector created by cornecoba - www.freepik.com,
-          </Href>{' '}
+          </Href>{" "}
           <Href href="https://www.freepik.com/free-photos-vectors/design" target="_blank">
             Design vector created by photoroyalty - www.freepik.com
           </Href>
         </ContentWrapper>
       </HrefWrapper>
-      <Button style={{ alignSelf: 'center' }} onClick={handleLicences}>
+      <Button secondary style={{ alignSelf: "center" }} onClick={handleLicences}>
         Wróć
       </Button>
     </InnerWrapper>

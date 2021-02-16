@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components/macro";
+import { createGlobalStyle } from "styled-components";
 import { device } from "Theme/mainTheme";
 
 const GlobalStyle = createGlobalStyle`
@@ -23,7 +23,7 @@ const GlobalStyle = createGlobalStyle`
     height: ${(props) =>
       props.windowHeightDimension ? props.windowHeightDimension.height : "700"}px;
 
-    @media screen and ${device.laptop} {
+    @media ${device.laptop} {
         margin: 0 auto;
       }
 

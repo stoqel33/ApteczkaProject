@@ -1,12 +1,13 @@
 import React from "react";
-import styled, { keyframes } from "styled-components/macro";
+import styled, { keyframes } from "styled-components";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { registerUser, loginUser, clearErrors } from "data/Actions/authActions";
+import { registerUser, loginUser } from "data/Actions/authActions";
+import { clearErrors } from "data/Actions/errorActions";
 import { withRouter } from "react-router";
 import { device } from "Theme/mainTheme";
 
-import FormCellSignIn from "Components/molecules/FormCellSignIn/FormCellSignIn";
+import FormCellSignIn from "Components/organisms/FormCellSignIn/FormCellSignIn";
 import Button from "Components/atoms/Button/Button";
 import Text from "Components/atoms/Text/Text";
 
@@ -33,7 +34,7 @@ const Wrapper = styled.div`
 
   animation: ${showingLuggage} 0.8s ease-out;
 
-  @media screen and ${device.tablet} {
+  @media ${device.tablet} {
     width: 80%;
     margin: 0 auto;
   }

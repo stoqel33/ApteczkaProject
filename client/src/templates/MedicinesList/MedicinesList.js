@@ -4,15 +4,15 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { device } from "Theme/mainTheme";
 
-import Card from "Components/molecules/Card/Card";
+import Card from "Components/organisms/Card/Card";
 import Button from "Components/atoms/Button/Button";
 import Title from "Components/atoms/Title/Title";
 import ButtonIcon from "Components/atoms/ButtonIcon/ButtonIcon";
 import SearchMedicine from "templates/SearchMedicine/SearchMedicine";
 import BurgerMenu from "templates/BurgerMenu/BurgerMenu";
-import Burger from "Components/atoms/Burger/Burger";
+import Burger from "Components/molecules/Burger/Burger";
 import Text from "Components/atoms/Text/Text";
-import Load from "Components/atoms/Load/Load";
+import Load from "Components/molecules/Load/Load";
 
 import search from "assets/icons/search.svg";
 import imgXsEmpty from "assets/image/xsmall-empty.png";
@@ -45,7 +45,7 @@ const TopBarWrap = styled.div`
   align-items: center;
   margin: 2rem 0;
 
-  @media screen and ${device.laptop} {
+  @media ${device.laptop} {
     grid-template-columns: 1fr 20rem 1fr;
     margin-bottom: 4rem;
   }
@@ -59,13 +59,13 @@ const MedicinesWrap = styled.div`
   flex-direction: column;
   margin: 0 auto;
 
-  @media screen and ${device.tablet} {
+  @media ${device.tablet} {
     width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
   }
-  @media screen and ${device.laptop} {
+  @media ${device.laptop} {
     width: 100rem;
     flex-direction: row;
     flex-wrap: wrap;
@@ -91,12 +91,12 @@ const Image = styled.div`
   background-repeat: no-repeat;
   background-position-x: center;
 
-  @media screen and ${device.mobileM} {
+  @media ${device.mobileM} {
     width: 22rem;
     height: 22rem;
     background-image: url(${imgSEmpty});
   }
-  @media screen and ${device.tablet} {
+  @media ${device.tablet} {
     width: 26rem;
     height: 26rem;
     background-image: url(${imgMEmpty});

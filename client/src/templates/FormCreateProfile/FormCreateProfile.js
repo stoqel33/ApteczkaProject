@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import styled, { keyframes } from "styled-components/macro";
+import styled, { keyframes } from "styled-components";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { createProfile, getProfile } from "data/Actions/profileActions";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
+import { device } from "Theme/mainTheme";
 
 import Button from "Components/atoms/Button/Button";
 import Text from "Components/atoms/Text/Text";
@@ -30,7 +31,7 @@ const Wrapper = styled.div`
   justify-content: center;
   height: 100%;
 
-  @media screen and (min-width: 768px) {
+  @media ${device.tablet} {
     width: 80%;
     margin: 0 auto;
   }
