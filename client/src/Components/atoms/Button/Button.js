@@ -49,10 +49,11 @@ const Button = styled.button`
       background-color: transparent;
       border: none;
       color: ${({ theme }) => theme.info};
+      text-decoration: underline;
       &:hover {
         box-shadow: none;
 
-        @media screen and ${device.laptop} {
+        @media ${device.laptop} {
           transform: scale(1.2);
         }
       }
