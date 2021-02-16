@@ -1,11 +1,11 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import React from "react";
+import styled from "styled-components";
+import PropTypes from "prop-types";
 
-import Input from 'Components/atoms/Input/Input';
-import Label from 'Components/atoms/Label/Label';
-import InputError from 'Components/atoms/InputError/InputError';
+import Input from "Components/atoms/Input/Input";
+import Label from "Components/atoms/Label/Label";
+import InputError from "Components/atoms/InputError/InputError";
 
 const Wrapper = styled.div`
   position: relative;
@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 const FormCell = ({ type, name, errors, onChange, value, expired, copy }) => {
   return (
     <>
-      {type === 'text' ? (
+      {type === "text" ? (
         <Wrapper>
           <Input
             name={name}
@@ -39,7 +39,7 @@ const FormCell = ({ type, name, errors, onChange, value, expired, copy }) => {
           <Label htmlFor={name}>Nazwa Leku</Label>
           {errors && <InputError>{errors}</InputError>}
         </Wrapper>
-      ) : type === 'number' ? (
+      ) : type === "number" ? (
         <Wrapper>
           <Input
             name={name}
@@ -85,11 +85,11 @@ FormCell.propTypes = {
   copy: PropTypes.bool,
 };
 FormCell.defaultProps = {
-  type: '',
-  name: '',
+  type: "",
+  name: "",
   errors: null,
   onChange: () => {},
-  value: '',
+  value: "",
   expired: false,
   copy: false,
 };

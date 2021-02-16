@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import FormCellSignIn from './FormCellSignIn';
+import FormCellSignIn from "./FormCellSignIn";
 
 export default {
   component: FormCellSignIn,
-  title: 'molecules/FormCellSignIn',
+  title: "molecules/FormCellSignIn",
 };
 
 export const Email = () => <FormCellSignIn />;

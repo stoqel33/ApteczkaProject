@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import styled, { css, keyframes } from "styled-components";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { decreaseMedicine } from "data/Actions/medicinesActions";
+import { device } from "Theme/mainTheme";
 
 import Text from "Components/atoms/Text/Text";
 import ButtonIcon from "Components/atoms/ButtonIcon/ButtonIcon";
@@ -11,7 +12,6 @@ import ButtonIcon from "Components/atoms/ButtonIcon/ButtonIcon";
 import pillIcon from "assets/icons/pill.svg";
 import editIcon from "assets/icons/edit.svg";
 import infoIcon from "assets/icons/information.svg";
-import { useReducer } from "react";
 
 const diminishAnimation = keyframes`
   0%, 80% {
@@ -129,24 +129,21 @@ const OuterWrapper = styled.div`
   margin: 0 1rem 2rem 1rem;
   transition: 0.5s;
 
+  &:nth-last-child(1) {
+    margin-bottom: 5rem;
+  }
+
   ${({ animationDuring }) =>
     animationDuring &&
     css`
       pointer-events: none;
     `};
 
-  @media screen and (min-width: 768px) {
+  @media ${device.tablet} {
     margin-bottom: 5rem;
   }
-
-  @media screen and (max-width: 767px) {
-    ${({ info }) =>
-      info &&
-      css`
-        margin-bottom: 5rem;
-      `};
-  }
 `;
+
 const DateInfo = styled.div`
   position: absolute;
   bottom: 0.5rem;

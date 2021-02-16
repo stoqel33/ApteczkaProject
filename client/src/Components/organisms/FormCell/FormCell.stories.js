@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import FormCell from './FormCell';
+import FormCell from "./FormCell";
 
 export default {
   component: FormCell,
-  title: 'molecules/FormCell',
+  title: "molecules/FormCell",
 };
 
 export const Normal = () => <FormCell type="text" />;
