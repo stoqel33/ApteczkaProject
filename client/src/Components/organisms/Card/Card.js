@@ -138,6 +138,11 @@ const OuterWrapper = styled.div`
     css`
       pointer-events: none;
     `};
+  ${({ info }) =>
+    info &&
+    css`
+      margin-bottom: 4.5rem;
+    `}
 
   @media ${device.tablet} {
     margin-bottom: 5rem;
@@ -236,6 +241,16 @@ const Card = ({ id, name, amount, date, today, takePill }) => {
     info ? setInfo(false) : setInfo(true);
   };
 
+  const formatShowingDate = (date) => {
+    const fullDate = date.split("-");
+    const year = fullDate[0];
+    const month = fullDate[1];
+    const day = fullDate[2];
+    return `${day}-${month}-${year}`;
+  };
+
+  const fomratedDate = formatShowingDate(date);
+
   const expired = today > date;
 
   return (
@@ -275,7 +290,9 @@ const Card = ({ id, name, amount, date, today, takePill }) => {
           diminishAnimate={animationStatus.diminishAnimate}
           failDiminishAnimate={animationStatus.failDiminishAnimate}
         >
-          <Text fs="1.5">Data ważności {date}</Text>
+          <Text fs="1.5" fw="600" cl="white">
+            Data ważności {fomratedDate}
+          </Text>
         </DateInfo>
       </Wrapper>
     </OuterWrapper>
