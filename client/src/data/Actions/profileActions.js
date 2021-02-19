@@ -31,14 +31,14 @@ export const getProfile = (history) => (dispatch) => {
     });
 };
 
-export const clearProfile = () => {
-  return {
+export const clearProfile = () => (dispatch) => {
+  dispatch({
     type: CLEAR_PROFILE,
-  };
+  });
 };
 
-export const loadingProfile = () => {
-  return {
+export const loadingProfile = () => (dispatch) => {
+  dispatch({
     type: PROFILE_LOADING,
-  };
+  });
 };

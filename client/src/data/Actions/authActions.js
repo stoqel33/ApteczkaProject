@@ -37,11 +37,11 @@ export const loginUser = (userData, history) => (dispatch) => {
 };
 
 // Set logged in user
-export const setCurrentUser = (decoded) => {
-  return {
+export const setCurrentUser = (decoded) => (dispatch) => {
+  dispatch({
     type: SET_CURRENT_USER,
     payload: decoded,
-  };
+  });
 };
 
 // Logout user
