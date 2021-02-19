@@ -70,7 +70,6 @@ export const removeMedicine = (id) => (dispatch) => {
 };
 
 export const decreaseMedicine = (id) => (dispatch) => {
-  dispatch(setMedicinesLoading());
   axios
     .put(`/api/Apteczka/takePill/${id}`)
     .then(() => {
@@ -85,8 +84,8 @@ export const decreaseMedicine = (id) => (dispatch) => {
 };
 
 // Set loading state
-export const setMedicinesLoading = () => {
-  return {
+export const setMedicinesLoading = () => (dispatch) => {
+  dispatch({
     type: MEDICINES_LOADING,
-  };
+  });
 };
