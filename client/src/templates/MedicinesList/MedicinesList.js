@@ -97,8 +97,8 @@ const Image = styled.div`
     background-image: url(${imgSEmpty});
   }
   @media ${device.tablet} {
-    width: 26rem;
-    height: 26rem;
+    width: 27rem;
+    height: 27rem;
     background-image: url(${imgMEmpty});
   }
 `;
@@ -183,8 +183,8 @@ const MedicinesList = ({
     <Wrapper>
       {TopBar}
       <BurgerMenu open={burgerMenu} height={heightTop} />
-      {Medicines}
       {loading && <Load />}
+      {Medicines}
       {ButtonAdd}
     </Wrapper>
   );
